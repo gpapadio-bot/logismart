@@ -252,6 +252,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
         <input type="hidden" id="ofrm"><div class="sddl" id="sddl-frm"></div></div></div>
       <div class="fg"><label>Από</label><input type="text" id="ofrom" class="fi" placeholder="π.χ. Μόναχο, DE"></div>
       <div class="fg"><label>Προς</label><input type="text" id="oto" class="fi" placeholder="π.χ. Αθήνα"></div>
+      <div class="fg s2"><label>Παραλήπτης</label><input type="text" id="orecip" class="fi" placeholder="Όνομα παραλήπτη (προεπιλογή: πελάτης)"></div>
       <div class="fsep fsep4">ΦΟΡΤΙΟ &amp; LDM</div>
       <div class="fg" id="fg-pal"><label>Τύπος παλετών<span class="req">*</span></label>
         <select id="opal" class="fsel" onchange="calcLDM()">
@@ -1398,7 +1399,7 @@ function confAsgn(send){
     var tkCity=[firm.tk,firm.ct].filter(Boolean).join(' ');
     var mapsUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent([str,tkCity,firm.co].filter(Boolean).join(', '));
     var palLbl=o.pal==='E'?'EPAL':o.pal==='B'?'Βιομηχανική':'Βαρέλια';
-    var msg='📦 ΑΝΑΘΕΣΗ ΦΟΡΤΙΟΥ\n\n🏢 ΦΙΡΜΑ: '+(o.firm||'—')+(str?'\n📍 Οδός: '+str:'')+(tkCity?'\n🏙 Πόλη: '+tkCity:'')+(firm.co?'\n🌍 Χώρα: '+firm.co:'')+'\n🗺 Maps: '+mapsUrl+(firm.hr?'\n⏰ Ωράριο: '+firm.hr:'')+(firm.cn?'\n👤 Επαφή: '+firm.cn+(firm.ph?' · '+firm.ph:''):'')+'\n\n📋 ΦΟΡΤΙΟ\nΠελάτης: '+o.client+'\nΕτοιμότητα: '+fmtD(o.rdy)+'\nΠαλέτες: '+o.qty+' '+palLbl+'\nLDM: '+o.ldm+'μ\nΒάρος: '+(o.wgt/1000).toFixed(1)+'t\nΘερμ.: '+TL[o.tmp]+(o.notes?'\nΣημ.: '+o.notes:'');
+    var msg='📦 ΑΝΑΘΕΣΗ ΦΟΡΤΙΟΥ\n\n🏢 ΦΙΡΜΑ: '+(o.firm||'—')+(str?'\n📍 Οδός: '+str:'')+(tkCity?'\n🏙 Πόλη: '+tkCity:'')+(firm.co?'\n🌍 Χώρα: '+firm.co:'')+'\n🗺 Maps: '+mapsUrl+(firm.cn?'\n👤 Επαφή: '+firm.cn+(firm.ph?' · '+firm.ph:''):'')+'\n\n📋 ΦΟΡΤΙΟ\nΠαραλήπτης: '+(o.recip||o.client)+'\nΕτοιμότητα: '+fmtD(o.rdy)+'\nΠαλέτες: '+o.qty+' '+palLbl+'\nLDM: '+o.ldm+'μ\nΒάρος: '+(o.wgt/1000).toFixed(1)+'t\nΘερμ.: '+TL[o.tmp]+(o.notes?'\nΣημ.: '+o.notes:'');
     window.open('https://wa.me/'+(t.ph||'').replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank');
   }
   notif('Ανάθεση ολοκληρώθηκε!');rDash();renderOrders();if(curPg==='dispatch')rDisp();if(curPg==='weekly')renderWeekly();
@@ -1441,7 +1442,7 @@ function SDD(key){
 }
 function SDDP(key,id){
   var items=key==='cli'?DB.clients:DB.firms,x=items.find(function(i){return i.id===id;});if(!x)return;
-  if(key==='cli'){g('ocliq').value=x.nm;g('ocli').value=x.nm;g('sddl-cli').classList.remove('on');g('fg-cli').classList.remove('ferr');var to=g('oto');if(to&&!to.value)to.value=x.ct||'';}
+  if(key==='cli'){g('ocliq').value=x.nm;g('ocli').value=x.nm;g('sddl-cli').classList.remove('on');g('fg-cli').classList.remove('ferr');var to=g('oto');if(to&&!to.value)to.value=x.ct||'';var rec=g('orecip');if(rec&&!rec.value)rec.value=x.nm;}
   else{g('ofrmq').value=x.nm;g('ofrm').value=x.nm;g('sddl-frm').classList.remove('on');g('fg-frm').classList.remove('ferr');var fr=g('ofrom');if(fr)fr.value=(x.ct||'')+(x.co?', '+x.co:'');}
 }
 function SDDC(key){var el=g('sddl-'+key);if(el)el.classList.remove('on');}
@@ -1461,7 +1462,7 @@ function updLDM(){var ldm=parseFloat(g('oldm').value)||0,el=g('ldmprev');if(ldm>
 function updWarn(){g('wgtwarn').classList.toggle('on',(parseInt(g('owgt').value)||0)>34000);}
 function resetOF(){
   editOid=null;dpSel=null;
-  ['ofrom','oto','oqty','oldm','owgt','oprice','onotes'].forEach(function(id){var el=g(id);if(el)el.value='';});
+  ['ofrom','oto','orecip','oqty','oldm','owgt','oprice','onotes'].forEach(function(id){var el=g(id);if(el)el.value='';});
   g('ocliq').value='';g('ocli').value='';g('ofrmq').value='';g('ofrm').value='';
   g('opal').value='';g('otmp').value='';g('ordytxt').value='';g('ordy').value='';
   g('ldmprev').classList.remove('on');g('ldmwarn').classList.remove('on');g('wgtwarn').classList.remove('on');
@@ -1480,7 +1481,7 @@ function saveOrd(){
   var checks=[{id:'fg-cli',v:cli,msg:'Επιλέξτε πελάτη'},{id:'fg-frm',v:frm,msg:'Επιλέξτε φίρμα'},{id:'fg-pal',v:pal,msg:'Επιλέξτε τύπο παλετών'},{id:'fg-qty',v:qty,msg:'Εισάγετε ποσότητα'},{id:'fg-ldm',v:ldm,msg:'Εισάγετε LDM'},{id:'fg-wgt',v:wgt,msg:'Εισάγετε βάρος'},{id:'fg-tmp',v:tmp,msg:'Επιλέξτε θερμοκρασία'},{id:'fg-rdy',v:rdy,msg:'Επιλέξτε ημερομηνία'}];
   var err=null;checks.forEach(function(c){var el=g(c.id);if(!c.v){if(el)el.classList.add('ferr');if(!err)err=c.msg;}else{if(el)el.classList.remove('ferr');}});
   if(err){notif(err,'er');return;}
-  var o={id:editOid||NID(DB.orders),client:cli,firm:frm,from:g('ofrom').value,to:g('oto').value,pal:pal,qty:qty,ldm:ldm,wgt:wgt,tmp:tmp,rdy:rdy,price:parseFloat(g('oprice').value)||0,notes:g('onotes').value,status:'Open',truck:'',hidden:false};
+  var recip=g('orecip').value.trim()||cli;var o={id:editOid||NID(DB.orders),client:cli,firm:frm,from:g('ofrom').value,to:g('oto').value,recip:recip,pal:pal,qty:qty,ldm:ldm,wgt:wgt,tmp:tmp,rdy:rdy,price:parseFloat(g('oprice').value)||0,notes:g('onotes').value,status:'Open',truck:'',hidden:false};
   if(editOid){var i=DB.orders.findIndex(function(x){return x.id===editOid;});if(i>=0){o.status=DB.orders[i].status;o.truck=DB.orders[i].truck;o.hidden=DB.orders[i].hidden;o.history=DB.orders[i].history||[];DB.orders[i]=o;}}
   else DB.orders.push(o);
   CM('ord-modal');editOid=null;notif('Παραγγελία αποθηκεύτηκε!');renderOrders();rDash();
@@ -1488,7 +1489,7 @@ function saveOrd(){
 function editOrd(id){
   var o=DB.orders.find(function(x){return x.id===id;});if(!o)return;
   resetOF();editOid=id;g('ordmt').textContent='Επεξεργασία #'+id;
-  ['from','to','qty','ldm','price','notes'].forEach(function(f){var el=g('o'+f);if(el)el.value=o[f]||'';});
+  ['from','to','qty','ldm','price','notes'].forEach(function(f){var el=g('o'+f);if(el)el.value=o[f]||'';});  if(g('orecip'))g('orecip').value=o.recip||o.client||'';
   g('owgt').value=o.wgt||'';g('ocliq').value=o.client||'';g('ocli').value=o.client||'';
   g('ofrmq').value=o.firm||'';g('ofrm').value=o.firm||'';g('opal').value=o.pal||'';g('otmp').value=o.tmp||'';
   if(o.rdy){var d=new Date(o.rdy+'T00:00:00');g('ordytxt').value=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();g('ordy').value=o.rdy;dpSel=d;}
