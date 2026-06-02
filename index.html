@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Logi-Smart v4</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--bg2:#0f1318;--bg3:#161b24;--bg4:#1d2333;--bg5:#252d40;--b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.12);--tx:#e4e8f0;--tx2:#7a8499;--tx3:#3d4560;--ac:#3b82f6;--ac2:#2563eb;--fr:#60a5fa;--ch:#34d399;--ht:#fbbf24;--dr:#9ca3af;--ok:#10b981;--er:#ef4444;--wn:#f59e0b;--m:'JetBrains Mono',monospace;--d:'Syne',sans-serif;--r:6px;--r2:10px}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
+body{font-family:var(--m);background:var(--bg);color:var(--tx);display:flex;flex-direction:column;font-size:12px}
+.nav{height:46px;background:var(--bg2);border-bottom:1px solid var(--b1);display:flex;align-items:center;padding:0 14px;gap:2px;flex-shrink:0;overflow-x:auto}
+.logo{font-family:var(--d);font-size:15px;font-weight:800;color:var(--tx);margin-right:16px;white-space:nowrap}.logo b{color:var(--ac)}
+.nt{padding:5px 11px;border-radius:var(--r);font-size:10px;cursor:pointer;border:none;background:none;color:var(--tx3);font-family:var(--m);white-space:nowrap}
+.nt:hover{color:var(--tx2);background:var(--bg3)}.nt.on{background:var(--bg4);color:var(--tx);border:1px solid var(--b2)}
+.nr{display:flex;align-items:center;gap:6px;margin-left:auto;padding-left:10px;flex-shrink:0}
+.nd{font-size:9px;color:var(--tx3);white-space:nowrap}
+.body{flex:1;overflow:hidden}
+.pg{display:none;height:100%;overflow-y:auto;padding:18px}.pg.on{display:block}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.pt{font-family:var(--d);font-size:18px;font-weight:800;color:var(--tx)}.ps{font-size:9px;color:var(--tx3);margin-top:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:14px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ct{font-size:9px;font-weight:600;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase}
+.stat{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:12px 14px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat.bl::before{background:var(--fr)}.stat.gr::before{background:var(--ch)}.stat.ye::before{background:var(--ht)}.stat.re::before{background:var(--er)}
+.sv{font-size:24px;font-weight:700;color:var(--tx);line-height:1;font-family:var(--d)}.sl{font-size:9px;color:var(--tx3);margin-top:4px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th{padding:7px 9px;color:var(--tx3);font-size:8px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b1);text-align:left;font-weight:500;white-space:nowrap}
+td{padding:8px 9px;border-bottom:1px solid var(--b1);color:var(--tx2);vertical-align:middle}
+tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border-bottom:none}
+.tdp{color:var(--tx);font-weight:500}
+.bdg{display:inline-flex;align-items:center;font-size:8px;padding:2px 6px;border-radius:99px;font-weight:600;white-space:nowrap;font-family:var(--m)}
+.bfr{background:rgba(96,165,250,.15);color:var(--fr);border:1px solid rgba(96,165,250,.25)}
+.bch{background:rgba(52,211,153,.15);color:var(--ch);border:1px solid rgba(52,211,153,.25)}
+.bht{background:rgba(251,191,36,.15);color:var(--ht);border:1px solid rgba(251,191,36,.25)}
+.bdr{background:rgba(156,163,175,.12);color:var(--dr);border:1px solid rgba(156,163,175,.2)}
+.bop{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)}
+.boh{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+.bas{background:rgba(251,191,36,.15);color:var(--ht);border:1px solid rgba(251,191,36,.25)}
+.btr{background:rgba(16,185,129,.15);color:var(--ok);border:1px solid rgba(16,185,129,.25)}
+.bde{background:rgba(156,163,175,.1);color:var(--tx3);border:1px solid var(--b1)}
+.bgr{background:rgba(236,72,153,.12);color:#f9a8d4;border:1px solid rgba(236,72,153,.25)}
+.btn{padding:6px 13px;border-radius:var(--r);font-size:10px;cursor:pointer;border:1px solid var(--b2);background:var(--bg3);color:var(--tx2);font-family:var(--m);white-space:nowrap;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.btn:hover{background:var(--bg4);color:var(--tx)}.btnp{background:var(--ac);border-color:var(--ac);color:#fff}.btnp:hover{background:var(--ac2)}
+.btns{padding:3px 9px;font-size:9px}.btni{width:24px;height:24px;padding:0;justify-content:center;font-size:11px}
+.btnd{border-color:rgba(239,68,68,.3);color:#fca5a5}.btnd:hover{background:rgba(239,68,68,.12)}
+.fg{display:flex;flex-direction:column;gap:4px}
+.s2{grid-column:span 2}.s4{grid-column:span 4}
+.fg label{font-size:8px;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase}
+.req{color:var(--er);margin-left:2px}
+.fi,.fsel,.fta{background:var(--bg);border:1px solid var(--b2);border-radius:var(--r);padding:6px 9px;font-size:10px;color:var(--tx);font-family:var(--m);width:100%;transition:border-color .15s}
+.fi:focus,.fsel:focus,.fta:focus{outline:none;border-color:var(--ac)}.fi[readonly]{background:var(--bg3);color:var(--tx3)}
+.fta{resize:vertical;min-height:56px}.fsel option{background:var(--bg3)}
+.fsep{font-size:8px;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;padding:6px 0 3px;border-top:1px solid var(--b1);margin-top:3px;grid-column:span 2}
+.fsep4{grid-column:span 4}.ferr .fi,.ferr .fsel{border-color:var(--er)!important}
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.mov.on{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:14px;padding:22px;width:100%;max-width:700px;max-height:92vh;overflow-y:auto}
+.modal.sm{max-width:440px}.modal.lg{max-width:860px}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mt{font-family:var(--d);font-size:15px;font-weight:700;color:var(--tx)}
+.mx{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:18px;line-height:1}.mx:hover{color:var(--tx)}
+.mf{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--b1)}
+.capb{background:var(--bg);border-radius:3px;height:12px;display:flex;overflow:hidden}.caps{height:100%}
+.capl{display:flex;justify-content:space-between;font-size:8px;color:var(--tx3);margin-top:2px}
+.trc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:13px}
+.trp{font-family:var(--d);font-size:16px;font-weight:800;color:var(--tx)}.tro{font-size:10px;color:var(--tx2);margin-top:2px}
+.sdd{position:relative}
+.sddl{position:absolute;top:100%;left:0;right:0;background:var(--bg4);border:1px solid var(--b2);border-radius:var(--r);z-index:500;max-height:160px;overflow-y:auto;display:none;margin-top:2px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.sddl.on{display:block}.sddi{padding:7px 9px;font-size:10px;color:var(--tx2);cursor:pointer;border-bottom:1px solid var(--b1)}
+.sddi:last-child{border-bottom:none}.sddi:hover{background:var(--bg5);color:var(--tx)}
+.sddi mark{background:rgba(59,130,246,.3);color:var(--fr);border-radius:2px;padding:0 1px;font-style:normal}
+.sdde{padding:7px 9px;font-size:10px;color:var(--tx3)}
+.dpw{position:relative}.dpi{cursor:pointer;caret-color:transparent}
+.dpc{position:absolute;top:calc(100% + 4px);left:0;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r2);z-index:600;padding:12px;width:244px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.dpc.on{display:block}.dpnr{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.dplb{font-size:11px;font-weight:600;color:var(--tx)}.dpb{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:15px;padding:2px 6px;border-radius:4px;line-height:1}
+.dpb:hover{background:var(--bg4);color:var(--tx)}.dpg{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:6px}
+.dc{text-align:center;padding:4px 0;font-size:9px;border-radius:3px;cursor:pointer;color:var(--tx2);line-height:1.4}
+.dc:hover:not(.dh):not(.do){background:var(--bg4);color:var(--tx)}.dh{font-size:8px;color:var(--tx3);cursor:default;font-weight:600}
+.dt{color:var(--ac);font-weight:700}.ds{background:var(--ac)!important;color:#fff!important;border-radius:3px}.do{opacity:.2;pointer-events:none}
+.dpsep{border-top:1px solid var(--b1);margin:8px 0}
+.ldmp{background:var(--bg3);border-radius:var(--r);padding:9px 11px;margin-top:6px;display:none;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ldmp.on{display:grid}.ldmv{font-size:14px;font-weight:700;color:var(--tx);text-align:center}.ldml{font-size:7px;color:var(--tx3);text-align:center;margin-top:2px}
+.warn{border-radius:var(--r);padding:8px 11px;font-size:10px;display:none;margin-top:6px}.warn.on{display:block}
+.warnr{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.warny{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);color:#fde68a}
+.apbox{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.3);border-radius:var(--r2);padding:13px;margin-top:10px}
+.apt{font-size:9px;font-weight:600;color:var(--ht);margin-bottom:7px}.apb{font-size:10px;color:var(--tx2);line-height:1.7;margin-bottom:10px}
+.notif{position:fixed;bottom:18px;right:18px;background:var(--bg3);border:1px solid var(--b2);border-radius:var(--r2);padding:11px 15px;font-size:10px;color:var(--tx);z-index:999;display:none;max-width:300px}
+.notif.on{display:block}.notif.ok{border-color:rgba(16,185,129,.4)}.notif.er{border-color:rgba(239,68,68,.4)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.chip{font-size:9px;padding:3px 10px;border-radius:99px;border:1px solid var(--b2);background:none;color:var(--tx3);cursor:pointer;font-family:var(--m)}
+.chip:hover{border-color:var(--ac);color:var(--tx2)}.chip.on{background:rgba(59,130,246,.15);border-color:var(--ac);color:var(--ac)}
+.sr{display:flex;gap:7px;margin-bottom:10px}.sr .fi{flex:1}
+.drag-over{border:1px dashed var(--ac)!important;background:rgba(59,130,246,.05)!important}
+.mtabs{display:flex;gap:2px;margin-bottom:14px;background:var(--bg3);border-radius:var(--r);padding:3px}
+.mtab{flex:1;padding:5px;border-radius:4px;font-size:9px;cursor:pointer;border:none;background:none;color:var(--tx3);font-family:var(--m);text-align:center}
+.mtab.on{background:var(--bg4);color:var(--tx);border:1px solid var(--b2)}
+.ferryc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r2);padding:11px 13px;margin-bottom:7px}
+.docup{width:100%;padding:7px;border:1px dashed var(--b2);border-radius:var(--r);background:none;color:var(--tx3);font-size:9px;cursor:pointer;text-align:center;font-family:var(--m)}
+.docup:hover{border-color:var(--ac);color:var(--ac)}
+.cal7{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.calh{text-align:center;font-size:8px;color:var(--tx3);padding:5px}
+.cald{min-height:66px;background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:4px}
+.cald.today{border-color:var(--ac)}.cald.other{opacity:.3}
+.caln{font-size:9px;color:var(--tx3);margin-bottom:3px}
+.cale{font-size:7px;padding:2px 4px;border-radius:2px;margin-bottom:2px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="logo">LOGI<b>-</b>SMART</div>
+  <button class="nt on" onclick="SP('dashboard')">ΕΠΙΣΚΟΠΗΣΗ</button>
+  <button class="nt" onclick="SP('orders')">ΠΑΡΑΓΓΕΛΙΕΣ</button>
+  <button class="nt" onclick="SP('dispatch')">DISPATCH</button>
+  <button class="nt" onclick="SP('groupage')">GROUPAGE</button>
+  <button class="nt" onclick="SP('trucks')">ΣΤΟΛΟΣ</button>
+  <button class="nt" onclick="SP('clients')">ΠΕΛΑΤΕΣ</button>
+  <button class="nt" onclick="SP('firms')">ΦΙΡΜΕΣ ΕΞ.</button>
+  <button class="nt" onclick="SP('weekly')">ΕΒΔ. ΠΛΑΝΟΣ</button>
+  <button class="nt" onclick="SP('calendar')">ΗΜΕΡΟΛΟΓΙΟ</button>
+  <button class="nt" onclick="SP('ferry')">ΚΑΡΑΒΙΑ</button>
+  <div class="nr">
+    <span class="nd" id="nd"></span>
+    <button class="btn btns" onclick="OM('em-modal')">📧 Email</button>
+    <button class="btn btns" onclick="exportData()" title="Εξαγωγή">💾 Export</button>
+    <button class="btn btns" onclick="g('import-file').click()" title="Εισαγωγή">📂 Import</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)">
+  </div>
+</div>
+<div class="body">
+
+<div id="pg-dashboard" class="pg on">
+  <div class="ph"><div><div class="pt">Επισκόπηση</div><div class="ps">LOGI-SMART ERP v4</div></div>
+    <button class="btn btnp" onclick="OM('ord-modal');resetOF()">+ Νέα Παραγγελία</button></div>
+  <div class="g4" style="margin-bottom:12px" id="dstats"></div>
+  <div class="g2" style="margin-bottom:12px">
+    <div class="card"><div class="ch"><span class="ct">Χωρίς ανάθεση</span><button class="btn btns" onclick="SP('dispatch')">Dispatch →</button></div><div id="dun"></div></div>
+    <div class="card"><div class="ch"><span class="ct">Κατάσταση στόλου</span><button class="btn btns" onclick="SP('trucks')">Στόλος →</button></div><div id="dfl"></div></div>
+  </div>
+  <div class="card"><div class="ch"><span class="ct">Τελευταίες παραγγελίες</span></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Πελάτης</th><th>Φίρμα</th><th>Θερμ.</th><th>LDM</th><th>Κιλά</th><th>Ετοιμότητα</th><th>Status</th><th>Φορτηγό</th></tr></thead><tbody id="dotb"></tbody></table></div>
+  </div>
+</div>
+
+<div id="pg-orders" class="pg">
+  <div class="ph"><div><div class="pt">Παραγγελίες</div><div class="ps" id="osub"></div></div>
+    <div style="display:flex;gap:7px"><button class="btn btns" onclick="OM('em-modal')">📧 Email</button><button class="btn btnp btns" onclick="OM('ord-modal');resetOF()">+ Νέα</button></div></div>
+  <div class="sr"><input class="fi" id="osrch" placeholder="Αναζήτηση…" oninput="renderOrders()"><button class="btn btns" onclick="showHid=!showHid;renderOrders()">👁</button></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+    <span style="font-size:9px;color:var(--tx3)">ΕΒΔΟΜΑΔΑ:</span>
+    <button class="btn btns" onclick="wkFil--;renderOrders()">←</button>
+    <span id="wkfil-lbl" style="font-size:10px;color:var(--tx2);min-width:160px;text-align:center"></span>
+    <button class="btn btns" onclick="wkFil++;renderOrders()">→</button>
+    <button class="btn btns" onclick="wkFil=0;renderOrders()">Τρέχουσα</button>
+    <button class="btn btns" id="wkfil-all" onclick="wkFil=null;renderOrders()">Όλες</button>
+  </div>
+  <div class="chips" id="ochips"></div>
+  <div class="tw"><table><thead><tr><th>👁</th><th>#</th><th>Πελάτης</th><th>Φίρμα</th><th>Από</th><th>Θερμ.</th><th>LDM</th><th>Κιλά</th><th>Ετοιμ.</th><th>Status</th><th>Φορτηγό</th><th></th></tr></thead><tbody id="otb"></tbody></table></div>
+</div>
+
+<div id="pg-dispatch" class="pg">
+  <div class="ph"><div><div class="pt">Dispatch Board</div><div class="ps">DRAG &amp; DROP — ΑΝΑΘΕΣΗ</div></div>
+    <button class="btn btnp btns" onclick="runOpt()">⚡ Optimizer</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;height:calc(100vh - 155px)">
+    <div style="overflow-y:auto"><div class="ct" style="margin-bottom:8px">ΑΝΟΙΚΤΕΣ ΠΑΡΑΓΓΕΛΙΕΣ</div><div id="dords"></div></div>
+    <div style="overflow-y:auto"><div class="ct" style="margin-bottom:8px">ΦΟΡΤΗΓΑ</div><div id="dtrks"></div></div>
+  </div>
+</div>
+
+<div id="pg-groupage" class="pg">
+  <div class="ph"><div><div class="pt">Groupage Engine</div><div class="ps">ΒΕΛΤΙΣΤΟΠΟΙΗΣΗ LDM</div></div>
+    <button class="btn btnp btns" onclick="renderGroupage()">▶ Υπολογισμός</button></div>
+  <div id="gcnt"></div>
+</div>
+
+<div id="pg-trucks" class="pg">
+  <div class="ph"><div><div class="pt">Στόλος</div><div class="ps">ΦΟΡΤΗΓΑ</div></div>
+    <button class="btn btnp btns" onclick="OM('trk-modal');resetTF()">+ Νέο</button></div>
+  <div id="tgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px"></div>
+</div>
+
+<div id="pg-clients" class="pg">
+  <div class="ph"><div><div class="pt">Πελάτες</div><div class="ps">ΕΤΑΙΡΕΙΕΣ</div></div>
+    <button class="btn btnp btns" onclick="OM('cli-modal');resetCF()">+ Νέος</button></div>
+  <div class="tw"><table><thead><tr><th>Εταιρεία</th><th>ΑΦΜ</th><th>Επαφή</th><th>Email</th><th>Τηλ.</th><th>Πόλη</th><th>Τιμοκ.</th><th></th></tr></thead><tbody id="ctb"></tbody></table></div>
+</div>
+
+<div id="pg-firms" class="pg">
+  <div class="ph"><div><div class="pt">Φίρμες Εξωτερικού</div><div class="ps">ΣΗΜΕΙΑ ΦΟΡΤΩΣΗΣ</div></div>
+    <button class="btn btnp btns" onclick="OM('frm-modal');resetFF()">+ Νέα</button></div>
+  <div class="tw"><table><thead><tr><th>Επωνυμία</th><th>Χώρα</th><th>Πόλη</th><th>Τ.Κ.</th><th>Οδός &amp; Αριθμός</th><th>Ωράριο</th><th>Επαφή</th><th>Τηλ.</th><th>Maps</th><th></th></tr></thead><tbody id="ftb"></tbody></table></div>
+</div>
+
+<div id="pg-weekly" class="pg">
+  <div class="ph"><div><div class="pt">Εβδομαδιαίος Πλάνος</div><div class="ps" id="wsub"></div></div>
+    <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+      <label style="font-size:9px;color:var(--tx3);display:flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" id="wfut" onchange="renderWeekly()"> Επόμενες εβδ.</label>
+      <button class="btn btns" onclick="wkOff--;renderWeekly()">← Πριν</button>
+      <button class="btn btns" onclick="wkOff++;renderWeekly()">Μετά →</button>
+      <button class="btn btnp btns" onclick="OM('avl-modal')">+ Διαθεσιμότητα</button>
+    </div></div>
+  <div class="card" style="margin-bottom:12px"><div class="ch"><span class="ct">Ανοικτές παραγγελίες</span></div><div id="wopen"></div></div>
+  <div style="overflow-x:auto" id="wgrid"></div>
+</div>
+
+<div id="pg-calendar" class="pg">
+  <div class="ph"><div><div class="pt">Ημερολόγιο</div></div>
+    <div style="display:flex;gap:7px;align-items:center">
+      <button class="btn btns" onclick="calPrev()">← Πριν</button>
+      <span style="font-size:11px;color:var(--tx2);min-width:120px;text-align:center" id="callbl"></span>
+      <button class="btn btns" onclick="calNext()">Μετά →</button>
+    </div></div>
+  <div class="cal7"><div class="calh">ΔΕΥ</div><div class="calh">ΤΡΙ</div><div class="calh">ΤΕΤ</div><div class="calh">ΠΕΜ</div><div class="calh">ΠΑΡ</div><div class="calh">ΣΑΒ</div><div class="calh">ΚΥΡ</div></div>
+  <div class="cal7" id="calgrid" style="margin-top:2px"></div>
+</div>
+
+<div id="pg-ferry" class="pg">
+  <div class="ph"><div><div class="pt">Δρομολόγια Καραβιών</div><div class="ps">BARI — ANCONA</div></div>
+    <button class="btn btnp btns" onclick="OM('fer-modal')">+ Νέο</button></div>
+  <div class="g2" id="fercnt"></div>
+</div>
+
+</div>
+
+<!-- ORDER MODAL -->
+<div class="mov" id="ord-modal"><div class="modal">
+  <div class="mh"><span class="mt" id="ordmt">Νέα Παραγγελία</span><button class="mx" onclick="CM('ord-modal')">×</button></div>
+  <div class="mtabs">
+    <button class="mtab on" id="ord-tab-btn-form" onclick="swTab('ord','form',this)">ΣΤΟΙΧΕΙΑ</button>
+    <button class="mtab" id="ord-tab-btn-hist" onclick="swTab('ord','hist',this)">ΙΣΤΟΡΙΚΟ</button>
+  </div>
+  <div id="ord-tab-form">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+      <div class="fg" id="fg-cli"><label>Πελάτης<span class="req">*</span></label>
+        <div class="sdd"><input type="text" id="ocliq" class="fi" placeholder="Πληκτρολογήστε…" autocomplete="off" oninput="SDD('cli')" onfocus="SDD('cli')" onblur="setTimeout(function(){SDDC('cli')},200)">
+        <input type="hidden" id="ocli"><div class="sddl" id="sddl-cli"></div></div></div>
+      <div class="fg" id="fg-frm"><label>Φίρμα<span class="req">*</span></label>
+        <div class="sdd"><input type="text" id="ofrmq" class="fi" placeholder="Πληκτρολογήστε…" autocomplete="off" oninput="SDD('frm')" onfocus="SDD('frm')" onblur="setTimeout(function(){SDDC('frm')},200)">
+        <input type="hidden" id="ofrm"><div class="sddl" id="sddl-frm"></div></div></div>
+      <div class="fg"><label>Από</label><input type="text" id="ofrom" class="fi" placeholder="π.χ. Μόναχο, DE"></div>
+      <div class="fg"><label>Προς</label><input type="text" id="oto" class="fi" placeholder="π.χ. Αθήνα"></div>
+      <div class="fsep fsep4">ΦΟΡΤΙΟ &amp; LDM</div>
+      <div class="fg" id="fg-pal"><label>Τύπος παλετών<span class="req">*</span></label>
+        <select id="opal" class="fsel" onchange="calcLDM()">
+          <option value="">— Επιλογή —</option>
+          <option value="E">E — Epal (0.40 LDM)</option>
+          <option value="B">B — Βιομηχανική (0.50 LDM)</option>
+          <option value="P">P — Βαρέλια (0.60 LDM)</option>
+          <option value="M">M — Ελεύθερα Μέτρα</option>
+        </select></div>
+      <div class="fg" id="fg-qty"><label>Ποσότητα<span class="req">*</span></label><input type="number" id="oqty" class="fi" placeholder="π.χ. 14" min="1" oninput="calcLDM()"></div>
+      <div class="fg" id="fg-ldm"><label>LDM<span class="req">*</span></label><input type="number" id="oldm" class="fi" step="0.01" placeholder="0.00" oninput="updLDM()"></div>
+      <div class="fg"><label>Τύπος φορτίου</label><input class="fi" value="Groupage" readonly style="background:var(--bg3);color:var(--tx3)"></div>
+      <div class="fg" id="fg-wgt"><label>Βάρος brutto (kg)<span class="req">*</span></label><input type="number" id="owgt" class="fi" placeholder="π.χ. 18000" oninput="updWarn()"></div>
+      <div class="fg" id="fg-tmp"><label>Θερμοκρασία<span class="req">*</span></label>
+        <select id="otmp" class="fsel">
+          <option value="">— Επιλογή —</option>
+          <option value="frozen">🔵 Κατάψυξη (-18°C)</option>
+          <option value="chilled">🟢 Συντήρηση (+4°C)</option>
+          <option value="heated">🟡 Ζεστό (+15°C)</option>
+          <option value="dry">⚫ Ξηρό</option>
+        </select></div>
+      <div class="fg" id="fg-rdy"><label>Ημ. Ετοιμότητας<span class="req">*</span></label>
+        <div class="dpw"><input type="text" id="ordytxt" class="fi dpi" placeholder="ηη/μμ/εεεε" readonly onclick="dpTog()">
+        <input type="hidden" id="ordy"><div class="dpc" id="dpcal"></div></div></div>
+      <div class="fg"><label>Τιμή (€)</label><input type="number" id="oprice" class="fi" placeholder="0.00"></div>
+      <div class="fsep fsep4">ΣΗΜΕΙΩΣΕΙΣ</div>
+      <div class="fg s4"><label>Σημειώσεις</label><textarea id="onotes" class="fta" placeholder="ATP, ωράρια, ειδικές οδηγίες…"></textarea></div>
+    </div>
+    <div class="ldmp" id="ldmprev"><div><div class="ldmv" id="lldm">—</div><div class="ldml">LDM</div></div><div><div class="ldmv" id="lpct">—</div><div class="ldml">% φορτηγού</div></div><div><div class="ldmv" id="lfree">—</div><div class="ldml">Εναπομ.</div></div></div>
+    <div class="warn warnr" id="ldmwarn">⚠ LDM υπερβαίνει 13.20μ — δεν χωράει σε ένα φορτηγό!</div>
+    <div class="warn warny" id="wgtwarn">⚠ Βάρος υπερβαίνει μέσο payload (42.000kg - απόβαρο)</div>
+  </div>
+  <div id="ord-tab-hist" style="display:none">
+    <div id="ord-hist-content" style="min-height:120px;padding:4px 0"></div>
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="CM('ord-modal')">Ακύρωση</button>
+    <button class="btn btnp" id="ord-save-btn" onclick="saveOrd()">Αποθήκευση</button>
+  </div>
+</div></div>
+
+<!-- TRUCK MODAL -->
+<div class="mov" id="trk-modal"><div class="modal lg">
+  <div class="mh"><span class="mt" id="trkmt">Νέο Φορτηγό</span><button class="mx" onclick="CM('trk-modal')">×</button></div>
+  <div class="mtabs"><button class="mtab on" onclick="swTab('trk','basic',this)">ΣΤΟΙΧΕΙΑ</button><button class="mtab" onclick="swTab('trk','docs',this)">ΕΓΓΡΑΦΑ</button></div>
+  <div id="trk-tab-basic"><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+    <div class="fg"><label>Πινακίδα Τράκτορα<span class="req">*</span></label><input type="text" id="ttr" class="fi" placeholder="ΑΒΓ-1234"></div>
+    <div class="fg"><label>Πινακίδα Θαλάμου<span class="req">*</span></label><input type="text" id="tth" class="fi" placeholder="ΔΕΖ-5678"></div>
+    <div class="fg"><label>2ος Θάλαμος</label><input type="text" id="tth2" class="fi"></div>
+    <div class="fg"><label>Ιδιοκτήτης<span class="req">*</span></label><input type="text" id="town" class="fi"></div>
+    <div class="fg"><label>Κινητό</label><input type="text" id="tph" class="fi" placeholder="+30 6944…"></div>
+    <div class="fg"><label>Email</label><input type="email" id="tem" class="fi"></div>
+    <div class="fg"><label>Βάση</label><input type="text" id="tbase" class="fi" placeholder="Αθήνα"></div>
+    <div class="fg"><label>Απόβαρο Tare (kg)<span class="req">*</span></label><input type="number" id="ttare" class="fi" placeholder="π.χ. 8500" oninput="calcPL()"></div>
+    <div class="fg"><label>Payload = 42.000 - Tare</label><input type="text" id="tpl" class="fi" readonly></div>
+    <div class="fg"><label>LDM Διαθέσιμα</label><input class="fi" value="13.20 μ" readonly></div>
+    <div class="fsep s4" style="grid-column:span 4">ΘΑΛΑΜΟΣ</div>
+    <div class="fg s2"><label>Τύπος θαλάμου</label>
+      <select id="tchm" class="fsel" onchange="togCF()">
+        <option value="single">Ενιαίος — Single-temp</option>
+        <option value="cold">Bi-temp: Ψυχρό → Θερμό</option>
+        <option value="hot">Bi-temp: Θερμό → Ψυχρό</option>
+      </select></div>
+    <div class="fg" id="tprtw" style="display:none"><label>Χώρισμα (μέτρα)</label><input type="number" id="tprt" class="fi" step="0.1"></div>
+    <div class="fg"></div>
+  </div></div>
+  <div id="trk-tab-docs" style="display:none">
+    <div class="ct" style="margin-bottom:10px">ΕΓΓΡΑΦΑ ΦΟΡΤΗΓΟΥ</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      <button class="docup" onclick="upDoc('truck','Άδεια Κυκλοφορίας')">📄 Άδεια Κυκλοφορίας</button>
+      <button class="docup" onclick="upDoc('truck','CMR Insurance')">📄 Ασφαλιστήριο CMR</button>
+      <button class="docup" onclick="upDoc('truck','ATP Πιστοποιητικό')">📄 Πιστοποιητικό ATP</button>
+      <button class="docup" onclick="upDoc('truck','Log Συντήρησης')">📄 Log Συντήρησης</button>
+    </div>
+  </div>
+  <div class="mf"><button class="btn" onclick="CM('trk-modal')">Ακύρωση</button><button class="btn btnp" onclick="saveTrk()">Αποθήκευση</button></div>
+</div></div>
+
+<!-- CLIENT MODAL -->
+<div class="mov" id="cli-modal"><div class="modal lg">
+  <div class="mh"><span class="mt" id="climt">Νέος Πελάτης</span><button class="mx" onclick="CM('cli-modal')">×</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg"><label>Επωνυμία<span class="req">*</span></label><input type="text" id="cnm" class="fi"></div>
+    <div class="fg"><label>ΑΦΜ</label><input type="text" id="cvt" class="fi" placeholder="EL123456789"></div>
+    <div class="fg"><label>Διεύθυνση</label><input type="text" id="cad" class="fi"></div>
+    <div class="fg"><label>Πόλη παράδοσης</label><input type="text" id="cct" class="fi"></div>
+    <div class="fg"><label>Επαφή</label><input type="text" id="cco" class="fi"></div>
+    <div class="fg"><label>Τηλέφωνο</label><input type="text" id="cph" class="fi"></div>
+    <div class="fg"><label>Email</label><input type="email" id="cem" class="fi"></div>
+    <div class="fg"><label>Σημειώσεις</label><textarea id="cnt" class="fta"></textarea></div>
+    <div class="fsep s2" style="grid-column:span 2">ΤΙΜΟΚΑΤΑΛΟΓΟΣ</div>
+    <div class="fg s2"><label>Σημείωση τιμοκαταλόγου</label><textarea id="cpl" class="fta" style="min-height:70px" placeholder="π.χ. Αθήνα 1.800€…"></textarea></div>
+    <div class="fg s2"><label>Αρχείο (PDF, Excel, Word, CSV)</label>
+      <div id="cplzone" style="border:1px dashed var(--b2);border-radius:var(--r);padding:14px;text-align:center;cursor:pointer;position:relative"
+        ondragover="event.preventDefault();this.style.borderColor='var(--ac)'"
+        ondragleave="this.style.borderColor=''"
+        ondrop="plDrop(event)">
+        <input type="file" id="cplfile" accept=".pdf,.xls,.xlsx,.doc,.docx,.txt,.csv" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="plChg(this)">
+        <div style="font-size:10px;color:var(--tx3)">📎 Σύρετε αρχείο ή <span style="color:var(--ac)">κλικάρετε</span></div>
+      </div>
+      <div id="cplprev" style="display:none;background:var(--bg3);border-radius:var(--r);padding:9px 12px;align-items:center;justify-content:space-between">
+        <span id="cplname" style="font-size:10px;color:var(--tx)"></span>
+        <button class="btn btns btnd" onclick="plClear()">✕</button>
+      </div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn" onclick="CM('cli-modal')">Ακύρωση</button><button class="btn btnp" onclick="saveCli()">Αποθήκευση</button></div>
+</div></div>
+
+<!-- FIRM MODAL -->
+<div class="mov" id="frm-modal"><div class="modal">
+  <div class="mh"><span class="mt" id="frmmt">Νέα Φίρμα</span><button class="mx" onclick="CM('frm-modal')">×</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg s2" style="grid-column:span 2">
+      <label>🔗 Google Maps URL <span style="color:var(--tx3);font-weight:400">— επικόλλησε link για αυτόματη συμπλήρωση</span></label>
+      <div style="display:flex;gap:6px">
+        <input type="text" id="gmaps-url" class="fi" placeholder="https://maps.google.com/?q=... ή https://goo.gl/maps/..." style="flex:1">
+        <button class="btn btns btnp" onclick="gmapsLookup()" type="button">⚡ Συμπλήρωση</button>
+      </div>
+      <div id="gmaps-status" style="font-size:9px;margin-top:3px;display:none"></div>
+    </div>
+    <div class="fg"><label>Επωνυμία<span class="req">*</span></label><input type="text" id="fnm" class="fi"></div>
+    <div class="fg"><label>Χώρα</label>
+      <select id="fco" class="fsel" onchange="updFAd()">
+        <option>Γερμανία</option><option>Αυστρία</option><option selected>Ιταλία</option><option>Γαλλία</option>
+        <option>Ολλανδία</option><option>Βέλγιο</option><option>Ισπανία</option><option>Πολωνία</option>
+        <option>Τσεχία</option><option>Ουγγαρία</option><option>Άλλο</option>
+      </select></div>
+    <div class="fg"><label>Πόλη</label><input type="text" id="fct" class="fi" oninput="updFAd()"></div>
+    <div class="fg"><label>Τ.Κ.</label><input type="text" id="ftk" class="fi" oninput="updFAd()"></div>
+    <div class="fg s2"><label>Οδός &amp; Αριθμός</label><input type="text" id="fstr" class="fi" oninput="updFAd()"></div>
+    <div class="fg s2"><label>Διεύθυνση πλήρης (αυτόματο)</label><input type="text" id="fad" class="fi" readonly style="background:var(--bg3);color:var(--tx3)"></div>
+    <div class="fg"><label>Ωράριο</label><input type="text" id="fhr" class="fi" placeholder="Δε-Πα 06:00-18:00"></div>
+    <div class="fg"><label>Επαφή</label><input type="text" id="fcn" class="fi"></div>
+    <div class="fg"><label>Τηλέφωνο</label><input type="text" id="fph" class="fi" placeholder="+39 …"></div>
+    <div class="fg"><label>Email</label><input type="email" id="fem" class="fi"></div>
+    <div class="fg s2"><label>Σημειώσεις</label><textarea id="fnt" class="fta"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="CM('frm-modal')">Ακύρωση</button><button class="btn btnp" onclick="saveFrm()">Αποθήκευση</button></div>
+</div></div>
+
+<!-- AVAIL MODAL -->
+<div class="mov" id="avl-modal"><div class="modal">
+  <div class="mh"><span class="mt">Διαθεσιμότητα Φορτηγού</span><button class="mx" onclick="CM('avl-modal')">×</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg s2"><label>Φορτηγό</label><select id="avtr" class="fsel"></select></div>
+    <div class="fg"><label>Πόλη</label><input type="text" id="avct" class="fi" placeholder="π.χ. Anzola"></div>
+    <div class="fg"><label>Χώρα</label><input type="text" id="avco" class="fi" placeholder="π.χ. Ιταλία"></div>
+    <div class="fg s2"><label>Ημερομηνία διαθεσιμότητας</label>
+      <div class="dpw">
+        <input type="text" id="avfrtxt" class="fi dpi" placeholder="ηη/μμ/εεεε" readonly onclick="avdpTog()">
+        <input type="hidden" id="avfr">
+        <div class="dpc" id="avdpcal" style="top:auto;bottom:calc(100% + 4px)"></div>
+      </div></div>
+    <div class="fg s2"><label>Σημειώσεις</label><input type="text" id="avnt" class="fi"></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="CM('avl-modal')">Ακύρωση</button><button class="btn btnp" onclick="saveAvl()">Αποθήκευση</button></div>
+</div></div>
+
+<!-- ASSIGN MODAL -->
+<div class="mov" id="asgn-modal"><div class="modal sm">
+  <div class="mh"><span class="mt">Ανάθεση Φορτηγού</span><button class="mx" onclick="CM('asgn-modal')">×</button></div>
+  <div id="asgninfo" style="background:var(--bg3);border-radius:var(--r);padding:11px;margin-bottom:12px;font-size:10px;line-height:1.8"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg s2"><label>Φορτηγό</label><select id="asgntr" class="fsel" onchange="chkAW()"></select></div>
+    <div class="fg s2"><label>Ημ/ώρα φόρτωσης</label><input type="datetime-local" id="asgndt" class="fi"></div>
+    <div class="fg s2"><label>Καράβι (προαιρετικό)</label><select id="asgnfe" class="fsel"><option value="">— Χωρίς καράβι —</option></select></div>
+  </div>
+  <div class="warn warnr" id="asgnww">⚠ Υπέρβαση payload!</div>
+  <div id="asgnap" style="display:none">
+    <div class="apbox"><div class="apt">ΕΠΙΒΕΒΑΙΩΣΗ ΑΝΑΘΕΣΗΣ</div>
+      <div class="apb" id="asgnapt"></div>
+      <div style="font-size:9px;color:var(--tx3);margin-bottom:9px">Αποστολή ειδοποίησης στον οδηγό;</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btns" onclick="CM('asgn-modal')">Ακύρωση</button>
+        <button class="btn btns" onclick="confAsgn(false)">Χωρίς αποστολή</button>
+        <button class="btn btnp btns" onclick="confAsgn(true)">✓ + WhatsApp</button>
+      </div></div>
+  </div>
+  <div class="mf" id="asgnft">
+    <button class="btn" onclick="CM('asgn-modal')">Ακύρωση</button>
+    <button class="btn btnp" onclick="showAP()">Επιβεβαίωση →</button>
+  </div>
+</div></div>
+
+<!-- STATUS MODAL -->
+<div class="mov" id="sts-modal"><div class="modal sm">
+  <div class="mh"><span class="mt" id="stsmt">Αλλαγή Status</span><button class="mx" onclick="CM('sts-modal')">×</button></div>
+  <div id="stsinfo" style="background:var(--bg3);border-radius:var(--r);padding:11px;margin-bottom:14px;font-size:10px;line-height:1.8"></div>
+  <div class="fg">
+    <label id="sts-date-lbl">Ημερομηνία</label>
+    <div class="dpw">
+      <input type="text" id="stsdtxt" class="fi dpi" placeholder="ηη/μμ/εεεε" readonly onclick="stsdpTog()">
+      <input type="hidden" id="stsdt">
+      <div class="dpc" id="stsdpcal"></div>
+    </div>
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="CM('sts-modal')">Ακύρωση</button>
+    <button class="btn btnp" onclick="confirmSts()">Αποθήκευση</button>
+  </div>
+</div></div>
+
+<!-- EMAIL MODAL -->
+<div class="mov" id="em-modal"><div class="modal">
+  <div class="mh"><span class="mt">Εισαγωγή από Email</span><button class="mx" onclick="CM('em-modal')">×</button></div>
+  <div style="display:grid;grid-template-columns:1fr;gap:9px">
+    <div class="fg"><label>Αποστολέας</label><input type="text" id="emsnd" class="fi" placeholder="orders@client.com"></div>
+    <div class="fg"><label>Κείμενο email</label><textarea id="embody" class="fta" style="min-height:100px" placeholder="Επικολλήστε εδώ…"></textarea></div>
+  </div>
+  <div id="emparsed" style="display:none;margin-top:12px">
+    <div style="font-size:8px;color:var(--ht);margin-bottom:9px">ΠΡΟΤΕΙΝΟΜΕΝΗ ΚΑΤΑΧΩΡΗΣΗ — ΕΛΕΓΞΤΕ</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+      <div class="fg"><label>Πελάτης</label><input type="text" id="epcli" class="fi"></div>
+      <div class="fg"><label>Θερμ.</label><select id="eptmp" class="fsel"><option value="frozen">🔵 Κατάψυξη</option><option value="chilled">🟢 Συντήρηση</option><option value="heated">🟡 Ζεστό</option><option value="dry">⚫ Ξηρό</option></select></div>
+      <div class="fg"><label>Ποσότητα</label><input type="number" id="epqty" class="fi"></div>
+      <div class="fg"><label>LDM</label><input type="number" id="epldm" class="fi" step="0.01"></div>
+      <div class="fg"><label>Βάρος (kg)</label><input type="number" id="epwgt" class="fi"></div>
+      <div class="fg"><label>Από</label><input type="text" id="epfrm" class="fi"></div>
+    </div>
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="CM('em-modal')">Ακύρωση</button>
+    <button class="btn" onclick="parseEm()">Ανάλυση →</button>
+    <button class="btn btnp" id="emok" style="display:none" onclick="appEm()">✓ Καταχώρηση</button>
+  </div>
+</div></div>
+
+<!-- FERRY MODAL -->
+<div class="mov" id="fer-modal"><div class="modal sm">
+  <div class="mh"><span class="mt">Νέο Δρομολόγιο</span><button class="mx" onclick="CM('fer-modal')">×</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg"><label>Λιμάνι</label><select id="fept" class="fsel"><option value="Bari">Μπάρι</option><option value="Ancona">Ανκόνα</option></select></div>
+    <div class="fg"><label>Εταιρεία</label><input type="text" id="feco" class="fi" placeholder="π.χ. Superfast"></div>
+    <div class="fg"><label>Αναχώρηση</label><input type="datetime-local" id="fedp" class="fi"></div>
+    <div class="fg"><label>Deadline λιμάνι</label><input type="datetime-local" id="fedl" class="fi"></div>
+    <div class="fg s2"><label>Σημειώσεις</label><input type="text" id="fent" class="fi"></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="CM('fer-modal')">Ακύρωση</button><button class="btn btnp" onclick="saveFer()">Αποθήκευση</button></div>
+</div></div>
+
+<!-- OPTIMIZER MODAL -->
+<div class="mov" id="opt-modal"><div class="modal lg">
+  <div class="mh"><span class="mt">⚡ Optimizer</span><button class="mx" onclick="CM('opt-modal')">×</button></div>
+  <div id="optres"></div>
+  <div class="mf"><button class="btn" onclick="CM('opt-modal')">Κλείσιμο</button></div>
+</div></div>
+
+<div class="notif" id="notif"></div>
+<script>
+var TLDM=13.20,GROSS=42000;
+var LM={E:0.40,B:0.50,P:0.60};
+var TC={frozen:'#60a5fa',chilled:'#34d399',heated:'#fbbf24',dry:'#9ca3af'};
+var TL={frozen:'🔵 Κατάψυξη',chilled:'🟢 Συντήρηση',heated:'🟡 Ζεστό',dry:'⚫ Ξηρό'};
+var TB={frozen:'bfr',chilled:'bch',heated:'bht',dry:'bdr'};
+var SB={Open:'bop','On-Hold':'boh',Assigned:'bas','In Transit':'btr',Delivered:'bde'};
+var SL={Open:'Ανοικτή','On-Hold':'Αναμονή',Assigned:'Ανατέθηκε','In Transit':'Μεταφορά',Delivered:'Παραδόθηκε'};
+var MN=['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος'];
+var DAYS=['ΔΕ','ΤΡ','ΤΕ','ΠΕ','ΠΑ','ΣΑ','ΚΥ'];
+var DB={orders:[
+    {id:11,client:'DTK FRIGO A/S',firm:'Trasporti Letizia',from:'Anzola dell emilia, Ιταλία',to:'',pal:'E',qty:33,ldm:13.2,wgt:17000,tmp:'chilled',rdy:'2026-05-31',price:3800,notes:'Φρεσκα Ψαρια στο -1 βαλε σφραγισα στο θαλαμο',status:'Open',truck:'',hidden:false}
+  ],trucks:[
+    {id:1,tr:'ΙΑΕ-1431',th:'Ρ-42156',th2:'',own:'ΓΙΑΝΝΑΚΟΔΗΜΟΣ ΜΙΧΑΗΛ',ph:'6973491338',em:'',base:'',tare:17600,pl:24400,chm:'hot',prt:1}
+  ],clients:[
+    {id:1,nm:'108 ΕΜΠΟΡΙΑ ΚΡΕΑΤΩΝ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'082850525',ad:'ΣΥΚΟΛΙΑ ΓΑΛΑΤΑ, 73100',ct:'ΧΑΝΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:2,nm:'3 WAY SOLUTIONS  LTD',vt:'BG 201948063',ad:'ST. TSAR BORIS III  14, 2850',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:3,nm:'A A SOLUTIONS ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801263531',ad:'ΣΟΛΩΜΟΥ 29, 15233',ct:'ΧΑΛΑΝΔΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:4,nm:'A MARA SRL',vt:'IT 03113620839',ad:'SP PONTE NASO SINAGRA, 98074',ct:'NASO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:5,nm:'A.T. FRIGO TRANSPORT LTD',vt:'CY10367316N',ad:'KILKIS 6, CY1086',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:6,nm:'A/S J. LAURITZENS EFTF',vt:'DK 13835381-26',ad:'AMERIKAVEJ 1, 6700',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:7,nm:'ABX SOLUTION WOJCIECH TRELA SPOLKA KOMANDYTOWA',vt:'8883161532',ad:'TORUNSKA 30, 87800',ct:'WLOCLAWEK',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:8,nm:'ACE BURGER COMPANY ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'800598357',ad:'ΣΟΛΩΜΟΥ 4-6, 15451',ct:'Ν ΨΥΧΙΚΟ',co:'',ph:'2106712222',em:'',pl:'',nt:'',plFile:null},
+    {id:9,nm:'AGROPAL  Α.Ε.',vt:'997931284',ad:'ΣΟΛΩΜΟΥ 59, 18345',ct:'',co:'',ph:'2104832207',em:'',pl:'',nt:'',plFile:null},
+    {id:10,nm:'ALEXMAR FRIGO P.L.T.D.',vt:'BG 201817555',ad:'JK ELENOVO 139 ET, 2700',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:11,nm:'ALL FRESH A.E.',vt:'800558476',ad:'Λ ΚΑΡΑΜΑΝΛΗ 212, 13 678',ct:'',co:'',ph:'2102463870',em:'',pl:'',nt:'',plFile:null},
+    {id:12,nm:'ALPHA STORAGE LIMITED',vt:'IE 3590009SH',ad:'MUFF CANNINGSTOWN, H12 YN59',ct:'COOTEHILL, CO. CAVAN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:13,nm:'ANDREAS PAPANIKOLIS & SON LTD',vt:'CY10077611G',ad:'KENTRIKI AGORA CHONDRIKIS POLISIS LEMESOU 4-5-6, 4160',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:14,nm:'ARC ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'801717871',ad:'ΕΡΜΟΥ 88, 19200',ct:'ΕΛΕΥΣΙΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:15,nm:'ARCA FOOD S.R.L.',vt:'ΙΤ04133630162',ad:'VIA BETTY AMBIVERI 25, 24125',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:16,nm:'ARGOLIDA ON LINE ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'801430860',ad:'ΒΑΡΒΑΚΗ 1, 21100',ct:'ΝΑΥΠΛΙΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:17,nm:'ART FOODS Α.Ε.Β.Ε.',vt:'999641424',ad:'ΛΑΘΕΑΣ 61, 13671',ct:'',co:'',ph:'2102407760',em:'',pl:'',nt:'',plFile:null},
+    {id:18,nm:'ATLAS MARITIME S.A.M',vt:'FR 07000005883',ad:'RUE GRIMALDI 57, 98000',ct:'MONACO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:19,nm:'ATTICA FRESH Α.Ε.',vt:'800394127',ad:'ΚΕΝΤΡΙΚΗ ΑΓΟΡΑ ΑΘΗΝΩΝ Ε-44-46-, 18 233',ct:'',co:'',ph:'2104837080',em:'',pl:'',nt:'',plFile:null},
+    {id:20,nm:'BALDO TRASPORTI SPA',vt:'00367150224',ad:'VIA DEL LAVORO 11, 38060',ct:'NOMI',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:21,nm:'BALKAN TRANSPORTATION SERVICES AD',vt:'BG 204272265',ad:'ST. TSAR BORIS III 15, 1612',ct:'SOFIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:22,nm:'BANANA LIGHT BANALIGHT C.A.',vt:'RUC0991263748001',ad:'KLM 4.5 VIA DURAN TAMBO- ECUADOR',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:23,nm:'BASSO SEBASTIANO SRL',vt:'ΙΤ 00786860262',ad:'VIA BASSANESE 84, 31010',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:24,nm:'BAZAAR ΑΝ ΨΥΚΤΙΚΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΕΙΑ ΕΙΔΩ',vt:'094384144',ad:'ΠΕΡΑΙΩΣ 8, 18346',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:25,nm:'BELLA FRUTTA AE',vt:'094437338',ad:'ΤΑΥΡΟΥ 4, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'2103450790',em:'',pl:'',nt:'',plFile:null},
+    {id:26,nm:'BELLEI LUIGI E FIGLI S.R.L.',vt:'IT01921530364',ad:'VIA NUOVA 55/C CASONI DI RAVARINO (MO) - ITALY, 41017',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:27,nm:'BENACO TRANS  S.R.L',vt:'IT 03183860984',ad:'VIA ALDO MORO  23, 25080',ct:'SOIANO DEL LAGO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:28,nm:'BERGATRANS GROUP SRLS',vt:'IT 05294080287',ad:'VIA DANTE ALIGHIERI 40, 35013',ct:'CITTADELLA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:29,nm:'BIAS TRANS MED LTD',vt:'BG 203395736',ad:'TSAR BORIS III - PETRICH- BULGARIA 14, 2850',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:30,nm:'BLUE WATER SHIPPING A/S',vt:'DK31044839',ad:'INDKILDEVEJ 6, 9910',ct:'AALBORG',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:31,nm:'BOVA GROUP SRL',vt:'04482051002',ad:'VIA DELLE VALLI 1, 04011',ct:'APRILIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:32,nm:'BRAZZALE  S.P.A.',vt:'ΙΤ 00160480240',ad:'VIA PASUBIO 2, 36010',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:33,nm:'BRING FRIGO A/S',vt:'DK17026518',ad:'GASVAERKSVEJ 48, 9000',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:34,nm:'BTL MORAVIA S.R.O.',vt:'CZ 27616223',ad:'Sterboholska 1434/102, 10200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:35,nm:'C&R TRANSPORT LTD',vt:'1035454K',ad:'ΛΕΩΦΟΡΟΣ ΛΕΜΕΣΟΥ 75, 2121',ct:'ΑΓΛΑΝΤΖΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:36,nm:'CARGO EXPERTS LTD',vt:'10356708R',ad:'ΛΕΩΦ.ΑΚΡΟΠΟΛΕΩΣ 71 ΔΙΑΜ:51, 2012',ct:'ΣΤΡΟΒΟΛΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:37,nm:'CARGO FAST PLTD',vt:'201739761',ad:'DAME GRUEV STR 28, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:38,nm:'CARGO GROUP SERVICES ΝΑΥΤΙΛΙΑΚΗ ΔΙΑΜΕΤΑΦΟΡΙΚΗ ΕΠΕ',vt:'095524825',ad:'ΦΙΛΕΛΛΗΝΩΝ 5-7, 18536',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:39,nm:'CARGO MED Α.Ε.',vt:'997464862',ad:'ΘΕΣΗ ΜΑΝΔΗΛΩ ΧΑΡΑΔΡΟΣ  ΔΙΟΔΩΡΟΥ 148, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:40,nm:'CARGO MED Ε.Π.Ε',vt:'999101444',ad:'ΔΙΟΔΩΡΟΥ ΧΑΡΑΔΡΟΣ 148, 26443',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:41,nm:'CASEIFICIO ALBIERO S.R.L.',vt:'IT 01622550240',ad:'VIA PONTE COCCO 10, 36050',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:42,nm:'CATHLINALE LTD',vt:'206061528',ad:'MLADOST 1A, 1729',ct:'SOFIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:43,nm:'CBON SARL',vt:'CHE494772425',ad:'CH. DU PRIEURE 4, 1304',ct:'COSSONAY',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:44,nm:'CEVA LOGISTICS GREECE ΜΟΝΟΠΡΟΣΩΠΗ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'800631985',ad:'ΛΕΩΦΟΡΟΣ ΣΥΓΓΡΟΥ 224, 17672',ct:'ΚΑΛΛΙΘΕΑ',co:'',ph:'2109572037',em:'',pl:'',nt:'',plFile:null},
+    {id:45,nm:'CHANDRINOS SUPPLIES Α Ε',vt:'802175713',ad:'Δ Δ ΝΕΑΣ ΣΕΛΕΥΚΕΙΑΣ, 46100',ct:'ΗΓΟΥΜΕΝΙΤΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:46,nm:'CHENCZKE LOGISTIC DAMIAN CHENCZKE',vt:'PL9680896660',ad:'RYCHNOW KOLONIA 11, 62814',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:47,nm:'CITROFOOD S.R.L.',vt:'IT 03119200834',ad:'PIAZZA SAN GIUSEPPE SNC, 98071',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:48,nm:'CMA HELLAS ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΑΕ',vt:'094494032',ad:'ΘΕΣΗ ΡΕΜΑ ΑΓ ΓΕΩΡΓΙΟΣ 0, 19300',ct:'ΑΣΠΡΟΠΥΡΓΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:49,nm:'COCA COLA 3Ε ΕΛΛΑΔΟΣ Α.Β.Ε.Ε.',vt:'094277965',ad:'ΦΡΑΓΚΟΚΚΛΗΣΙΑΣ 9, 15125',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:50,nm:'COCA COLA HBC SOURCING BV',vt:'996858890',ad:'ΑΝΑΞΑΓΟΡΑ 6-8, 10010',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:51,nm:'COCA COLA HELLENIC PROCUREMENT GmbH',vt:'AT U63817524',ad:'AΜ EURO PLATZ  2, A-1120',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:52,nm:'COCA-COLA HBC ITALIA SRL',vt:'IT12363410155',ad:'PIAZZA INDRO MONTANELLI 30, 20099',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:53,nm:'COCA-COLA HBC SOURCING B.V.',vt:'NL 860061188B01',ad:'RADARWEG 60, 1043',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:54,nm:'COLOOMBUS SOCIETA\' A RESPONSABILITA\' LIMITATA',vt:'06679920824',ad:'VIA LUDOVICO ARIOSTO 9, 90144',ct:'PALERMO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:55,nm:'COLUMBUS SPEDITION GMBH',vt:'114703115',ad:'FREILADESTRASSE 1, 27572',ct:'BREMERHAVEN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:56,nm:'CONEXTRANS A.E.',vt:'095349047',ad:'ΘΕΡΜΗ ΑΡΙΘΝΟΣ  ΑΓΡΟΤΕΜ 51 0, 57001',ct:'',co:'',ph:'2310753002',em:'',pl:'',nt:'',plFile:null},
+    {id:57,nm:'CONSERVA S.P.A.',vt:'IT 07596960729',ad:'S.P. 231 KM 2,500, 70032',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:58,nm:'CRETA SUPPLIES  ΙΚΕ',vt:'998802539',ad:'ΓΕΦΥΡΑ ΖΟΥΡΙΔΑΣ ΝΙΚΗΦΟΡΟΥ ΦΩΚΑ ΑΤΣΙΠΟΠΟΥΛΟ, 74100',ct:'ΡΕΘΥΜΝΟ',co:'',ph:'2831020002',em:'',pl:'',nt:'',plFile:null},
+    {id:59,nm:'CTL ΕΠΕ',vt:'998050847',ad:'ΑΡΚΑΔΙΟΥ 57-59, 16673',ct:'ΒΟΥΛΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:60,nm:'D.S TSAOUSIS TRANS PLTD',vt:'BG 205047454',ad:'KRUSHEVO 3, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:61,nm:'DAILY FOODS AND DRINKS Ε.Π.Ε',vt:'997833414',ad:'ΘΕΣΗ ΡΙΚΙΑ 0, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:62,nm:'DANIEL TRANS Kft',vt:'HU 24978905',ad:'SZABO LORINC UTCA 31, HU 4481',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:63,nm:'DELAMODE BALTICS UAB',vt:'100002783011',ad:'EIGULIU 2, 03150',ct:'VILNIUS',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:64,nm:'DEUTSCHMANN INTER/ΝΑL SPEDITION D.O.O.',vt:'HR 73899967894',ad:'ZRINSKIH I FRANKOPANA 4, 42000',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:65,nm:'DHL ΓΚΛΟΜΠΑΛ ΦΟΡΓΟΥΟΡΝΤΙΝΓΚ ΕΛΛΑΣ ΑΕ',vt:'094385000',ad:'ΑΓ  ΔΗΜΗΤΡΙΟΥ 41, 18546',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:66,nm:'DI.TA. INTERNATIONAL S.R.L',vt:'IT 06869220720',ad:'VIA VEZZANO 5, 70022',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:67,nm:'DIAMANTIS  TRANSPORT  B.V.',vt:'806852331B01',ad:'DORPSWEG  97, 45563',ct:'TWISK',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:68,nm:'D\'IORIO TRASPORTI S.R.L.',vt:'05697370657',ad:'VIA CURTI 1, 84087',ct:'SARNO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:69,nm:'DOHLER GMBH',vt:'DE 815573176',ad:'RIEDSTRASSE 7-9, 64295',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:70,nm:'DOHLER HOLLAND B.V.',vt:'NL 004601658B03',ad:'ALBUSSTRAAT 5, 4903',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:71,nm:'DONAU TRANS POLSKA SP ZOO',vt:'5222614797',ad:'ALEJA KRAKOWSKA 106, 02256',ct:'WARSZAWA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:72,nm:'DS FREIGHT FORWARDING ΙΚΕ',vt:'800527819',ad:'ΜΟΝΑΣΤΗΡΙΟΥ 107-109, 54627',ct:'ΘΕΣΣΑΛΟΝΙΚΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:73,nm:'DSV ΕΛΛΑΣ Α.Ε.',vt:'094509037',ad:'ΑΛΙΜΟΥ 100, 16452',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:74,nm:'DTK FRIGO A/S',vt:'DK 38421360',ad:'HERMESVEJ 18, 6330',ct:'PADBORG',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:75,nm:'ECO INTERNATIONAL TRANS OOD',vt:'BG 200897527',ad:'VARDAR 14, 2850',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:76,nm:'ELIKON LOGISTICS Ι Κ Ε',vt:'801274011',ad:'ΕΛ ΓΟΝΗ ΚΑΙ ΣΟΦΟΚΛΕΟΥΣ, 32100',ct:'ΛΕΙΒΑΔΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:77,nm:'ELPENA ΜΟΝΟΠΡΟΣΩΠΗ ΙΚΕ',vt:'801048289',ad:'ΛΕΩΦΟΡΟΣ ΚΗΦΙΣΟΥ 85, 12241',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:78,nm:'ELXIS INTL FORWARDING LOGISTICS SER ΑΕ',vt:'800779040',ad:'ΠΑΥΛΟΥ ΜΕΛΑ 45, 12131',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:79,nm:'ENELE TRADING LTD',vt:'10374285X',ad:'ARCH MAKARIOU III 82, 1077',ct:'NICOSIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:80,nm:'ERFOLG s.r.o.',vt:'SK 2022195615',ad:'Tovarenska 6, SK07101',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:81,nm:'ESS-FOOD A/S',vt:'73599318',ad:'Vesterbrogade 4A 2, 1620',ct:'Kobenhavn',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:82,nm:'EURL S.C.O.T',vt:'FR07791497365',ad:'RUE CLAUDE GIRARD 10, 25770',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:83,nm:'EURO – FOODS POLSKA  Sp. z o o',vt:'PL7791082652',ad:'HOZZA 66/68, 00-682',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:84,nm:'EUROFOOD ΠΟΙΟΤΗΤΑ Α.E.',vt:'094394101',ad:'ΠΕΡΙΚΛΕΟΥΣ 100, 15344',ct:'ΓΕΡΑΚΑΣ',co:'',ph:'2106617405107',em:'',pl:'',nt:'',plFile:null},
+    {id:85,nm:'EUROFRIGO INTERNATIONAL ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'800547289',ad:'ΗΡΩΩΝ ΠΟΛΥΤΕΧΝΕΙΟΥ 60, 41222',ct:'ΛΑΡΙΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:86,nm:'EUROLOGIC ΜΕΤΑΦΟΡΕΣ ΑΕ',vt:'094492051',ad:'ΠΕΡΙΟΧΗ ΒΕΛΑΝΙΔΙΑ 0, 19300',ct:'',co:'',ph:'2105593052',em:'',pl:'',nt:'',plFile:null},
+    {id:87,nm:'EUROQUALITY TRANS IKE',vt:'800585269',ad:'ΝΟΤΑΡΑ 34, 18531',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:88,nm:'EUROTRANS ΜΕΤΑΦΟΡΙΚΗ .Ε.Π.Ε.',vt:'095701270',ad:'ΚΟΛΟΚΟΤΡΩΝΗ & ΣΩΤΗΡΟΣ ΔΙΟΣ 83, 185 35',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:89,nm:'EUROWELT SOC. CONS. A R. L.',vt:'ΙΤ 00076460286',ad:'VIA G. LEOPARDI 1, 35013',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:90,nm:'EWALS CARGO CARE BV',vt:'NL 008904571B01',ad:'ARIENSSTRAAT 61-63, 5931',ct:'TEGELEN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:91,nm:'F K FOOD LOGISTICS ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'801106445',ad:'12 ΧΛΜ ΕΘΝΙΚΗΣ ΟΔΟΥ ΚΕΡΚΥΡΑΣ ΠΑΛΑΙΟΚΑΣΤΡΙΤΣΑΣ 0, 49100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:92,nm:'FALOG SPA',vt:'02302640442',ad:'VIA PIANELLE 12, 63077',ct:'MONSAMPOLO DEL TRONTO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:93,nm:'FAMILY FOOD Μ ΑΡΑΜΠΑΝΟΣ ΚΑΙ ΣΙΑ Ε Ε',vt:'800397812',ad:'ΠΑΡΑΔΡΟΜΟΣ ΛΕΩΦΟΡΟΥ ΑΘΗΝΩΝ 0, 32001',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:94,nm:'FEMA SERVICE SRL',vt:'IT 06208210721',ad:'CONTRADA PANTANO 18/1, 76011',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:95,nm:'FIGLI MICHELE ANGIULI SRL',vt:'00252920723',ad:'VIALE G DEGENNARO EDIFICIO A2 1, 70132',ct:'BARI',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:96,nm:'FINE INTERNATIONAL TRADE AND LOGISTICS ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'802377556',ad:'ΑΡΙΣΤΟΤΕΛΟΥΣ 8, 17671',ct:'ΚΑΛΛΙΘΕΑ',co:'',ph:'2109245537',em:'',pl:'',nt:'',plFile:null},
+    {id:97,nm:'FIRST QUALITY CHEESE E.Π.Ε.',vt:'998764739',ad:'ΘΕΣΗ ΡΙΚΙΑ, 19300',ct:'ΑΣΠΡΟΠΥΡΓΟΣ',co:'',ph:'2102476053',em:'',pl:'',nt:'',plFile:null},
+    {id:98,nm:'FLEXATRANS',vt:'FR28503105314',ad:'415 AVENUE DES CHABAUDS - BOUC BEL AIR- FRANCE, 13320',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:99,nm:'FOUR FISH ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801021462',ad:'ΠΕΤΡΟΥ ΡΑΛΛΗ 8, 11855',ct:'ΑΘΗΝΑ',co:'',ph:'2111825333',em:'',pl:'',nt:'',plFile:null},
+    {id:100,nm:'FRED Ε.Π.Ε',vt:'095656281',ad:'6 ΧΛΜ ΚΑΛΑΜΑΤΑΣ ΜΕΣΣΗΝΗΣ 0, 24100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:101,nm:'FREIGHTSPOT IΚΕ',vt:'801195634',ad:'ΠΡΩΤΟΜΑΓΙΑΣ ΚΑΙ 9 ΕΚΤΕΛ ΚΑΛΟΧΩΡΙΤΩΝ 0, 57009',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:102,nm:'FRESH CARGO PLTD',vt:'204260645',ad:'KRUSHEVO 3, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:103,nm:'FRESHFROZEN ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'999273623',ad:'ΓΕΦ ΖΟΥΡΙΔΑ, 74100',ct:'ΡΕΘΥΜΝΟ',co:'',ph:'2831057927',em:'',pl:'',nt:'',plFile:null},
+    {id:104,nm:'FRIGO FOOD ΑΕ',vt:'094229814',ad:'ΣΙΝΑ ΒΗΣΣΑΡΙΩΝΟΣ 9, 10672',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:105,nm:'FUTURA ENTERPRISE - S.R.L.',vt:'IT04359300722',ad:'STRADA PROV LE 231 KM 2 500 S, 70032',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:106,nm:'G T A INVESTMENTS GROUP Ι Κ Ε',vt:'801496129',ad:'ΗΡΩΩΝ ΠΟΛΥΤΕΧΝΕΙΟΥ 85, 18536',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'6932293039ΠΑΠΑΚΩΣΤΑΣ',em:'',pl:'',nt:'',plFile:null},
+    {id:107,nm:'G.F. PAGASITIKOS LTD',vt:'10335295Z',ad:'KILKIS 6',ct:'NICOSIA CYPRUS',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:108,nm:'GALAXY TRANS -ΤΣΙΑΠΟΣ  ΑΘΑΝAΣΙΟΣ',vt:'114867076',ad:'ΑΝΑΓΕΝΝΗΣΕΩΣ 7 - 9, 14342',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:109,nm:'GATEWAY EXPRESS Kft',vt:'HU14422520',ad:'SZABADSAG UT 117Aep, 2040',ct:'',co:'',ph:'+3623428877',em:'',pl:'',nt:'',plFile:null},
+    {id:110,nm:'GEF TRANS LTD',vt:'CY10370808 G',ad:'ΚΙΛΚΙΣ 6, 1086',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:111,nm:'GELATO BAKERY EXPERTS A E B E',vt:'801087635',ad:'ΑΓΙΟΥ ΧΡΙΣΤΟΦΟΡΟΥ 15, 19009',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:112,nm:'GEMME DI LUCANIA SNC DI PIETRO E MARINO LOCANTORE',vt:'IT 01001510773',ad:'VIA SANTA LUCIA, 75024',ct:'',co:'',ph:'+390835200240',em:'',pl:'',nt:'',plFile:null},
+    {id:113,nm:'GENERAL CARGO Ι Κ Ε',vt:'801514858',ad:'ΗΡΩΩΝ ΠΟΛΥΤΕΧΝΕΙΟΥ 60, 41222',ct:'ΛΑΡΙΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:114,nm:'GENFROCO A.E.',vt:'095324249',ad:'ΘΕΣΗ ΛΑΚΟΣ ΧΑΤΖΗ 0, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:115,nm:'GEOPLANT Α. Ε..Ε.Γ.Ε.',vt:'094485023',ad:'Π Ε Ο ΠΑΤΡΩΝ ΠΥΡΓΟΥ 0, 27053',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:116,nm:'GFA FOOD ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΙΑ',vt:'800645154',ad:'ΠΛΑΤΕΙΑ ΝΥΜΦΩΝ 1, 16674',ct:'ΓΛΥΦΑΔΑ',co:'',ph:'2108940260',em:'',pl:'',nt:'',plFile:null},
+    {id:117,nm:'GLOBAL FOODS ΕΜΠΟΡΙΟ ΤΡΟΦΙΜΩΝ ΠΟΤΩΝ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'800742697',ad:'ΚΟΥΣΚΟΥΡΑ 10, 54622',ct:'ΘΕΣΣΑΛΟΝΙΚΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:118,nm:'GLOBAL FOODS ΕΤΑΙΡΕΙΑ ΕΜΠΟΡΙΑΣ ΤΥΠΟΠΟΙΗΜΕΝΩΝ ΠΡΟΙΟΝΤΩΝ ΜΟΝΟΠΡΟΣΩΠΗ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'800385524',ad:'ΧΡ ΔΑΜΙΑΝΟΥ 3, 13678',ct:'ΑΧΑΡΝΕΣ',co:'',ph:'2117401250',em:'',pl:'',nt:'',plFile:null},
+    {id:119,nm:'GREENSOM I.F.F. EOOD',vt:'BG 201441462',ad:'TZARIGRADSKO SHAUSSE BOULVARD 53, 1124',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:120,nm:'GRIMALDI EUROMED S.P.A.',vt:'IT00278730825',ad:'VIA EMERICO AMARI 8, 90139',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:121,nm:'GROUP SERVICE SRL',vt:'IT02992260832',ad:'VIA MACEO 1, 98050',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:122,nm:'GRUARIN SIMONE',vt:'01013100936',ad:'VIA ZARA 11, 33079',ct:'SESTO AL REGHENA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:123,nm:'GRUPA TRANSPORTOWA SPOLKA ZOO',vt:'7712852200',ad:'LODZKA 30AB, 97-300',ct:'PIOTRKOW TRYBUNALSKI',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:124,nm:'Harvan  s.r.o.',vt:'48110434',ad:'Jicinska 226/17, 130 00',ct:'PRAHA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:125,nm:'HELLAS LOGISTICS AE',vt:'999401545',ad:'ΘΕΣΗ ΡΥΚΙΑ, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:126,nm:'HELLENIC FOODSERVICE A.E.',vt:'081703552',ad:'20 ΧΛΜ ΘΕΣΣΑΛΟΝΙΚΗΣ ΠΟΛΥΓΥΡΟΥ 0, 57001',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:127,nm:'HELLENIC QUALITY FOODS ΑΝΩΝΥΜΟΣ ΕΤΑΙΡΙΑ ΤΡΟΦΙΜΩΝ',vt:'094094130',ad:'ΛΕΩΦ  ΓΕΩΡΓΙΟΥ ΓΕΝΝΗΜΑΤΑ, 19018',ct:'ΜΑΓΟΥΛΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:128,nm:'HELLENIC WINES',vt:'CHE142064928',ad:'OBERGUTSCHSTRASSE 32, 6003',ct:'Luzern',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:129,nm:'HERMES HELLAS ΕΜΠΟΡΙΚΗ  ΕΙΣΑΓΩΓΙΚΗ ΔΙΑΧΕΙΡΙΣΤΙΚΗ  Ι Κ Ε',vt:'801259960',ad:'ΔΑΦΝΙΔΟΣ 8-10, 11364',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:130,nm:'IL RE DEI FUNGHI SRL',vt:'08965050720',ad:'CONTRADA SAN PIETRO 51, 76011',ct:'BISCEGLIE',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:131,nm:'Ing. Romana Svandova ROMANA SVANDOVA - RS - SERVICE',vt:'6951070566',ad:'Kocande 45, 252 42',ct:'JESENICE',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:132,nm:'INSTAFREIGHT GMBH',vt:'DE 283789022',ad:'ORANIESTRASSE 25, 10999',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:133,nm:'INTER EXPRESS TRANS PLTD',vt:'206773529',ad:'MITROPOLIT BORIS 17, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:134,nm:'INTERNATIONAL BEST FOODS Ltd',vt:'BG 202903991',ad:'RAKOVSKI 145, 1000',ct:'SOFIA',co:'',ph:'6937886287ΑΝΔΡΕΑΣ',em:'',pl:'',nt:'',plFile:null},
+    {id:135,nm:'ISLAND FOOD SERVICE ΟΕ',vt:'099567017',ad:'ΑΝΤΩΝΙΟΥ ΚΑΝΑΚΗ 8, 84100',ct:'ΣΥΡΟΣ',co:'',ph:'2281083642POYSSA',em:'',pl:'',nt:'',plFile:null},
+    {id:136,nm:'ISOLA FISH  B.V.',vt:'NL 004744251 B01',ad:'POSTBUS 179, 8320 AD',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:137,nm:'ITALY LINES ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ LOGISTICS Α. E.',vt:'095479850',ad:'ΘΕΣΗ ΣΚΑΡΠΑ, 19300',ct:'ΑΣΠΡΟΠΥΡΓΟΣ',co:'',ph:'2105597550',em:'',pl:'',nt:'',plFile:null},
+    {id:138,nm:'J.G.F. INTERNATIONAL  TRANSPORT LTD',vt:'10394122H',ad:'ΚΙΛΚΙΣ 6, 1086',ct:'ΛΕΥΚΩΣΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:139,nm:'JL FREIGHT LTD',vt:'BG202841242',ad:'PIROTSKA STR 9, 1000',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:140,nm:'K.V. TRANSPORT',vt:'203206720',ad:'28 OCTOMVRI  5, 2850',ct:'PETRICH BULGARIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:141,nm:'KAJ MADSEN FJELSTRUP A/S',vt:'73177715',ad:'Venusvej 27, 6000',ct:'Kolding',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:142,nm:'KARAKOUTAS FOODTRADE  Ι Κ Ε',vt:'801738031',ad:'ΝΕΥΤΩΝΟΣ 19, 57009',ct:'ΚΑΛΟΧΩΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:143,nm:'KEHITO SWISS',vt:'CHE442815889',ad:'WESEMLINHOHEWEG 14, 6006',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:144,nm:'KLD ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΜΟΝΟΠΡΟΣΩΠΗ ΙΚΕ',vt:'800971513',ad:'ΙΕΡΑ ΟΔΟΣ 294, 12243',ct:'ΑΙΓΑΛΕΩ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:145,nm:'KORINTIAS TRANS LTD',vt:'BG 101786742',ad:'CHERNO MORE 5, 2850',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:146,nm:'KR VILLAGE HELLAS Ι Κ Ε',vt:'800701445',ad:'ΚΕΝΝΕΝΤΥ 2, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:147,nm:'L.S. DELIFOODS LIMITED',vt:'CY10283479Y',ad:'PROTARA 540, 5297',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:148,nm:'LEASIM INTERNATIONAL TRANSPORT LTD',vt:'10349306Q',ad:'ΚΙΛΚΙΣ 6, 1086',ct:'ΛΕΥΚΩΣΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:149,nm:'LIAKAT MD MOSHAROF HOSSAIN JAFOR',vt:'067566470',ad:'ΓΕΡΑΝΙΟΥ 6, 10552',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:150,nm:'LOGICA SPEDIZIONI SR',vt:'IT01605580933',ad:'VIA ODERZO 16, 33100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:151,nm:'M. TRADING LTD',vt:'GB 232760521',ad:'HIGH ROAD 896, N12 8QA',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:152,nm:'MALGARA TRANS LTD NALBANDIS TRIANTAFILOS',vt:'BG200801594',ad:'TODOR ALEKSANDROF STR 66',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:153,nm:'MANOUSOS FRUITS I K E',vt:'800787814',ad:'13Ο ΧΛΜ ΕΟ ΣΠΑΡΤΗΣ ΓΥΘΕΙΟΥ 0, 23100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:154,nm:'MAR SABA PLTD',vt:'BG 201565150',ad:'DAME GRUEV 28, 2700',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:155,nm:'MARLO EXPEDITE B.V.',vt:'NL 808362501 B01',ad:'DORPSSTRAAT 202, 2761 AJ',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:156,nm:'MAXIMAL ΜΟΝΟΠΡΟΣΩΠΗ Ε.Π.Ε.',vt:'997720942',ad:'AΠΟΣΤΟΛΟΠΟΥΛΟΥ 21, 15232',ct:'',co:'',ph:'2106775646',em:'',pl:'',nt:'',plFile:null},
+    {id:157,nm:'MAYER  JOANNA EWA LUDWIK',vt:'154568636',ad:'ΠΕΙΡΑΙΩΣ 253, 18346',ct:'',co:'',ph:'2104811180',em:'',pl:'',nt:'',plFile:null},
+    {id:158,nm:'MED FRIGO A.E.',vt:'082598597',ad:'ΔΙΟΔΩΡΟΥ  ΧΑΡΑΔΡΟΣ ΒΕΛΒΙΤΣΙ ΠΑΤΡΩΝ 148, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:159,nm:'MERCUR SUDLOGISTIK SPEDITIONS GMBH',vt:'DE  811970996',ad:'RHEINKAISTRASSE 34, D-68159',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:160,nm:'MULINO ALIMENTARE S.P.A.',vt:'IT 01685240341',ad:'VIA F. RIZZI 9/A, 43126',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:161,nm:'MULTICCO SPOLKA Z OGRANICZONA ODPOWIEDZIALNOSCIA SPOLKA KOMANDYTOWA',vt:'5423242138',ad:'MIKOLAJA KOPERNIKA 95A, 15-396',ct:'BIALYSTOK',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:162,nm:'N VIVI TRANS LTD',vt:'205396042',ad:'ROKFELER 42, 2850',ct:'PETRICH',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:163,nm:'NAGEL ITALIA S.A.R.L.',vt:'',ad:'VIA SOMMACAMPAGNA 63/H, 37137',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:164,nm:'NAGEL ITALIA S.A.R.L.',vt:'IT00750560211',ad:'VIA SOMMACAMPAGNA 63/H, 37137',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:165,nm:'NAOYMIS Α.Ε.Β.Ε.',vt:'997648860',ad:'2 ΧΛΜ ΚΑΡΔΙΤΣΑΣ ΚΕΔΡΟΥ 0, 43100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:166,nm:'NAVICON ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ ΝΑΥΤΙΛΙΑΚΗ ΜΕΤΑΦΟΡΙΚΗ',vt:'999772541',ad:'ΦΙΛΩΝΟΣ 53, 18535',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'2104115837',em:'',pl:'',nt:'',plFile:null},
+    {id:167,nm:'NETTUNO ALIMENTARI SPA',vt:'01321140129',ad:'CORSO ITALIA 995, 21042',ct:'CARONNO PERTUSELLA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:168,nm:'NG TRANSPORT ΙΚΕ',vt:'800708305',ad:'ΜΑΚΕΔΟΝΟΜΑΧΩΝ 16, 57009',ct:'ΚΑΛΟΧΩΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:169,nm:'NOVAFREIGHT LTD',vt:'10258656C',ad:'KILKIS STR 6, 1086',ct:'NICOSIA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:170,nm:'OCEAN FISH B.V.',vt:'NL 807567085 B01',ad:'WAGENINGEN - COSTERWEG 1T, NL-6702',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:171,nm:'OLYMPIC FOODS  LIMITED',vt:'997011431',ad:'ΤΕΡΜΑ ΑΡΤΕΜΙΔΟΣ 0, 14452',ct:'ΜΕΤΑΜΟΡΦΩΣΗ',co:'',ph:'2102846036',em:'',pl:'',nt:'',plFile:null},
+    {id:172,nm:'ORION FREIGHT INTERNATIONAL SERVICES Ε Ε',vt:'801202617',ad:'ΓΟΥΝΑΡΗ 4-6, 18531',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:173,nm:'ORTOFRUTTICOLA SILE S.R.L.',vt:'00198820268',ad:'MERCATO ORTOFRUTTICOLO A/2, 31100',ct:'TREVISO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:174,nm:'OSTERREICHISCHE DONAULAGER GMBH',vt:'AT U22985401',ad:'INDUSTRIEZEILE 35A, AT 4020',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:175,nm:'OVERGAS ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΕΙΑ ΥΓΡΑΕΡΙΟΥ',vt:'801039729',ad:'ΒΙΠΕ ΙΩΑΝΝΙΝΩΝ, 45500',ct:'ΙΩΑΝΝΙΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:176,nm:'OVEROLL CROISSANTERIE ΜΟΝ Α Ε',vt:'802119280',ad:'ΚΑΤΣΟΥΛΙΕΡΗ 10, 15233',ct:'ΧΑΛΑΝΔΡΙ',co:'',ph:'2110010588',em:'',pl:'',nt:'',plFile:null},
+    {id:177,nm:'OVEROLL CROISSANTERIE Ο Ε',vt:'801380194',ad:'ΠΡΑΞΙΤΕΛΟΥΣ 27, 10560',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:178,nm:'OVO FRESCO ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΙΑ',vt:'099533315',ad:'1 ΧΙΛΙΟΜ ΕΠΑΡΧΙΑΚΗΣ ΟΔΟΥ ΜΠΙΖΑΝΙΟΥ ΑΜΠΕΛΙΑΣ 0, 45500',ct:'ΑΝΑΤΟΛΗ ΙΩΑΝΝΙΝΩΝ',co:'',ph:'2651094180',em:'',pl:'',nt:'',plFile:null},
+    {id:179,nm:'PASSINA PRODUCTS B.V.',vt:'NL 810171880Β02',ad:'BELCRUMWEG 3a - BREDA HOLLAND, 4815 HA',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:180,nm:'PATAPAM SRL',vt:'IT 02080200682',ad:'CORSO UMBERTO I 188, 65015',ct:'MONTESILVANO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:181,nm:'PEPSICO HELLAS ΜΟΝ Α.Β.Ε.Ε.',vt:'094043325',ad:'22 ΧΛΜ Ε Ο  ΑΘΗΝΩΝ ΛΑΜΙΑΣ 0, 14565',ct:'ΑΓΙΟΣ ΣΤΕΦΑΝΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:182,nm:'PEPSICO ΗΒΗ MONOΠΡΟΣΩΠΗ Ε.Π.Ε.',vt:'094019208',ad:'22 ΧΛΜ ΕΟ ΑΘΗΝΩΝ  ΛΑΜΙΑΣ 0, 14565',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:183,nm:'PETPAN TRANSPORT',vt:'CY10355829V',ad:'LEMESOU 75, 2121',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:184,nm:'PLANET FRUITS ΕΠΕ',vt:'999779634',ad:'ΟΚΑΑ Μ 10 12   Λ  11 0, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:185,nm:'PLANTKO BELGIE BVBA',vt:'BE0445050747',ad:'LIJSTERBESLAAN 22, 2950',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:186,nm:'PORTMANN TRANSPORTS ET FILS S.A',vt:'FR05947352373',ad:'AV KONRAD ADENAUER 3, 68390',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:187,nm:'PURATOS ΕΛΛΑΣ ΑΕΒΕ',vt:'094159788',ad:'ΘΕΣΗ ΜΑΔΑΡΟ, 32011',ct:'ΟΙΝΟΦΥΤΑ',co:'',ph:'2262032407',em:'',pl:'',nt:'',plFile:null},
+    {id:188,nm:'RAVINTRANS  ΕΠΕ',vt:'095091818',ad:'ΜΕΝΑΝΔΡΟΥ 54, 10431',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:189,nm:'RAY TRANS SPOLKA Z OGRANICZONA ODPOWIEDZIALNOSCIA',vt:'8522643563',ad:'ANDRZEJA MALKOWSKIEGO 30, 70-304',ct:'SZCZECIN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:190,nm:'REALFOODSERVICES ΙΚΕ',vt:'800767735',ad:'ΖΑΚΚΑ 19, 56727',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:191,nm:'RED ROAD ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'801702488',ad:'ΝΕΑΣ ΕΛΒΕΤΙΑΣ 1, 19015',ct:'ΣΚΑΛΑ ΩΡΩΠΟΥ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:192,nm:'Road Solution - Logistik Service GmbH',vt:'U64049666',ad:'Durisolstra?e 11, 4600',ct:'Wels',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:193,nm:'RUBETRANS LOGISTICS GMBH CO KG',vt:'DE336973672',ad:'GEWERBERING 1, 49439',ct:'STEINFELD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:194,nm:'RUGGERI SILVIA ADALBERTO',vt:'155476844',ad:'ΚΟΥΦΟΝΗΣΙ ΝΑΞΟΥ 0, 84300',ct:'',co:'',ph:'6987914374',em:'',pl:'',nt:'',plFile:null},
+    {id:195,nm:'S I T  ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΜΟΝΟΠΡΟΣΩΠΗ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801695340',ad:'ΝΕΡΟΚΟΡΟΥ ΘΕΣΗ ΠΑΝΑΓΙΑ, 73100',ct:'ΧΑΝΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:196,nm:'SAN GABRIELE S.p.A.',vt:'01505720282',ad:'VIA VENEZIA  6, 35010',ct:'TREBASELEGHE  ITALY',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:197,nm:'SANMAR SP ΖΟΟ',vt:'7831622707',ad:'JANA HENRYKA DABROWSKIEGO 292, 60-406',ct:'POZNAN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:198,nm:'SAS EIKON LOGISTICS',vt:'FR 68513652784',ad:'RUE DU QUADRANT 24, 14123',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:199,nm:'SEA WORLD  Α.Ε.Β.Ε',vt:'094347658',ad:'3 ΧΙΛΙΟΜΕΤΡΟ ΚΑΡΔΙΤΣΑΣ ΤΡΙΚΑΛΩΝ 0, 43100',ct:'ΚΑΡΔΙΤΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:200,nm:'SEACORIN N.V.',vt:'BE 0561712350',ad:'HENRI LEBBESTRAAT 188, 8790',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:201,nm:'SERTRA S.R.L.',vt:'IT 02431200233',ad:'VIA ADIGE 34, 37060',ct:'NOGAROLE ROCCA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:202,nm:'SNC LACTALIS LOGISTIQUE',vt:'FR35343294195',ad:'ZI DES TOUCHES BD ARAGO, 53810',ct:'CHANGE',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:203,nm:'SOCIETA\' AGRICOLA VIVAI MAZZONI SS',vt:'01128930383',ad:'VIA DEL MARE 4, 44039',ct:'TRESIGNANA',co:'',ph:'00390533607511IRENE',em:'',pl:'',nt:'',plFile:null},
+    {id:204,nm:'SPAROS DIL IKE',vt:'997468719',ad:'ΜΥΚΑΛΗΣ 59, 18540',ct:'',co:'',ph:'2104123506-7',em:'',pl:'',nt:'',plFile:null},
+    {id:205,nm:'SPEDITOR TRANS PLTD',vt:'BG201667212',ad:'DAME GRUEV STR 28, 2700',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:206,nm:'SUNFOODS MON. I.Κ.Ε.',vt:'800680629',ad:'ΚΟΝΤΟΝΗ 12, 18 346',ct:'',co:'',ph:'2104836044',em:'',pl:'',nt:'',plFile:null},
+    {id:207,nm:'SVAT SPA',vt:'02671880280',ad:'VIA PIAVE 12, 37060',ct:'NOGAROLE ROCCA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:208,nm:'SVILA SRL',vt:'IT 00866911001',ad:'VIA C BATTISTI 55, 62039',ct:'VISSO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:209,nm:'TBA TRANSBOZEN AUSTRIA GMBH',vt:'AT U65294905',ad:'AU 15A, A- 6134',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:210,nm:'THEO INTERNATIONAL TRANSPORT PLTD',vt:'BG 202338198',ad:'DAME GRUEV 28, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:211,nm:'THEO TRANS ΜΟΝΟΠΡΟΣΩΠΗ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'802572720',ad:'3 ΧΛΜ ΝΕΟ ΛΑΜΙΑΣ  ΑΘΗΝΩΝ, 35100',ct:'ΛΑΜΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:212,nm:'THEODOSIOU G.K.TRANSPORT LTD',vt:'CY10357565 C',ad:'LEMESOU 75, CY 2121',ct:'ΑΓΛΑΝΤΖΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:213,nm:'THERMOTRAFFIC GMBH',vt:'126957135',ad:'EMSCHERSTRASSE 22, 45891',ct:'GELSENKIRCHEN',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:214,nm:'THETA TRADING     M  ΕΠΕ',vt:'997248110',ad:'ΟΥΡΑΝΙΑΣ ΕΝΑΝΤΙ ΣΤΑΡ ΜΠΙΤΣ ΛΙΜΗΝ ΧΕΡΣΟΝΗΣΟΥ 13, 70014',ct:'ΛΙΜΕΝΑΣ ΧΕΡΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:215,nm:'TORELLO TRASPORTI S.R.L',vt:'IT 01897330641',ad:'VIA G. MARCONI 381, 83025',ct:'MONTORO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:216,nm:'TORRE ΑΒΕΕ ΗΛΙΑΣ ΓΚΛΑΤΖΟΥΝΗΣ ΒΙΟΜΗΧΑΝΙΑ ΤΡΟΦΙΜΩΝ ΠΑΓΩΤΟΥ ΕΙΣΑΓΩΓΕΣ ΕΞΑΓΩΓΕΣ ΤΡΟΦΙΜΩΝ',vt:'094257874',ad:'Ν ΣΑΝΤΑ, 61100',ct:'ΚΙΛΚΙΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:217,nm:'TRADE TRANS COMBI sp zoo',vt:'8971649500',ad:'WIEZIENNA 21B, 250118',ct:'WROCLAW',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:218,nm:'TRADECOR SRL',vt:'IT 00653850214',ad:'VIA LUCIA FRISCHIN 1, 39100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:219,nm:'TRANS ITALIA SRL',vt:'IT 02032300655',ad:'PIAZZA MARTINEZ 5, 84085',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:220,nm:'TRANSBOZEN LOGISTIK SRL - GMBH',vt:'02415590211',ad:'VIA ISARCO 2, 39040',ct:'LAION',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:221,nm:'TRANSCOMBI EXPRESS A.E.',vt:'094438347',ad:'',ct:'',co:'',ph:'2113005300',em:'',pl:'',nt:'',plFile:null},
+    {id:222,nm:'TRANSCOMBI EXPRESS GmbH',vt:'DE 149146887',ad:'LANDZUNGENSTRASSE 12, 68159',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:223,nm:'TRANSERVICE LOGISTIC SRL',vt:'IT02314300993',ad:'VIA A. CANTORE 30B/1, 16149',ct:'GENOVA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:224,nm:'TRASPORTI LETIZIA  SNC',vt:'ΙΤ 02659570838',ad:'MANDONUZZA 12, 98074',ct:'NASO',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:225,nm:'TRENTOFRUTTA S.P.A.',vt:'IT 00122700222',ad:'VIA DEGASPERI 130, 38123',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:226,nm:'TRIP HELLAS ΜΟΝΟΠΡΟΣΩΠΗ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801382010',ad:'ΜΕΣΣΗΝΙΑΣ 23, 14235',ct:'Ν ΙΩΝΙΑ',co:'',ph:'6944321747',em:'',pl:'',nt:'',plFile:null},
+    {id:227,nm:'TROFELIA ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'800496629',ad:'ΤΣΙΜΙΣΚΗ 52, 54623',ct:'ΘΕΣΣΑΛΟΝΙΚΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:228,nm:'TSL INTERMODAL SPOLKA Z OGRANICZONA',vt:'9512338899',ad:'POLONEZA 93, 02-826',ct:'WARSZAVA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:229,nm:'UAB "Freightia"',vt:'100013698316',ad:'Naftininku g. 34-34, 89132',ct:'Mazeikiai',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:230,nm:'UNION FREIGHT ΜΟΝΟΠΡΟΣΩΠΗ ΕΠΕ',vt:'099268447',ad:'ΚΟΛΟΚΟΤΡΩΝΗ 102, 18535',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:231,nm:'UNION FRIGHT GR ΜΟΝΟΠΡΟΣΩΠΗ Ι Κ Ε',vt:'801666971',ad:'ΘΕΣΗ ΓΕΡΜΑΝΙΚΑ ΕΠΙ ΑΓΡΟΤΕΜΑΧΙΟΥ 0, 19300',ct:'ΑΣΠΡΟΠΥΡΓΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:232,nm:'UNTERER GMBH',vt:'ATU 32430107',ad:'LUNA 32, 6250',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:233,nm:'VERONA EXPRESS SRL',vt:'04409710235',ad:'VIA SAN DONATO 82, 40127',ct:'BOLOGNA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:234,nm:'VESTA FOODS ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'099352276',ad:'ΠΥΡΓΟΥ ΚΑΙ  ΠΡΕΣΠΑΣ, 18346',ct:'ΜΟΣΧΑΤΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:235,nm:'VITTORIA GATI ΕΣΤΙΑΣΕΙΣ ΙΚΕ',vt:'801016728',ad:'ΠΛΑΤΕΙΑ ΝΥΜΦΩΝ 1, 16674',ct:'ΓΛΥΦΑΔΑ',co:'',ph:'2108944491',em:'',pl:'',nt:'',plFile:null},
+    {id:236,nm:'WEST GATE LOGISTICS Α Ε',vt:'801529558',ad:'37 ΧΛΜ ΝΕΑΣ ΕΘΝΙΚΗΣ ΟΔΟΥ ΑΘΗΝΩΝ ΚΟΡΙΝΘΟΥ, 19100',ct:'ΜΕΓΑΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:237,nm:'WING FOODS A/S',vt:'34089175',ad:'HJORTEHEGNET 8, 2800',ct:'LYNGBY',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:238,nm:'WONDERFOODS ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801835920',ad:'7  ΧΙΛ ΑΡΓΟΥΣ ΣΤΕΡΝΑΣ, 21200',ct:'ΑΡΓΟΣ',co:'',ph:'2751092051',em:'',pl:'',nt:'',plFile:null},
+    {id:239,nm:'XRIMA SPEDITION EOOD',vt:'204182011',ad:'TODOR ALEKSANDROV 5, 2850',ct:'PETRICH',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:240,nm:'ZAFIRI A/ΦΟΙ Ο.Ε.',vt:'997852674',ad:'ΒΙΠΕ ΙΩΑΝΝΙΝΩΝ, 45500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:241,nm:'ZS NATIONAL   INTERNATIONAL TRANSPORT ΟΜΟΡΡΥΘΜΗ ΕΤΑΙΡΕΙΑ',vt:'802040529',ad:'1 ΧΛΜ ΑΡΤΑΣ ΑΓΡΙΝΙΟΥ, 47100',ct:'ΑΡΤΑ',co:'',ph:'6907459099',em:'',pl:'',nt:'',plFile:null},
+    {id:242,nm:'ZT TRANSPORT AND TRADE LTD',vt:'204795669',ad:'KRUSHEVO 3, 2700',ct:'BLAGOEVGRAD',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:243,nm:'Α &  Π ΓΙΑΝΝΑΚΗΣ ΑΕ',vt:'094442521',ad:'ΛΑΧΑΝΑΓΟΡΑ ΠΑΤΡΩΝ 8, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:244,nm:'Α ΚΑΙ Μ ΑΝΩΝΥΜΗ ΕΤΑΙΡΙΑ ΤΡΟΦΟΔΟΣΙΑΣ ΔΙΑΝΟΜΗΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΑΝΤΙΠΡΟΣΩΠΕΙΩΝ',vt:'998450486',ad:'ΚΑΛΟΥΤΑ 32, 82100',ct:'ΧΙΟΣ',co:'',ph:'2271026221',em:'',pl:'',nt:'',plFile:null},
+    {id:245,nm:'Α/ΦΟΙ ΜΑΚΑΤΟΥΝΑΚΗ Ο.Ε.',vt:'999486211',ad:'2ο ΧΛΜ. ΓΑΖΙΟΥ - ΚΡΟΥΣΩΝΑ, 71414',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:246,nm:'ΑΓΡΟΤΕΜΠΟΡΙΚΗ ΕΠΕ',vt:'095636454',ad:'Λ ΜΑΡΑΘΩΝΟΣ 3, 15351',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:247,nm:'ΑΓΡΟΤΙΚΑ ΒΙΟΛΟΓΙΚΑ ΠΡΟΙΟΝΤΑ ΑΕ',vt:'999008410',ad:'12 ΧΛΜ ΑΡΓΟΥΣ ΣΤΕΡΝΑΣ 0, 21200',ct:'ΑΡΓΟΣ',co:'',ph:'2751077222',em:'',pl:'',nt:'',plFile:null},
+    {id:248,nm:'ΑΓΡΟΤΙΚΟΣ ΣΥΝΕΤΑΙΡΙΣΜΟΣ ΝΕΑΠΟΛΗΣ  ΑΓΡΙΝΙΟΥ',vt:'096082740',ad:'ΝΕΑΠΟΛΗ 0, 30100',ct:'',co:'',ph:'2641039490',em:'',pl:'',nt:'',plFile:null},
+    {id:249,nm:'ΑΓΡΟΤΟΚΤ/ΚΕΣ ΓΕΝΙΚΕΣ ΕΠΙΧΕΙΡ. ΠΑΤΕΡΑΚΗ ΑΕ',vt:'094238491',ad:'ΣΤΕΡΝΕΣ, 73100',ct:'ΧΑΝΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:250,nm:'ΑΘΗΝΑΓΟΡΑΣ ΕΠΕ',vt:'099001403',ad:'ΟΚΛΑ Δ 46 Δ 48 Γ 43 Γ 45 0, 18233',ct:'',co:'',ph:'2104830298',em:'',pl:'',nt:'',plFile:null},
+    {id:251,nm:'ΑΙΝΟΣ ΑΕΒΕ',vt:'094265390',ad:'ΠΕΙΡΑΙΩΣ 88, 18346',ct:'ΜΟΣΧΑΤΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:252,nm:'ΑΙΝΟΣ ΤΡΑΝΖΙΤ Α.Ε.',vt:'094445050',ad:'ΚΩΝΣΤΑΝΤΙΝΟΥΠΟΛΕΩΣ 3, 18540',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:253,nm:'ΑΛ ΩΜΕΓΑ ΜΑΡΚΕΤ  Ι.Κ.Ε.',vt:'800447623',ad:'ΟΡΦΕΩΣ 83, 11855',ct:'',co:'',ph:'2114110372',em:'',pl:'',nt:'',plFile:null},
+    {id:254,nm:'ΑΛΙΟΣ ΑΕ',vt:'093904421',ad:'ΑΡΑΧΘΟΥ 17, 18345',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:255,nm:'ΑΛΙΠΡΑΝΤΗΣ  ΓΡΗΓΟΡΙΟΣ ΙΩΑΝΝΗΣ',vt:'040438237',ad:'ΜΑΡΜΑΡΑ, 84400',ct:'ΠΑΡΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:256,nm:'ΑΛΦΑ ΦΡΙΓΚΟΡ ΕΠΕ',vt:'095737486',ad:'ΠΕΙΡΑΙΩΣ 88, 18345',ct:'ΜΟΣΧΑΤΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:257,nm:'ΑΜΑΛΘΕΙΑ Ι Κ Ε',vt:'800918960',ad:'ΔΑΝΙΛΙΑ ΑΦΡΑ, 49100',ct:'ΚΕΡΚΥΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:258,nm:'ΑΜΑΝΑΤΙΔΗΣ  ΧΡΗΣΤΟΣ ΘΕΟΧΑΡΗΣ',vt:'028733997',ad:'ΑΝΑΞΑΓΟΡΑ, 34600',ct:'Ν ΑΡΤΑΚΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:259,nm:'ΑΜΒΡΟΣΙΑΔΗΣ ΠΑΡΑΓΩΓΗ ΚΑΙ ΕΜΠΟΡΙΑ ΠΤΗΝΟΤΡΟΦΙΚΩΝ ΖΩΙΚΩΝ ΠΡΟΙΟΝΤΩΝ ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΙΑ',vt:'081932139',ad:'2 ΧΙΛ ΠΕΟ ΚΑΤΕΡΙΝΗΣ Π ΚΕΡΑΜΙΔΙΟΥ 0, 60100',ct:'ΚΑΤΕΡΙΝΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:260,nm:'ΑΝΑΓΝΩΣΤΟΠΟΥΛΟΣ  ΔΗΜΗΤΡΙΟΣ ΠΑΝΑΓΙΩΤΗΣ',vt:'143814190',ad:'ΘΕΣΣΑΛΟΝΙΚΗΣ 18, 26441',ct:'ΠΑΤΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:261,nm:'ΑΝΑΓΝΩΣΤΟΠΟΥΛΟΣ  ΝΙΚΟΛΑΟΣ ΠΑΝΑΓΙΩΤΗΣ',vt:'160084486',ad:'ΘΕΣΣΑΛΟΝΙΚΗΣ 18, 26441',ct:'ΠΑΤΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:262,nm:'ΑΝΑΓΝΩΣΤΟΠΟΥΛΟΣ  ΠΑΝΑΓΙΩΤΗΣ ΔΗΜΗΤΡΙΟΣ',vt:'020119886',ad:'ΘΕΣΣΑΛΟΝΙΚΗΣ 18, 26441',ct:'ΠΑΤΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:263,nm:'ΑΝΑΓΝΩΣΤΟΠΟΥΛΟΣ ΗΛ. ΠΑΝΑΓΙΩΤΗΣ',vt:'079177699',ad:'ΘΕΣΗ ΠΗΛΙΧΟ Λ ΝΑΤΟ 0, 19300',ct:'',co:'',ph:'2105576656',em:'',pl:'',nt:'',plFile:null},
+    {id:264,nm:'ΑΝΑΓΝΩΣΤΟΥ  ΑΘΑΝΑΣΙΟΣ ΗΛΙΑΣ',vt:'038678300',ad:'ΑΓ ΝΙΚΟΛΑΟΣ 0, 36100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:265,nm:'ΑΝΔΡΕΑΣ ΔΕΛΗΓΙΑΝΝΗΣ ΜΟΝ.  ΙΚΕ',vt:'800455463',ad:'ΛΕΒΙΔΟΥ 40, 14563',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:266,nm:'ΑΝΘΟΥΛΑΚΗΣ Ε Π Ε ΕΛΛΗΝΙΚΗ ΕΤΑΙΡΕΙΑ ΔΙΕΘΝΩΝ ΟΔΙΚΩΝ ΜΕΤΑΦΟΡΩΝ',vt:'095051199',ad:'ΔΗΜΟΣΘΕΝΟΥΣ 31, 54628',ct:'ΜΕΝΕΜΕΝΗ',co:'',ph:'2310753086',em:'',pl:'',nt:'',plFile:null},
+    {id:267,nm:'ΑΝΤΖΟΥΛΑΤΟΣ Α.Ε.',vt:'094434416',ad:'ΦΛΕΒΑΣ ΚΑΙ ΤΡΟΙΖΗΝΙΑΣ 19, 13122',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:268,nm:'ΑΝΤΩΝΑΚΟΣ  ΠΑΝΑΓΙΩΤΗΣ ΓΕΩΡΓΙΟΣ',vt:'039993832',ad:'ΑΜΥΚΛΑΙ, 23100',ct:'ΣΠΑΡΤΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:269,nm:'ΑΝΤΩΝΙΟΣ ΚΟΥΤΣΟΓΙΑΝΝΟΠΟΥΛΟΣ ΚΑΙ ΥΙΟΙ ΟΕ',vt:'099154211',ad:'61ΧΛΜ ΠΑΤΡΩΝ ΠΥΡΓΟΥ ΑΝΔΡΑΒΙΔΑ 0, 27051',ct:'ΑΝΔΡΑΒΙΔΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:270,nm:'ΑΠΟΛΛΩΝΙΟΝ ΑΒΕΕ ΑΡΤΟΥ',vt:'094423113',ad:'ΘΕΣΗ ΤΖΗΜΑ 0, 19400',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:271,nm:'ΑΠΟΣΤΟΛΟΠΟΥΛΟΣ  ΕΥΘΥΜΙΟΣ ΘΕΟΔΩΡΟΣ',vt:'076504323',ad:'ΠΕΤΤΑ ΑΧΑΙΑΣ, 25200',ct:'Κ ΑΧΑΙΑ',co:'',ph:'6972693035',em:'',pl:'',nt:'',plFile:null},
+    {id:272,nm:'ΑΠΟΣΤΟΛΟΥ  ΔΗΜΗΤΡΙΟΣ ΓΕΩΡΓΙΟΣ',vt:'144987257',ad:'ΜΕΓΑΛΟΥ ΑΛΕΞΑΝΔΟΥ 3, 12242',ct:'',co:'',ph:'21054910045',em:'',pl:'',nt:'',plFile:null},
+    {id:273,nm:'ΑΡΓΥΡΟΝΗΣΟΣ ΜΟΝ. ΕΠΕ',vt:'998618411',ad:'ΔΙΓΕΝΗ ΑΚΡΙΤΑ 15, 12243',ct:'',co:'',ph:'2103454500',em:'',pl:'',nt:'',plFile:null},
+    {id:274,nm:'ΑΡΤΟΒΙΟΜΗΧΑΝΙΑ ΚΑΡΑΜΟΛΕΓΚΟΣ ΑΕ',vt:'094276540',ad:'ΘΕΣΗ ΤΖΗΜΑ 29, 19400',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:275,nm:'ΑΣΠΕΡΣΑ ΕΤΑΙΡΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'095300160',ad:'ΔΡΑΠΑΝΙΑΣ  ΚΟΚΚΙΝΟ ΜΕΤΟΧΙ 0, 73400',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:276,nm:'ΑΣΠΡΑΚΗΣ ΚΟΛΕΓΙΑΝΝΗΣ Α Β Ε Ε',vt:'094271346',ad:'4 ΧΙΛ ΡΟΔΟΥ ΛΙΝΔΟΥ 0, 85100',ct:'ΡΟΔΟΣ',co:'',ph:'2241068660',em:'',pl:'',nt:'',plFile:null},
+    {id:277,nm:'ΑΦΟΙ ΑΓΙ ΔΙΑΚΟΥΜΑΚΟΥ ΚΑΙ ΣΙΑ  ΟΕ',vt:'091439848',ad:'ΤΡΑΠΕΖΟΝΤΗ 0, 23054',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:278,nm:'ΑΦΟΙ ΑΝΔΡΕΑ ΚΑΡΚΑΒΙΤΣΑ ΟΕ',vt:'099154106',ad:'Π Ε Ο ΠΑΤΡΩΝ ΠΥΡΓΟΥ ΔΙΑΣΤΑΥΡΩΣΗ ΛΕΧΑΙΝΩΝ 00, 27053',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:279,nm:'ΑΦΟΙ ΑΝΤΩΝΑΚΗ ΑΝΩΝΥΜΟΣ ΕΜΠΟΡΙΚΗ ΒΙΟΜΗΧΑΝ ΕΤΑΙΡΕΙΑ',vt:'094262595',ad:'ΑΤΣΙΠΟΠΟΥΛΟ ΠΕΡΙΟΧΗ ΖΙΖΙΝΑΚΗ, 74100',ct:'ΡΕΘΥΜΝΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:280,nm:'ΑΦΟΙ ΔΗΜΗΤΡΙΟΥ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ ΒΙΟΤΕΧΝΙΑ ΚΡΕΑΤΟΣ',vt:'082256630',ad:'ΔΗΜΑΡ ΧΡΗΣΤΟΥ ΜΠΕΚΑ 8, 19004',ct:'ΣΠΑΤΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:281,nm:'ΑΦΟΙ ΕΛΕΥΘΕΡΙΟΥ ΛΙΓΝΟΥ ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΜΠΟΡΙΚΗ ΚΑΤΑΣΚΕΥΑΣΤΙΚΗ ΤΟΥΡΙΣΤΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'800481721',ad:'ΑΝΩΝΥΜΟΣ, 28100',ct:'ΑΡΓΟΣΤΟΛΙ',co:'',ph:'2671026041',em:'',pl:'',nt:'',plFile:null},
+    {id:282,nm:'ΑΦΟΙ ΙΩΑΝΝΟΥ ΔΕΝΑΞΑ ΕΠΕ',vt:'095628779',ad:'ΕΜΠΟΡΕΙΟ, 84703',ct:'ΕΜΠΟΡΕΙΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:283,nm:'ΑΦΟΙ ΛΑΟΥΔΗ ΑΝΩΝΥΜΗ ΕΜΠΟΡΙΚΗ ΒΙΟΜΗΧΑΝΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'095502440',ad:'ΑΘ ΔΙΑΚΟΥ 10, 19009',ct:'ΡΑΦΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:284,nm:'ΑΦΟΙ ΜΑΝΤΟΥΒΑΛΟΙ ΕΦΟΔΙΑΣΜΟΙ ΠΛΟΙΩΝ ΕΙΣΑΓ ΕΞΑΓ ΑE',vt:'094475700',ad:'Μ ΚΙΟΥΡΙ - ΠΕΡΑΜΑ 328, 18863',ct:'',co:'',ph:'2104009370',em:'',pl:'',nt:'',plFile:null},
+    {id:285,nm:'ΑΦΟΙ ΝΑΣΟΠΟΥΛΟΙ Α.Ε.',vt:'094325513',ad:'ΙΤΕΑΣ 19 ΚΑΙ ΑΕΡΟΠΟΡΙΑΣ 0, 16452',ct:'',co:'',ph:'2109956591',em:'',pl:'',nt:'',plFile:null},
+    {id:286,nm:'ΑΦΟΙ Π ΚΑΙ Α ΚΩΝΝΟΥ ΑΝΔΡΙΟΠΟΥΛΟΙ ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΙ ΕΜΠΟΡΙΑ ΚΡΕΑΤΩΝ ΑΝΩΝΥΜΟΣ ΒΙΟΜΗΧΑΝΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'082253270',ad:'ΚΗΦΙΣΟΥ 112, 12132',ct:'ΠΕΡΙΣΤΕΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:287,nm:'ΑΦΟΙ ΠΑΠΑΔΟΠΟΥΛΟΙ ΟΕ',vt:'081899624',ad:'2ΧΙΛ ΑΛΕΞ ΠΟΛΗΣ ΑΒΑΝΤΟΣ 0, 68100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:288,nm:'ΑΦΟΙ ΧΑΣΙΚΟΥ ΑΕΒΕ',vt:'091126672',ad:'ΒΙΟΛΙ ΧΑΡΑΚΙ 0, 74100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:289,nm:'ΑΧΑΙΚΑ ΤΡΟΦΙΜΑ ΜΟΝΟΠΡΟΣΩΠΗ ΕΠΕ',vt:'998364074',ad:'ΣΑΡΑΒΑΛΙ ΣΤΑΔΙΟΥ 58, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:290,nm:'Β ΔΕΝΑΞΑΣ ΚΑΙ ΣΙΑ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'800448865',ad:'ΟΚΑΑ  Κ2  10Α  Ν28 0, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:291,nm:'Β. ΛΑΜΠΑΔΙΑΡΗΣ- Ζ.  ΛΑΜΠΑΔΙΑΡΗ ΟΕ',vt:'081233003',ad:'ΓΡΑΜΜΕΝΗ 0, 35011',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:292,nm:'ΒΑΛΑΚΕΛΗΣ  ΧΡΙΣΤΟΔΟΥΛΟΣ ΙΩΑΝΝΗΣ',vt:'070401697',ad:'ΑΡΓΟΣΤΟΛΙΟΥ 32Α, 18648',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:293,nm:'ΒΑΝΟΣ Α.Ε.',vt:'094191520',ad:'Δ ΜΟΥΤΣΟΠΟΥΛΟΥ 96 ΚΑΙ  ΣΕΡΙΦΟΥ 0, 18541',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:294,nm:'ΒΑΠ -  ΠΑΝΤΕΛΗΣ ΚΟΥΓΙΟΣ ΑΒΕΕ',vt:'094109379',ad:'ΤΣΑΙΡΙ 0, 85100',ct:'ΡΟΔΟΣ',co:'',ph:'22410–60710',em:'',pl:'',nt:'',plFile:null},
+    {id:295,nm:'ΒΑΣΙΛΕΙΟΣ ΝΟΤΟΠΟΥΛΟΣ ΑΣΗΜΟΥΛΑ ΣΤΕΡΓΙΟΥ ΟΕ',vt:'999596381',ad:'ΚΕΝΤΡΙΚΗ ΙΧΘΥΑΓΟΡΑ   ΚΑΤΑΣΤΗΜΑ 53 53, 10551',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:296,nm:'ΒΑΣΙΛΕΙΟΥ ΤΡΟΦΙΝΚΟ Α.Ε.Β.Ε.',vt:'094146050',ad:'ΔΕΡΒΕΝΟΧΩΡΙΩΝ ΒΙΠΑ ΜΑΓΟΥΛΑΣ 0, 19600',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:297,nm:'ΒΕΝΕΤΗΣ ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΙΑ ΤΡΟΦΙΜΩΝ',vt:'094471750',ad:'ΑΓ ΠΑΡΑΣΚΕΥΗΣ 9, 14123',ct:'ΛΥΚΟΒΡΥΣΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:298,nm:'ΒΗΤΑ ΕΨΙΛΟΝ ΕΜΠΟΡΙΟ ΤΡΟΦΙΜΩΝ ΕΠΕ',vt:'998666353',ad:'ΜΟΝΟΛΙΘΟΣ ΝΕΟ ΜΙΣΘΩΜΕΝΟ ΑΚΙΝΗΤΟ 0, 84700',ct:'ΘΗΡΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:299,nm:'ΒΙΓΛΑ ΟΛΥΜΠΟΥ ΑΕΒΕ',vt:'094142500',ad:'3 ΧΛΜ ΕΛΑΣΣΟΝΑΣ ΔΕΣΚΑΤΗΣ 0, 40200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:300,nm:'ΒΙΟΜΑΡ ΑΕ',vt:'094369116',ad:'ΒΙΜΗΧΑΝΙΚΗ ΠΕΡ ΛΑΡΙΣΑΣ 0, 41500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:301,nm:'ΒΙΟΜΗΧΑΝΙΚΕΣ ΕΜΠΟΡΙΚΕΣ ΤΟΥΡΙΣΤΙΚΕΣ ΚΑΙ ΑΓΡΟΤΙΚΕΣ ΕΠΙΧΕΙΡΗΣΕΙΣ ΠΑΠΑΔΗΜΗΤΡΙΟΥ ΕΜΜΑΝΟΥΗΛ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'099657846',ad:'ΔΑΜΑΤΡΙΑ, 85106',ct:'ΠΑΡΑΔΕΙΣΙ',co:'',ph:'2241091545',em:'',pl:'',nt:'',plFile:null},
+    {id:302,nm:'ΒΙΟΤΥΡ Α.Ε.Β.Ε.',vt:'094462986',ad:'ΑΛΩΝΙΣΤΡΑ ΠΟΚΑ ΒΙΟΠΑ ΚΟΡΩΠΙΟΥ, 19400',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:303,nm:'ΒΛΑΧΟΔΗΜΟΣ ΜΑΡΚΕΤ Ε.Π.Ε.',vt:'997423911',ad:'ΓΙΑΝN ΠΑΠΑΓΟΥ & ΘΗΣΕΩΣ - ΛΑΡΙΣΑ, 41500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:304,nm:'ΒΟΡΔΩΝΗΣ ΑEE ΓΕΝΙΚΟ ΕΜΠΟΡΙΟ ΕΙΔΩΝ ΖΑΧΑΡΟΠΛΑΣΤΙΚΗΣ ΖΑΧΑΡΩΔΗ',vt:'999843231',ad:'ΟΡΤΑΝΣΙΑΣ 29, 13671',ct:'ΑΧΑΡΝΑΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:305,nm:'ΒΟΥΛΓΑΡΗ ΑΦΟΙ ΑΕΒΕ',vt:'094182269',ad:'ΒΙΟΜΗΧ ΠΕΡΙΟΧΗ ΗΡΑΚΛΕΙΟΥ 0, 71000',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:306,nm:'Γ Μ ΒΙΒΛΙΟΥΠΟΛΗ ΟΕ',vt:'999793339',ad:'ΕΛ ΒΕΝΙΖΕΛΟΥ 44, 12132',ct:'ΠΕΡΙΣΤΕΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:307,nm:'Γ ΜΠΑΓΑΚΗΣ Α.Ε.',vt:'998452326',ad:'ΤΣΙΚΑΛΑΡΙΑ ΔΗΜΟΥ ΣΟΥΔΑΣ 0, 73200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:308,nm:'Γ ΠΑΠΑΔΗΜΗΤΡΙΟΥ ΚΑΙ ΣΙΑ ΕΕ',vt:'998944333',ad:'ΝΕΑ ΣΕΛΕΥΚΕΙΑ 0, 46100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:309,nm:'Γ ΣΑΒΟΙΔΑΚΗΣ ΑΕ',vt:'094103295',ad:'ΒΙΟΜΗΧ ΠΕΡΙΟΧΗ 0, 71000',ct:'ΗΡΑΚΛΕΙΟ',co:'',ph:'2810380977',em:'',pl:'',nt:'',plFile:null},
+    {id:310,nm:'ΓΑΛΙΤΕΛ Α.Ε.',vt:'999843894',ad:'ΤΡΟΙΖΗΝΙΑΣ 6 ΚΑΙ ΑΡΓΟΛΙΔΟΣ - ΚΗΦΙΣΙΑ 0, 14564',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:311,nm:'ΓΕΩ ΠΑΠΑΚΩΣΤΑΣ ΚΑΙ ΣΙΑ Ε Ε',vt:'801214364',ad:'ΕΛΕΥΘΕΡΙΟΥ ΒΕΝΙΖΕΛΟΥ 93, 17123',ct:'Ν ΣΜΥΡΝΗ',co:'',ph:'2109312500',em:'',pl:'',nt:'',plFile:null},
+    {id:312,nm:'ΓΕΩΡ.  ΠΑΠΑΖΟΓΛΟΥ Α.Ε.',vt:'094080702',ad:'ΚΟΝΤΟΝΗ 16Α  ΚΑΙ  ΜΟΣΧΟΝΗΣΙΩΝ 0, 18300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:313,nm:'ΓΕΩΡΓΙΟΣ Ν.ΦΡΑΓΚΙΣΤΑΣ ΕΙΣΑΓΩΓΑΙ-ΕΞΑΓΩΓΑΙ Α.Ε.',vt:'094016220',ad:'6 ΧΛΜ Ε Ο  ΝΑΥΠΛΙΟΥ ΑΡΓΟΥΣ 0, 21100',ct:'ΝΑΥΠΛΙΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:314,nm:'ΓΙΑΚΟΥΜΙΔΗΣ  ΠΑΥΛΟΣ ΙΩΑΝΝΗΣ',vt:'158221355',ad:'ΣΙΩΚΟΥ    ΠΕΡΙΟΧΗ ΒΟΥΡΚΟΣ, 34100',ct:'ΧΑΛΚΙΔΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:315,nm:'ΓΙΑΝΝΑΚΟΔΗΜΟΣ  ΜΙΧΑΗΛ ΘΩΜΑΣ',vt:'035792404',ad:'ΚΟΡΑΗ 47, 16341',ct:'ΗΛΙΟΥΠΟΛΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:316,nm:'ΓΙΑΝΝΙΤΣΗΣ LOGISTICS ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'095256598',ad:'ΒΙΠΕ ΛΑΜΙΑΣ ΟΙΚ ΤΕΤ 5 0, 35100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:317,nm:'ΓΚΟΠΗΣ ΚΩΝΣΤΑΝΤΙΝΟΣ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'800905939',ad:'ΛΕΩΦΟΡΟΣ ΙΩΑΝΝΙΝΩΝ 416, 48100',ct:'ΠΡΕΒΕΖΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:318,nm:'ΓΛΑΡΟΣ ΕΛΛΑΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'095134085',ad:'ΠΕΝΤΑΓΙΩΝ 15, 12461',ct:'ΧΑΙΔΑΡΙ',co:'',ph:'2105582410-14',em:'',pl:'',nt:'',plFile:null},
+    {id:319,nm:'ΓΟΓΓΑΚΗΣ Α.Ε.Β.Ε.',vt:'094294581',ad:'ΘΕΣΗ ΚΑΜΠΟΣ ΣΟΛΑΡΙ ΔΕΗ 0, 49100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:320,nm:'ΓΟΛΕΜΗΣ  ΚΡΙΤΩΝ ΓΕΩΡΓ ΑΡΙΣΤΕΙΔΗΣ',vt:'049657229',ad:'ΠΟΛΥΜΝΙΑΣ 3, 16671',ct:'ΒΟΥΛΙΑΓΜΕΝΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:321,nm:'ΓΟΥΝΑΔΑΚΗΣ Ι Κ Ε',vt:'802099275',ad:'ΒΡΥΣΕΣ, 73007',ct:'ΒΡΥΣΕΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:322,nm:'Δ ΠΑΠΑΔΟΠΟΥΛΟΣ ΤΖ ΣΤΡΕΜΜΕΝΟΥ ΟΕ',vt:'082406647',ad:'Λ  ΠΕΝΤΕΛΗΣ   ΚΑΙ  ΕΚΤΟΡΟΣ 39Α, 15235',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:323,nm:'Δ ΦΛΕΡΙΑΝΟΣ KAI ΣΙΑ ΕΕ',vt:'099004872',ad:'Γ ΠΑΠΑΝΔΡΕΟΥ 15, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:324,nm:'ΔΑΒΑΡΗΣ  ΑΝΤΩΝΙΟΣ ΧΡΗΣΤΟΣ',vt:'012712381',ad:'Σ ΥΦΑΝΤΗ 15, 19400',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:325,nm:'ΔΑΒΙΩΤΗΣ  ΘΕΟΔΩΡΟΣ ΚΩΝΣΤ.',vt:'104855611',ad:'ΠΑΠΑΛΕΞΟΠΟΥΛΟΥ 20, 21200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:326,nm:'ΔΑΒΙΩΤΗΣ  ΣΠΥΡΙΔΩΝ ΓΕΩΡΓΙΟΣ',vt:'148116768',ad:'ΜΙΚΡΑΣ ΑΣΙΑΣ 48, 21100',ct:'ΝΑΥΠΛΙΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:327,nm:'ΔΑΛΛΑΣ  ΑΛΕΞΑΝΔΡΟΣ ΧΡΗΣΤΟΣ',vt:'065407462',ad:'ΝΕΑ ΑΓΑΘΟΥΠΟΛΗ, 60066',ct:'ΜΕΘΩΝΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:328,nm:'ΔΕΛΗΓΙΑΝΝΑΚΗΣ ΣΤ ΜΑΥΡΟΥΔΑΚΗ Δ ΟΕ',vt:'999246762',ad:'ΚΝΙΔΟΥ ΚΑΙ ΛΑΟΔΙΚΕΙΑΣ 1, 85100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:329,nm:'ΔΕΛΤΑ ΤΡΟΦΙΜΑ Α.Ε.',vt:'099771194',ad:'23ΧΛΜ Ε Ο ΑΘΗΝΩΝ ΛΑΜΙΑΣ 0, 14565',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:330,nm:'ΔΗΜΗΤΡΙΟΣ ΚΑΙ ΚΩΝΣΤΑΝΤΙΝΟΣ ΛΕΒΕΝΤΟΓΙΑΝΝΗΣ ΙΚΕ',vt:'082054441',ad:'ΚΛΑ Ε28 Δ25 27, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:331,nm:'ΔΗΜΗΤΡΙΟΣ ΚΑΛΙΓΩΣΗΣ ΣΙΑ Ε Ε',vt:'800853963',ad:'ΚΟΛΟΚΟΤΡΩΝΗ 17, 18450',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:332,nm:'ΔΙΑΜΑΝΤΗΣ  ΝΙΚΟΛΑΟΣ ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'130157908',ad:'ΛΕΩΝ ΣΩΜΑΚΟΥ 12, 45221',ct:'ΙΩΑΝΝΙΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:333,nm:'ΔΙΑΝΑ ΜΕΑΤ ΑΕ ΑΝΩΝΥΜΟΣ ΕΤΑΙΡΕΙΑ ΚΡΕΑΤΩΝ Α.Ε',vt:'094077980',ad:'ΠΕΤΡΟΥ ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'2103471448',em:'',pl:'',nt:'',plFile:null},
+    {id:334,nm:'ΔΙΑΝΟΜΕΥΣ ΕΜΠΟΡΙΑ ΕΙΔΩΝ ΔΙΑΤΡΟΦΗΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'084199465',ad:'ΘΕΣΗ ΝΤΑΓΛΑ ΒΙΠΕ ΜΑΡΚΟΠΟΥΛΟΥ 0, 19003',ct:'ΜΑΡΚΟΠΟΥΛΟ',co:'',ph:'2299309547',em:'',pl:'',nt:'',plFile:null},
+    {id:335,nm:'ΔΙΒΑΡΗ ΜΟΝΟΠΡΟΣΩΠΗ ΕΠΕ',vt:'099001901',ad:'Π ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'2103423103',em:'',pl:'',nt:'',plFile:null},
+    {id:336,nm:'ΔΟΥΚΑΤΟ ΤΡΑΝΣ Ε.Π.Ε.',vt:'998879672',ad:'ΘΕΣΗ ΓΚΟΡΥΤΣΑ 0, 19300',ct:'',co:'',ph:'2105598046',em:'',pl:'',nt:'',plFile:null},
+    {id:337,nm:'ΔΡΑΚΟΥΛΗΣ ΜΟΝ. Ε.Π.Ε.',vt:'998468521',ad:'ΑΓΙΑΣ ΣΟΦΙΑΣ 90, 17123',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:338,nm:'Ε Ι  ΠΑΠΑΔΟΠΟΥΛΟΣ Α Ε',vt:'094031399',ad:'Π ΡΑΛΛΗ 26, 17778',ct:'',co:'',ph:'2103482000',em:'',pl:'',nt:'',plFile:null},
+    {id:339,nm:'Ε ΚΑΙΤΑΤΖΗ ΚΑΙ ΣΙΑ ΕΕ',vt:'998942014',ad:'ΟΡΕΣΤΗ  ΜΑΚΡΗ 5Α, 34100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:340,nm:'Ε ΠΕΦΑΝΗ FRUIT A E',vt:'800981309',ad:'ΚΕΝΤΡΙΚΗ ΑΓΟΡΑ ΑΘΗΝΩΝ Γ27 Γ29 G 27-29, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:341,nm:'Ε ΤΡΙΑΝΤΑΦΥΛΛΟΥ  Κ ΤΡΙΑΝΤΑΦΥΛΛΟΥ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801748386',ad:'ΣΑΠΦΟΥΣ 20, 11146',ct:'ΓΑΛΑΤΣΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:342,nm:'ΕΒΡΙΤΙΚΑ ΚΕΛΛΑΡΙΑ Α.Ε.',vt:'099310906',ad:'ΜΑΡΑΣΙΑ 0, 68007',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:343,nm:'ΕΙΣΑΓΩΓΙΚΗ ΠΕΡΙΣΤΕΡΙΟΥ ΜΟΝ ΙΚΕ',vt:'800878226',ad:'Λ ΚΗΦΙΣΟΥ 162, 12131',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:344,nm:'ΕΚΡΕΤ Α.Ε.Β.Ε.',vt:'094509234',ad:'ΚΗΦΙΣΟΥ 78, 18232',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:345,nm:'ΕΛ. ΚΙΑΧΑΚΗΣ Α.Ε.',vt:'094078859',ad:'Ο Κ Α Α  ΚΕΝΝΕΝΤΥ 1  Κ2 06Α ΚΑΤΑΣΤΗΜΑ 24 ΕΠΕΚΤΑΣΗ Κ2 05Β Ν23 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:346,nm:'ΕΛΛΑΦΡΙΚ Α.Ε.',vt:'094306756',ad:'ΑΓ ΑΝΑΡΓΥΡΩΝ 6, 17564',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:347,nm:'ΕΛΛΗΝΙΚΑ ΓΑΛΑΚΤΟΚΟΜΕΙΑ Α.Ε.',vt:'094020244',ad:'5  ΧΛΜ  ΤΡΙΚΑΛΩΝ  ΠΥΛΗΣ 0, 42100',ct:'',co:'',ph:'2431061222',em:'',pl:'',nt:'',plFile:null},
+    {id:348,nm:'ΕΛΛΗΝΙΚΑ ΚΑΙ ΔΙΕΘΝΗ ΜΕΤΑΦΟΡΙΚΑ ΣΥΣΤΗΜΑΤΑ ΕΠΕ',vt:'095735390',ad:'ΑΘΑΝΑΣΙΟΥ ΔΙΑΚΟΥ 2, 16672',ct:'ΒΑΡΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:349,nm:'ΕΛΛΗΝΙΚΕΣ ΦΑΡΜΕΣ ΑΝΩΝΥΜΗ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΙΑ',vt:'997819573',ad:'ΠΡΙΝΟΣ ΘΕΣΗ ΧΑΛΙΚΟΚΕΦΑΛΑ 0, 74100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:350,nm:'ΕΛΛΗΝΙΚΟΙ ΧΥΜΟΙ ΑΝΩΝΥΜΟΣ ΒΙΟΜΗΧΑΝΙΚΗ ΚΑΙ ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΙΑ',vt:'099847119',ad:'ΒΙΠΕ ΛΑΡΙΣΑΣ ΤΘ 2160 41003, 41500',ct:'ΛΑΡΙΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:351,nm:'ΕΝΩΣΗ ΑΓΡΟΤΩΝ ΣΥΝΕΤΑΙΡΩΝ ΑΡΓΟΛΙΔΑΣ ΡΕΑ',vt:'096049270',ad:'ΠΑΡΑΛ ΝΑΥΠΛΙΟΥ  Ν ΚΙΟΥ 2 ΧΙΛΙΟΜ, 21100',ct:'ΝΑΥΠΛΙΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:352,nm:'ΕΡΜΗΣ ΑΕ',vt:'094030888',ad:'ΕΥΠΟΛΙΔΟΣ 8, 10551',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:353,nm:'ΕΡΜΗΣ ΧΑΡΙΣΙΑΔΗΣ Α.Ε.',vt:'095754378',ad:'ΜΥΚΑΛΗΣ 59  ΚΑΙ  ΕΡΥΜΑΝΘΟΥ 0, 18540',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:354,nm:'ΕΡΜΗΣ ΧΑΡΙΣΙΑΔΗΣ ΚΑΙ ΥΙΟΙ Ε.Π.Ε',vt:'095754380',ad:'12 Ο ΧΙΛ ΠΑΛΑΙΑΣ ΕΘΝ ΟΔΟΥ ΠΑΤΡΩΝ ΚΟΡΙΝΘΟΥ 0, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:355,nm:'ΕΣΤΙΑ ΜΙΚΡΟΓΕΥΜΑΤΑ Ε Ε',vt:'801309758',ad:'ΑΓΙΟΥ ΔΗΜΗΤΡΙΟΥ 53, 18546',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:356,nm:'ΕΥΑΓΓΕΛΟΣ ΜΑΡΓΑΡΙΤΗΣ TRANSPORT LOGISTICS ΜΟΝ ΕΠΕ',vt:'997759744',ad:'ΤΕΡΜΑ ΗΠΕΙΡΟΥ 0, 57009',ct:'ΚΑΛΟΧΩΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:357,nm:'ΕΨΑ ΑΝΩΝΥΜΟΣ ΕΤΑΙΡEΙΑ ΒΙΟΜΗΧΑΝΙΑ ΑΝΑΨΥΚΤΙΚΩΝ Κ ΧΥΜΩΝ',vt:'094010515',ad:'Λ ΔΗΜΟΚΡΑΤΙΑΣ ΑΠ ΛΑΜΠΗ, 37300',ct:'ΑΓΡΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:358,nm:'ΖΑΦΕΙΡΗΣ  ΙΩΑΝΝΗΣ ΠΑΝΑΓΙΩΤΗΣ',vt:'056845046',ad:'ΜΥΣΤΑΚΟΠΟΥΛΟΥ 29, 21200',ct:'ΑΡΓΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:359,nm:'ΖΑΧΟΥ ΚΩΝ. ΔΗΜΗΤΡΑ',vt:'073927431',ad:'ΑΝΘΕΩΝ 3, 41335',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:360,nm:'ΖΗΔΙΑΝΑΚΗΣ - ΦΗΜΗ Α.Ε.',vt:'099779167',ad:'ΑΓΙΕΣ ΠΑΡΑΣΚΙΕΣ 0, 70100',ct:'ΗΡΑΚΛΕΙΟ',co:'',ph:'2810741654NONI',em:'',pl:'',nt:'',plFile:null},
+    {id:361,nm:'ΗΛΙΑΣ ΔΗΜ ΚΟΥΛΙΕΡΗΣ ΑΝΩΝΥΜΗ ΕΜΠΟΡΙΚΗ ΕΙΣΑΓΩΓΙΚΗ ΕΞΑΓΩΓΙΚΗ ΕΤΑΙΡΕΙΑ ΑΝΤΙΠΡΟΣΩΠΕΙΕΣ ΔΙΑΝΟΜΕΣ',vt:'999459976',ad:'ΒΙΠΕ ΚΑΛΑΜΑΤΑΣ Α ΟΤ4, 24100',ct:'ΚΑΛΑΜΑΤΑ',co:'',ph:'271069957',em:'',pl:'',nt:'',plFile:null},
+    {id:362,nm:'ΘΑΛΤΡΙΤΩΝ ΕΠΕ',vt:'095227751',ad:'ΚΟΡΙΝΝΗΣ 12, 10553',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:363,nm:'ΘΕΟΧΑΡΟΠΟΥΛΟΣ  ΗΡΑΚΛΗΣ ΘΕΟΧΑΡΗΣ',vt:'112417807',ad:'ΑΓΡΙΛΙΑ, 35100',ct:'ΛΑΜΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:364,nm:'ΘΕΤΙΣ ΜΟΝΟΠΡΟΣΩΠΗ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801694540',ad:'ΡΙΖΑΡΙΟ ΘΕΣΗ ΑΥΛΑΚΙ 0, 42100',ct:'ΤΡΙΚΑΛΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:365,nm:'ΘΡΕΨΗ ΖΩΗΣ ΕΠΕ',vt:'800316360',ad:'ΠΕΤΡΟΥ ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:366,nm:'ΙΑΚ.ΔΑΒΟΥΤΗΣ&ΣΙΑ Α.Ε',vt:'099056684',ad:'ΕΡΓΑΣΙΑΣ 15, 14231',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:367,nm:'ΙΒΙΣΚΟΣ ΠΑΡΑΓΩΓΗ ΚΑΙ ΕΜΠΟΡΙΑ ΕΙΔΩΝ ΔΙΑΤΡΟΦΗΣ ΑΕ',vt:'081067715',ad:'ΛΕΩΦ ΡΟΔΟΥ ΛΙΝΔΟΥ 5 ΧΛ, 85100',ct:'ΡΟΔΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:368,nm:'ΙΝΤΕΡΝΑΣΙΟΝΑΛ ΝΟΒΑ ΤΡΑΝΣΠΟΡΤ ΜΟΝ ΕΠΕ',vt:'099005820',ad:'ΕΥΑΓΓΕΛΙΣΤΡΙΑΣ 14, 15342',ct:'ΑΓ ΠΑΡΑΣΚΕΥΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:369,nm:'ΙΟΝ AΕΒΕ ΚΑΚΑΟ ΚΑΙ ΣΟΚΟΛΑΤΑΣ',vt:'094006864',ad:'ΕΛ ΒΕΝΙΖΕΛΟΥ 69, 18547',ct:'ΠΕΙΡΑΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:370,nm:'ΙΟΝΙΚΗ ΞΕΝΟΔΟΧΕΙΑΚΑΙ ΕΠΙΧΕΙΡΗΣΕΙΣ ΑΕ',vt:'094006888',ad:'ΖΕΦΥΡΟΥ 60, 17564',ct:'Π ΦΑΛΗΡΟ',co:'',ph:'6942656867',em:'',pl:'',nt:'',plFile:null},
+    {id:371,nm:'ΙΩΑN.  ΠΕΛΕΚΗΣ A.E.',vt:'094500516',ad:'ΘΕΣΗ ΛΑΚΚΑ ΣΚΛΗΡΟΥ, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:372,nm:'ΙΩΑΝΝΗΣ Γ ΦΛΩΡΟΣ ΚΑΙ ΣΙΑ ΕΕ',vt:'800862333',ad:'ΤΡΙΑΚΟΣΙΩΝ 94, 23100',ct:'ΣΠΑΡΤΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:373,nm:'ΙΩΑΝΝΗΣ Θ. ΤΟΠΙΝΤΖΗΣ & ΣΙΑ Ο.Ε',vt:'084102070',ad:'ΠΑΤΡΩΝ 13, 27100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:374,nm:'ΙΩΝΙΚΗ ΣΦΟΛΙΑΤΑ ΑΝΩΝΥΜΗ ΕΤΑΙΡΙΑ',vt:'099770855',ad:'1 ΧΛΜ ΝΕΟΧΩΡΟΥΔΑΣ ΩΡΑΙΟΚΑΣΤΡΟΥ 0, 54500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:375,nm:'ΙΩΣΗΦ ΜΑΚΡΥΔΑΚΗΣ Α.Ε.',vt:'094145631',ad:'Π ΡΑΛΛΗ 8, 11855',ct:'ΑΘΗΝΑ',co:'',ph:'2103459338',em:'',pl:'',nt:'',plFile:null},
+    {id:376,nm:'Κ ΜΠΑΤΑΤΟΛΗΣ ΚΑΙ ΣΙΑ ΟΕ',vt:'095601337',ad:'ΑΡΡΙΑΝΟΥ ΚΑΙ ΗΣΙΟΔΟΥ ΤΘ3996 0, 42100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:377,nm:'ΚΑΚΑΖΟΥΚΗΣ  ΛΑΜΠΡΟΣ ΣΕΡ.',vt:'102853935',ad:'ΚΝΩΣΣΟΥ 44, 17455',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:378,nm:'ΚΑΛΛΑΣ INCORPORATION ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'094091600',ad:'ΦΙΛΙΠΠΟΥ ΔΑΜΙΑΝΟΥ 13, 13671',ct:'AXAPNAI',co:'',ph:'2102401830ΚΟΥΚΟΥΖΑ',em:'',pl:'',nt:'',plFile:null},
+    {id:379,nm:'ΚΑΛΟΡΟΓΙΑΝΝΗΣ  ΒΑΪΟΣ ΝΙΚΟΛΑΟΣ',vt:'054173174',ad:'ΟΜΟΡΦΟΧΩΡΙ ΘΕΣΗ ΡΙΖΑΚΙΑ Η ΟΧΤΑΡΙΑ, 41500',ct:'ΛΑΡΙΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:380,nm:'ΚΑΛΥΒΗΣΑ.Ε.',vt:'800525840',ad:'Λ 25 Λ 27 Μ 22 Μ 24 Μ 28 Λ 23 ΜΙΣΟ ΔΕΞΙΑ 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:381,nm:'ΚΑΝΚΟ ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΚΑΙ ΑΠΟΘΗΚΕΥΣΕΙΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΙΑ',vt:'099001372',ad:'ΚΟΙΝΟΤΙΚΗ ΟΔΟΣ ΑΥΛΩΝΑ ΑΣΠΡΟΧΩΡΙΟΥ ΘΕΣΗ ΡΕΡΕΣΙ, 19011',ct:'ΑΥΛΩΝΑ',co:'',ph:'22950-44107',em:'',pl:'',nt:'',plFile:null},
+    {id:382,nm:'ΚΑΝΤΙΑ ΤΡΕΙΝΤ ΜΟΝ. ΕΠΕ',vt:'095620339',ad:'ΝΕΡΟΚΟΥΡΟΥ ΘΕΣΗ ΚΑΨΑΛΩΝΑΣ ΑΓΙΩΝ ΣΑΡΑΝΤΑ 31, 73100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:383,nm:'ΚΑΡΑΓΙΑΝΝΗΣ ΓΕΩΡ. ΑΕ',vt:'094402836',ad:'',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:384,nm:'ΚΑΡΑΚΑΤΣΑΝΗΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'081328274',ad:'ΚΟΡΩΝΙΟΥ 20, 38334',ct:'ΒΟΛΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:385,nm:'ΚΑΡΓΚΟ ΚΕΑΡ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ ΕΠΕ',vt:'095563605',ad:'ΕΘΝΙΚΗΣ ΑΝΤΙΣΤΑΣΕΩΣ 30, 15235',ct:'ΒΡΙΛΗΣΣΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:386,nm:'ΚΑΣΙΔΗΣ ΑΕ',vt:'099136451',ad:'1 ΧΛΜ ΔΙΑΣΤ ΑΓΙΑΣ ΣΟΦΙΑΣ ΜΕ ΕΟ ΛΑΡΙΣΑΣ ΤΥΡΝΑΒΟΥ 0, 40100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:387,nm:'ΚΟΖΑΣ ΒΑΣΙΛΕΙΟΣ & ΣΙΑ ΟΕ',vt:'091681563',ad:'5 ΧΙΛ ΡΟΔΟΥ ΛΙΝΔΟΥ 0, 85100',ct:'',co:'',ph:'2241068643',em:'',pl:'',nt:'',plFile:null},
+    {id:388,nm:'ΚΟΙΝΟΠΡΑΞΙΑ ΑΝΕΚ  ΣΟΥΠΕΡΦΑΣΤ',vt:'997595200',ad:'ΛΥΣΙΚΡΑΤΟΥΣ 29, 17674',ct:'ΚΑΛΛΙΘΕΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:389,nm:'ΚΟΚΚΑΛΗΣ Α.E.',vt:'094135293',ad:'ΟΔΟΣ Θ ΒΙΠΕ 0, 71500',ct:'',co:'',ph:'2810381031',em:'',pl:'',nt:'',plFile:null},
+    {id:390,nm:'ΚΟΝΒΟΙ ΤΡΑΝΣ ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΕΤΑΙΡΙΑ ΠΕΡΙΩΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'095592404',ad:'ΑΘΗΝΑΣ ΤΑΧΥΔΡΟΜΙΚΗ ΘΥΡΙΔΑ 550, 57005',ct:'Ν ΜΑΓΝΗΣΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:391,nm:'ΚΟΝΤΟΠΟΥΛΟΣ  ΚΥΡΙΑΚΟΣ ΧΑΡΑΛΑΜΠ',vt:'046414447',ad:'ΗΠΕΙΡΟΥ 36, 59034',ct:'ΕΙΡΗΝΟΥΠΟΛΗ ΝΟΜΟΥ ΗΜΑΘΙΑΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:392,nm:'ΚΟΝΤΟΣ Ν-Β-Ι ΕΠΕ',vt:'095531982',ad:'Π  ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:393,nm:'ΚΟΡΡΟΥ  ΔΗΜΗΤΡΑ ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'134611744',ad:'ΑΡΙΣΤΟΤΕΛΟΥΣ 32, 20200',ct:'ΚΙΑΤΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:394,nm:'ΚΟΡΩΝΗ ΑΝΩΝΥΜΗ ΕΜΠΟΡΙΚΗ ΒΙΟΤΕΧΝΙΚΗ ΞΕΝΟΔΟΧΕΙΑΚΗ ΚΑΙ ΤΟΥΡΙΣΤΙΚΗ ΕΤΑΙΡΙΑ',vt:'099708120',ad:'ΕΙΡΗΝΗΣ ΚΑΙ ΦΙΛΙΑΣ 102, 71410',ct:'ΗΡΑΚΛΕΙΟ',co:'',ph:'22810250150',em:'',pl:'',nt:'',plFile:null},
+    {id:395,nm:'ΚΟΡΩΝΗ ΧΑΝΙΩΝ ΑΝΩΝΥΜΗ ΕΜΠΟΡΙΚΗ ΒΙΟΤΕΧΝΙΚΗ ΕΙΣΑΓΩΓΙΚΗ ΚΑΙ ΔΙΑΝΟΜΩΝ ΕΤΑΙΡΙΑ',vt:'800627498',ad:'ΜΥΛΩΝΙΑΝΑ ΒΑΡΥΠΕΤΡΟΥ ΧΑΝΙΩΝ, 73100',ct:'ΧΑΝΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:396,nm:'ΚΟΣΙΑΒΑΣ ΚΟΥΖΙΩΚΑΣ Α.Ε.Β.Ε.',vt:'094195566',ad:'Α ΒΙΠΕ ΒΟΛΟΥ 0, 38500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:397,nm:'ΚΟΥΣΑΘΑΝΑΣ  ΘΕΟΧΑΡΗΣ ΙΩΑΝΝΗΣ',vt:'107234166',ad:'ΛΥΚΟΠΟΡΙΑ 0, 20009',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:398,nm:'ΚΟΥΤΣΙΚΟΠΟΥΛΟΣ ΕΜΠΟΡΙΚΗ ΑΕE',vt:'095261965',ad:'ΚΥΡΑ ΧΡΥΣΙΚΟΥ ΔΑΝΙΛΙΑ 0, 49100',ct:'KEPKYPA',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:399,nm:'ΚΡΕΑΤΕΜΠΟΡΙΚΗ ΚΟΣΣΥΒΑ Α.Ε.',vt:'997318035',ad:'ΘΕΣΗ ΚΑΡΑΒΑ 1 ΧΛΜ ΑΣΤΡΟΥΣ ΠΑΡΑΛΙΟΥ ΑΣΤΡΟΥΣ 0, 22001',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:400,nm:'ΚΡΗΤΙΚΗ ΒΙΟΜΗΧ. ΕΠΕΞΕΡΓ ΚΡΕΑΤ ΑΕΞΕ',vt:'094460317',ad:'ΚΑΜΠΟΣ ΕΛΙΑΣ ΠΑΝΩ ΧΕΡΣΟΝΗΣΟΣ 0, 70014',ct:'',co:'',ph:'2897026600',em:'',pl:'',nt:'',plFile:null},
+    {id:401,nm:'ΚΩΝ. ΧΡΙΣΤΟΔΟΥΛΙΔΗΣ Κ ΣΙΑ ΕΕ',vt:'999674916',ad:'10 ΧΛΜ ΡΟΔΟΥ ΛΙΝΔΟΥ 0, 85100',ct:'',co:'',ph:'2241086402',em:'',pl:'',nt:'',plFile:null},
+    {id:402,nm:'ΚΩΝ/ΝΟΣ ΠΑΠΑΚΩΣΤΑΣ ΜΟΝ. Ε.Π.Ε.',vt:'997459090',ad:'ΑΠΟΣΤΟΛΟΠΟΥΛΟΥ 12, 15121',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:403,nm:'ΚΩΣΤΑ  ΜΑΡΓΑΡΙΤΑ ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'108441602',ad:'ΣΚΑΛΑ 0, 23051',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:404,nm:'ΛΑΓΑΚΗΣ Κ ΚΑΙ ΣΙΑ ΟΕ',vt:'082345883',ad:'ΠΑΥΛΟΥ ΜΕΛΑ 50 ΚΑΙ ΚΗΦΙΣΣΟΥ 13, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:405,nm:'ΛΑΚΩΝΙΑ  ΑΓΡ. ΣΥΝ. ΕΠΕΞ. ΕΣΠΕΡ.',vt:'096122810',ad:'ΑΜΥΚΛΕΣ, 23100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:406,nm:'ΛΑΛΑΣ Α.Ε.',vt:'801003874',ad:'ΚΕΝΤΡ. ΑΓΟΡΑ ΑΘΗΝΩΝ Μ18- 20, 18233',ct:'',co:'',ph:'2104816243',em:'',pl:'',nt:'',plFile:null},
+    {id:407,nm:'ΛΑΛΑΣ ΙΩΑΝΝΗΣ ΚΑΙ ΘΥΓΑΤΕΡΕΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΙΑ',vt:'800392318',ad:'ΚΕΝΤΡΙΚΗ ΑΓΟΡΑ ΑΘΗΝΩΝ Β25Β27Β29Β31Γ30 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:408,nm:'ΛΑΝΤΣΙΟΝ ΜΗΤ ΕΒΡΟΥ ΑΕ',vt:'094340713',ad:'ΒΙΠΕ ΑΛΕΞΑΝΔΡΟΥΠΟΛΗΣ ΤΘ 148, 68100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:409,nm:'ΛΑΤΣΩΝΑΣ  ΠΑΡΑΣΚΕΥΑΣ ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'052501756',ad:'ΠΑΡΑΛ  ΟΔΟΣ ΝΑΥΠΛΙΟΥ ΝΕΑΣ ΚΙΟΥ 3 ΧΙΛΙΟΜ ΠΕΡΙΦ ΑΡΓΟΛΙΚΟΥ, 21055',ct:'ΑΓ ΤΡΙΑΔΑ',co:'',ph:'2752026866',em:'',pl:'',nt:'',plFile:null},
+    {id:410,nm:'ΛΕΟΝΟΡΑ ΣΜΑΤΣΗ ΚΑΙ ΣΙΑ ΟΕ',vt:'998874664',ad:'ΑΝΑΓΝΩΣΤΟΠΟΥΛΟΥ 11, 10673',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:411,nm:'ΛΕΥΚΙΜΜΙΑΤΗΣ  ΠΑΝΑΓΙΩΤΗΣ ΝΙΚΟΛΑΟΣ',vt:'039119930',ad:'ΚΑΒΒΑΔΑΔΕΣ 00, 49081',ct:'ΚΑΡΟΥΣΑΔΕΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:412,nm:'Μ ΔΡΟΣΟΠΟΥΛΟΥ Κ ΜΠΟΥΡΑΣ ΟΕ',vt:'999337045',ad:'ΔΕΡΒΕΝΑΚΙΩΝ 23, 15351',ct:'ΠΑΛΛΗΝΗ',co:'',ph:'2106666637ΜΠΟΥΡΑΣ',em:'',pl:'',nt:'',plFile:null},
+    {id:413,nm:'ΜΑΓΟΥΛΗ  ΑΙΚΑΤΕΡΙΝΗ ΓΕΩΡΓΙΟΣ',vt:'158931353',ad:'ΦΥΛΗΣ, 19300',ct:'ΑΣΠΡΟΠΥΡΓΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:414,nm:'ΜΑΝΙΤΑΡΙΑ ΔΙΡΦΥΣ ΙΚΕ',vt:'997834472',ad:'ΘΕΣΗ ΑΡΑΠΗΣ ΕΠ ΟΔΟΣ ΧΑΛΚΙΔΑΣ ΣΤΕΝΗΣ, 34018',ct:'ΚΑΘΕΝΟΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:415,nm:'ΜΑΝΙΤΑΡΙΑ ΤΡΙΚΑΛΩΝ Α.Ε.',vt:'998612861',ad:'ΠΑΛΑΙΟΠΥΡΓΟΣ 0, 42100',ct:'',co:'',ph:'2431087872',em:'',pl:'',nt:'',plFile:null},
+    {id:416,nm:'ΜΑΝΩΛΗΣ ΚΕΜΠΑΠ ΚΑΙ ΣΙΑ ΕΕ',vt:'800685350',ad:'Λ ΕΙΡΗΝΗΣ 73, 17778',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:417,nm:'ΜΑΡΓΕΛΛΟΣ Α.Ε.',vt:'094230769',ad:'ΠΕΙΡΑΙΩΣ 88, 18346',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:418,nm:'ΜΑΡΙΝΟΣ ΗΛ ΒΑΣΙΛΟΠΟΥΛΟΣ ΔΗΜ ΑΕ',vt:'800461851',ad:'37 ΧΙΛΙΟΜΕΤΡΟ ΝΕΑΣ ΕΘΝΙΚΗΣ ΟΔΟΥ ΑΘΗΝΩΝ ΚΟΡΙΝΘΟΥ 0, 19100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:419,nm:'ΜΑΡΚΟΠΟΥΛΟΣ Φ. ΠΕΤΡΟΣ',vt:'035812710',ad:'ΚΥΠΡΟΥ 45  ΚΑΙ  ΛΑΚΩΝΙΑΣ- ΑΓ. ΒΑΡΒΑΡΑ 0, 12351',ct:'',co:'',ph:'2105695616',em:'',pl:'',nt:'',plFile:null},
+    {id:420,nm:'ΜΑΣΙΜΟ ΕΜΠΟΡΙΚΗ ΜΟΝΟΠΡΟΣΩΠΗ ΕΤΑΙΡΕΙΑ ΠΕΡΙΟΡΙΣΜΕΝΗΣ ΕΥΘΥΝΗΣ',vt:'800500555',ad:'ΠΟΤΑΜΟΥ  ΡΟΤΣΟ, 85200',ct:'ΚΑΛΥΜΝΟΣ',co:'',ph:'2243024550',em:'',pl:'',nt:'',plFile:null},
+    {id:421,nm:'ΜΕΝΤ ΣΤΑΡ ΝΑΥΤΙΛΙΑΚΗ ΚΑΙ ΜΕΤΑΦΟΡΙΚΗ ΑΕ',vt:'800383322',ad:'2ΑΣ ΜΕΡΑΡΧΙΑΣ 3, 18535',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:422,nm:'ΜΕΡΑΚΛΙΔΗΣ ΑΛΕΞ. ΙΩΑΝΝΗΣ',vt:'031304121',ad:'ΜΑΚΕΔΟΝΟΜΑΧΩΝ 6 ΠΕΙΡΑΙ, 18542',ct:'',co:'',ph:'6973329429',em:'',pl:'',nt:'',plFile:null},
+    {id:423,nm:'ΜΗΤΡΑΚΟΣ  ΔΗΜΗΤΡΙΟΣ ΠΕΤΡΟΣ',vt:'050962319',ad:'ΑΡΧΙΔΑΜΟΥ 113, 23100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:424,nm:'ΜΙΝΕΡΒΑ ΑΕ ΕΛΑΙΟΥΡΓΙΚΩΝ ΕΠΙΧΕΙΡΗΣΕΩΝ',vt:'094074001',ad:'ΤΑΤΟΙΟΥ 165 ΚΑΙ ΟΔΥΣΕΩΣ 0, 14452',ct:'',co:'',ph:'2102854290ΠΑΥΛΟΥΣ',em:'',pl:'',nt:'',plFile:null},
+    {id:425,nm:'ΜΙΝΩΙΚΑΙ ΓΡΑΜΜΑΙ ANE',vt:'094049145',ad:'25 ΑΥΓΟΥΣΤΟΥ 17, 71202',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:426,nm:'ΜΙΡΑΝ ΑΛΛΑΝΤΟΠΟΙΙΑ Α.Ε.Β.Ε.',vt:'999779923',ad:'ΚΑΝΑΡΗ 22, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:427,nm:'ΜΙΧΑΗΛ ΑΡΑΜΠΑΤΖΗΣ ΑΒΕΕ ΤΡΟΦΙΜΩΝ',vt:'099773821',ad:'1 ΔΡΟΜΟΣ ΒΙΠΕΘ, 57022',ct:'ΒΙΠΕΘ ΣΙΝΔΟΣ',co:'',ph:'2310723440',em:'',pl:'',nt:'',plFile:null},
+    {id:428,nm:'ΜΟΔΙΑΝΟ Α.Ε.',vt:'094351371',ad:'ΚΗΦΙΣΙΑΣ 282, 15232',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:429,nm:'ΜΟΝΤΙΑΛ ΕΛΛΑΣ ΜΕΤΑΦΟΡΙΚΗ Α.Ε.',vt:'095113366',ad:'Λ ΑΜΦΙΘΕΑΣ 105, 17563',ct:'',co:'',ph:'2105540907',em:'',pl:'',nt:'',plFile:null},
+    {id:430,nm:'ΜΟΝΤΟ ΝΤΕΛ ΜΑΡΕ ΕΙΣΑΓΩΓΗ ΕΞΑΓΩΓΗ ΚΑΙ ΕΜΠΟΡΙΑ ΝΩΠΩΝ ΚΑΤΕΨΥΓΜΕΝΩΝ',vt:'999374723',ad:'ΠΕΤΡΟΥ ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:431,nm:'ΜΟΥΜΤΖΙΔΗΣ ΜΙΧΑΛΗΣ',vt:'027092368',ad:'ΣΟΛΩΜΟΥ 62',ct:'',co:'',ph:'2105786149',em:'',pl:'',nt:'',plFile:null},
+    {id:432,nm:'ΜΠΑΖΙΓΟΥ  ΟΥΡΑΝΙΑ',vt:'047362980',ad:'ΚΕΝΝΕΝΤΥ 10, 18233',ct:'',co:'',ph:'2104836033',em:'',pl:'',nt:'',plFile:null},
+    {id:433,nm:'ΜΠΑΙΝΕΤΑΣ ΔΗΜΗΤ. ΣΩΤΗΡΙΟΣ',vt:'054795504',ad:'ΜΑΡΑΘΩΝΟΣ ΑΒΥΘΟΣ ΔΗΜΟΥ ΣΥΜΠΟΛΙΤΕΙΑΣ 1, 25100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:434,nm:'ΜΠΑΛΤΣΑΒΙΑΣ  ΔΙΟΜΗΔΗΣ ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'022237167',ad:'ΤΑΤΑΟΥΛΩΝ 3, 11476',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:435,nm:'ΜΠΑΛΤΣΑΒΙΑΣ ΚΩΝΣΤΑΝΤΙΝΟΣ ΔΙΟΜΗΔΗΣ',vt:'114864271',ad:'ΤΑΤΑΟΥΛΩΝ 3, 11476',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:436,nm:'ΜΠΑΜΠΑΓΙΟΥΡΗΣ  ΔΗΜΗΤΡΙΟΣ ΘΩΜΑΣ',vt:'068806116',ad:'ΖΑΙΜΗ 1, 41222',ct:'ΛΑΡΙΣΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:437,nm:'ΜΠΑΜΠΑΝΑΣΙΟΣ  ΑΘΑΝΑΣΙΟΣ ΠΑΝΑΓΙΩΤΗΣ',vt:'051902253',ad:'Ο Κ Κ Α  Κ3  07Β 37  Κ3  08Β  36, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:438,nm:'ΜΠΑΡΜΠΗΣ  ΙΩΑΝΝΗΣ Π.',vt:'062448647',ad:'ΠΑΤΡΟΚΛΟΥ 5, 41222',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:439,nm:'ΜΠΑΦΕΤΗΣ Α.Ε.',vt:'800483230',ad:'Κ37 39 41 43 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:440,nm:'ΜΠΕΣΤ ΛΟΤΖΙΣΤΙΚΣ ΝΟΡΘ ΔΙΑΚΙΝΗΣΗ ΚΑΙ ΑΠΟΘΗΚΕΥΣΗ ΕΜΠΟΡΕΥΜΑΤΩΝ ΑΕ',vt:'800052350',ad:'ΘΕΡΜΗ ΑΓΡΟΤΕΜΑΧΙΟ 51 0, 57001',ct:'ΘΕΡΜΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:441,nm:'ΜΠΙΖΙΟΣ  ΜΙΧΑΗΛ ΓΕΩΡΓΙΟΣ',vt:'025539636',ad:'ΤΖΑΒΕΛΛΑ 4, 42100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:442,nm:'ΜΠΙΚΑΣ Α.Ε.',vt:'997282600',ad:'1ΧΛΜ ΒΕΡΟΙΑΣ ΑΜΜΟΥ 0, 59100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:443,nm:'ΜΠΙΛΙΑΣ ΠΑΝΑΓΙΩΤΗΣ ΜΟΝΟΠΡΟΣΩΠΗ ΙΚΕ',vt:'800424204',ad:'ΑΡΧΑΙΑΣ ΗΛΙΔΑΣ, 27300',ct:'ΓΑΣΤΟΥΝΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:444,nm:'ΜΠΙΤΟΥΝΗΣ Α. - Β.  ΣΟΥΚΟΥΛΗΣ Ε.Π.Ε.',vt:'095317664',ad:'ΠΑΤΡΩΝ 84, 20100',ct:'',co:'',ph:'2741022116',em:'',pl:'',nt:'',plFile:null},
+    {id:445,nm:'ΜΠΟΖΙΟΝΕΛΟΣ  ΙΩΑΝΝ ΦΩΤΙΟΣ',vt:'024744855',ad:'ΑΚΟΒΑ 0, 21200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:446,nm:'ΜΠΟΖΙΟΝΕΛΟΣ Α.Ε.Ε',vt:'094377546',ad:'ΠΥΡΓΟΥ 27, 18300',ct:'ΜΟΣΧΑΤΟ',co:'',ph:'2105818964',em:'',pl:'',nt:'',plFile:null},
+    {id:447,nm:'ΜΠΟΖΙΟΥ  ΑΙΚΑΤΕΡΙΝΗ ΣΤΕΦΑΝΟΣ',vt:'119528829',ad:'ΜΑΝΟΥ ΚΑΤΡΑΚΗ 4, 45500',ct:'ΚΑΤΩ ΝΕΟΧΩΡΟΠΟΥΛΟ ΙΩΑΝΝΙΝΩΝ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:448,nm:'ΜΠΡΑΚΟΠΟΥΛΟΣ ΑBEEΤ',vt:'092419583',ad:'28 ΧΛΜ Λ ΚΟΡΩΠΙΟΥ ΒΑΡΗΣ 0, 19400',ct:'ΚΟΡΩΠΙ',co:'',ph:'2106626562ΣΤΑΜΑΤΑΚ',em:'',pl:'',nt:'',plFile:null},
+    {id:449,nm:'ΜΩΛΕΣ ΔΗΜ.  ΚΩΝΣΤΑΝΤΙΝΟΣ',vt:'023114952',ad:'ΤΕΡΜΑ ΚΡΙΕΖΗ 0, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:450,nm:'Ν Α Φ ΕΜΠΟΡΙΑ ΑΓΡΟΤΙΚΩΝ ΠΡΟΙΟΝΤΩΝ ΙΚΕ',vt:'800726267',ad:'Ο Κ Α Α  Υ 16  Υ 17 Υ 12 Υ13 Υ 14 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:451,nm:'Ν ΚΑΙ Δ ΠΑΙΝΕΣΗΣ ΟΕ',vt:'997719802',ad:'Π ΣΠΥΡΟΠΟΥΛΟΥ 3, 18346',ct:'ΜΟΣΧΑΤΟ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:452,nm:'Ν. & Ν. ΝΙΚΟΛΑΟΥ Ο.Ε.',vt:'091028389',ad:'Ε.Ο. ΧΑΛΚΙΔΑΣ ΚΑΡΥΣΤΟΥ, 34500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:453,nm:'ΝΑΝΟΣ ΙΩΑΝΝ. Κ ΣΙΑ ΑΕΒΕ',vt:'081248016',ad:'ΘΕΣΗ ΤΖΑΒΕΡΔΕΛΑ, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:454,nm:'ΝΑΤΟΥΡΑ ΑΕ ΠΑΡΑΓΩΓΗ ΑΓΡΟΤΙΚΩΝ ΠΡΟΙΟΝΤΩΝ',vt:'094274780',ad:'2ΧΙΛ ΑΛΕΞ ΠΟΛΗΣ ΑΒΑΝΤΑ, 68100',ct:'ΑΛΕΞΑΝΔΡΟΥΠΟΛΗ',co:'',ph:'2551035323',em:'',pl:'',nt:'',plFile:null},
+    {id:455,nm:'ΝΤΑΛΛΑΣ  ΔΗΜΗΤΡ ΑΘΑΝΑΣΙΟΣ',vt:'025340834',ad:'ΒΙΝΙΑΝΙ ΕΥΡΥΤΑΝΙΑΣ 0, 36071',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:456,nm:'ΟΛΥΜΠΙΚ ΦΟΥΝΤΣ Α.Ε.Β.Ε.',vt:'094281296',ad:'ΤΕΡΜΑ ΑΡΤΕΜΙΔΟΣ 0, 14452',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:457,nm:'ΟΜΗΡΟΣ Α.Ε.',vt:'094468641',ad:'4 ΧΙΛ  Π Ε Ο ΚΑΤΕΡ ΘΕΣ/ΚΗΣ 0, 60100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:458,nm:'ΟΡΕΙΝΗ ΑΛΛΑΝΤΟΠΟΙΙΑ Ι.Κ.Ε.',vt:'801002275',ad:'ΓΡΗΓΟΡΙΟΥ ΛΑΜΠΡΑΚΗ 58, 16675',ct:'ΓΛΥΦΑΔΑ',co:'',ph:'2106440195',em:'',pl:'',nt:'',plFile:null},
+    {id:459,nm:'Π ΑΣΑΡΓΙΩΤΑΚΗΣ ΚΑΙ ΣΙΑ Ε Ε',vt:'802180298',ad:'ΠΡΑΞΙΤΕΛΟΥΣ 8, 10561',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:460,nm:'Π ΤΖΑΚΗΣ  Ι ΠΛΟΣΚΑΣ ΟΕ',vt:'099970785',ad:'Γ ΚΟΥΒΙΔΗ 35, 19200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:461,nm:'ΠΑΙΔΑΣ  ΙΩΑΝΝΗΣ ΣΠΥΡΙΔΩΝ',vt:'026150366',ad:'ΠΕΝΤΕΛΗΣ 26',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:462,nm:'ΠΑΝΟΣ   ΚΩΣΤΑΣ Ι Κ Ε',vt:'802094520',ad:'ΒΙΠΑ 1ΟΣ ΔΡΟΜΟΣ ΛΑΚΚΩΜΑ, 63080',ct:'Ν ΚΑΛ/ΚΡΑΤΕΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:463,nm:'ΠΑΝΤΟΥΛΗΣ  ΓΕΩΡΓΙΟΣ ΑΣΤ.',vt:'063899063',ad:'ΠΙΕΡΙΩΝ 1, 41222',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:464,nm:'ΠΑΞΜΑΝ Ε.Π.Ε.',vt:'095521097',ad:'Β Ι Π Ε ΠΑΤΡΩΝ 0, 25200',ct:'',co:'',ph:'2610647544',em:'',pl:'',nt:'',plFile:null},
+    {id:465,nm:'ΠΑΠΑΓΕΩΡΓΙΟΥ ΑΦΟΙ Α.Ε.',vt:'082272665',ad:'ΗΛΕΙΑΣ 5, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:466,nm:'ΠΑΤΡΑΣ Ι Κ Ε',vt:'800543242',ad:'ΚΑΡΔΙΤΣΑ ΜΗΤΡΟΠΟΛΗ ΧΛΜ 2, 43100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:467,nm:'ΠΕΛΑΤΗΣ ΛΙΑΝΙΚΗΣ',vt:'',ad:'',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:468,nm:'ΠΕΤΡΟΠΟΥΛΟΣ  ΦΩΤΙΟΣ ΣΠΥΡΙΔΩΝ',vt:'138264597',ad:'ΛΕΧΑΙΟ, 20011',ct:'ΠΕΡΙΓΙΑΛΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:469,nm:'ΠΕΤΡΟΠΟΥΛΟΥ ΣΑΡ.  ΜΑΡΓΑΡΙΤΑ',vt:'104000725',ad:'ΘΕΣΗ ΦΑΚΑ 0, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:470,nm:'ΠΕΤΡΟΣ ΠΑΝΤΑΖΗΣ ΜΟΝΟΠΡΟΣΩΠΗ ΕΠΕ',vt:'999796182',ad:'ΑΓ  ΓΛΥΚΕΡΙΑΣ 12, 11146',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:471,nm:'ΠΕΦΑΝΗΣAE',vt:'998922433',ad:'ΚΑΑ Γ2 4 6 8 Β3 5 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:472,nm:'ΠΟΤΟΥΛΗΣ ΑΝΤ.  ΕΥΑΓΓΕΛΟΣ',vt:'046663114',ad:'ΑΝΑΒΡΑ - ΑΓΙΑ ΛΑΡΙΣΣΑ 0, 40003',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:473,nm:'ΡΟΔΟΥΛΑ Α.Ε.',vt:'099117147',ad:'ΑΜΑΛΙΑΔΟΣ   ΚΑΙ ΘΡΑΚΟΜΑΚΕΔΟΝΩΝ 74 2, 13671',ct:'ΑΧΑΡΝΑΙ',co:'',ph:'2102478678',em:'',pl:'',nt:'',plFile:null},
+    {id:474,nm:'ΣΑΒΡΑΜΗΣ ΒΑΣΙΛΗΣ ΚΑΙ ΣΙΑ ΕΠΕ',vt:'095653973',ad:'ΠΕΙΡΑΙΩΣ 226, 17778',ct:'ΤΑΥΡΟΣ',co:'',ph:'2103420777',em:'',pl:'',nt:'',plFile:null},
+    {id:475,nm:'ΣΕΦΚΟ ΖΕΕΛΑΝΔΙΑ ΑΒΕΕ',vt:'094360183',ad:'ΘΕΣΗ ΓΙΑΛΟΥ 0, 19004',ct:'ΣΠΑΤΑ',co:'',ph:'2106633662',em:'',pl:'',nt:'',plFile:null},
+    {id:476,nm:'ΣΙΩΡΑΣ ΝΙΚΗΤΑΣ ΚΑΙ ΣΙΑ ΟΕ',vt:'998820441',ad:'Π ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:477,nm:'ΣΚΑΛΚΟΓΙΑΝΝΗΣ Ι. ΚΩΝ/ΝΟΣ',vt:'029644083',ad:'ΠΕΤΡΟΥ ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:478,nm:'ΣΚΟΠΟΣ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'094295356',ad:'Α ΒΙ ΠΕ ΒΟΛΟΥ 0, 38110',ct:'ΒΟΛΟΣ',co:'',ph:'2421095488',em:'',pl:'',nt:'',plFile:null},
+    {id:479,nm:'ΣΜΑΡΤΡΑΝΣ ΙΚΕ',vt:'095349059',ad:'ΔΗΜΟΣΘΕΝΟΥΣ 31, 54628',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:480,nm:'ΣΠΑΝΟΣ ΕΜΜΑΝΟΥΗΛ ΚΑΙ ΣΙΑ ΕΕ',vt:'099687120',ad:'ΔΗΜΟΚΡΑΤΙΑΣ ΚΑΙ 28ΗΣ ΟΚΤΩΒΡΙΟΥ ΠΗΓΑΔΙΑ ΚΑΡΠΑΘΟΥ, 85700',ct:'ΚΑΡΠΑΘΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:481,nm:'ΣΠΑΡΟΣ ΑΕ',vt:'094338613',ad:'1 ΧΙΛ ΛΕΙΒΑΔΙΑΣ   ΛΑΜΙΑΣ 0, 32100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:482,nm:'ΣΤΑΜΑΤΑΚΗΣ ΑΝΤ & ΘΩΜΑ Μ. ΟΕ',vt:'999486733',ad:'ΑΓΙΑΣ  ΕΙΡΗΝΗΣ  ΠΕΡΙΟΧΗ  ΣΥΛΛΑΜΟΣ  ΗΡΑΚΛΕΙΟΥ 76, 71500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:483,nm:'ΣΤΑΜΑΤΑΚΗΣ ΣΠΥΡΟΣ ΑΠΟ',vt:'026357064',ad:'ΕΜΠΟΡΙΚΗ ΠΡΟΒΛΗΤΑ ΛΙΜΕΝΟΣ ΣΟΥΔΑΣ 0, 73200',ct:'ΣΟΥΔΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:484,nm:'ΣΤΑΜΑΤΗΣ ΚΛΟΥΔΑΣ ΑΕ',vt:'998106048',ad:'Π ΡΑΛΛΗ 8, 11855',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:485,nm:'ΣΤΑΥΡΟΣ ΣΤΕΡΓΙΟΥ ΑΕ ΕΜΠΟΡΙΑ ΓΑΛΑΚΤΟΚΟΜΙΚΩΝ ΠΡΩΤΩΝ ΥΛΩΝ ΖΑΧΑΡΟΠΛΑΣΤΙΚΗΣ',vt:'999716101',ad:'ΟΔΟΣ ΙΩΑΝΝΙΝΩΝ ΘΕΣΗ ΠΑΛΗΟΜΑΝΔΡΑ      ΤΘ21067 0, 55510',ct:'ΠΥΛΑΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:486,nm:'ΣΤΕΛΙΟΣ ΓΙΑΝΝΙΚΑΣ Α.Ε.Β.Ε.',vt:'999642076',ad:'ΕΥΡΙΠΙΔΟΥ 5, 12133',ct:'',co:'',ph:'2262056320',em:'',pl:'',nt:'',plFile:null},
+    {id:487,nm:'ΣΦΑΚΙΑΝΑΚΗΣ ΓΕΩΡ.  ΝΙΚΟΛΑΟΣ',vt:'021582070',ad:'ΣΚΑΛΑΝΙ 0, 71500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:488,nm:'ΣΩΤ Γ ΜΠΑΚΑΣ ΚΑΙ ΣΙΑ ΕΕ',vt:'999939345',ad:'Π ΡΑΛΛΗ 8, 11855',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:489,nm:'ΤΑΜΙΩΛΑΚΗΣ ΓΕΩΡΓΙΟΣ  ΕΠΕ',vt:'095375680',ad:'ΠΑΤΡΩΟΥ 10, 10557',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:490,nm:'ΤΕΡΚΕΝΛΗΣ ΑΕ',vt:'094374009',ad:'ΒΙΟΜΗΧΑΝΙΚΟ ΠΑΡΚΟ Ν.ΡΑΙΒΕΣΤΟΥ, 57001',ct:'ΤΕΡΜΗ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:491,nm:'ΤΕΤΡΑΚΤΙΣ ΕΜΠΟΡΙΟ ΤΡΟΦΙΜΩΝ ΜΟΝ ΕΠΕ',vt:'800464877',ad:'ΚΩΝΣΤΑΝΤΙΝΟΥΠΟΛΕΩΣ 236-240, 10445',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:492,nm:'ΤΖΕΛΜΑΡ Ε.Π.Ε',vt:'095567500',ad:'ΠΕΙΡΑΙΩΣ 226, 17778',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:493,nm:'ΤΟ ΚΡΕΟΠΩΛΕΙΟ ΤΗΣ ΑΓΟΡΑΣ ΕΕ',vt:'997565126',ad:'Ο Κ Α Α  ΚΡ10 15 ΚΡ11 14 ΚΡ13 AΓ. ΙΩΑΝΝΗΣ ΡΕΝΤΗΣ 0, 18233',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:494,nm:'ΤΟΛΙΑΣ  ΔΗΜΗΤΡΙΟΣ ΠΑΝΑΓΙΩΤΗΣ',vt:'059424000',ad:'ΚΑΛΒΟΥ ΑΝΔΡΕΑ 10, 13341',ct:'ΑΝΩ ΛΙΟΣΙΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:495,nm:'ΤΟΥΡΝΑΒΙΤΗΣ ΙΩΑΝ.  ΠΕΤΡΟΣ',vt:'102462360',ad:'ΑΣΠΡΗ ΑΜΜΟΣ - ΚΑΒΑΛΑ 0, 65201',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:496,nm:'ΤΡΙΑ ΔΕΛΤΑ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'095734797',ad:'ΠΑΡΝΗΘΟΣ 7 ΚΑΙ ΕΛΕΥΘΕΡΙΑΣ, 18233',ct:'ΑΓ Ι ΡΕΝΤΗΣ',co:'',ph:'2104256201',em:'',pl:'',nt:'',plFile:null},
+    {id:497,nm:'ΤΡΙΑΙΝΑ HF Α.Ε.',vt:'099876625',ad:'Λ. ΚΩΝΣΤΑΝΤΙΝΟΥΠΟΛΕΩΣ 236 - 24, 10445',ct:'ΑΘΗΝΑ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:498,nm:'ΤΡΙΖΩΝΗΣ  ΑΘΑΝΑΣΙΟΣ ΒΑΣΙΛΕΙΟΣ',vt:'115170467',ad:'ΧΑΤΖΗΓΑΚΗ 3, 42100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:499,nm:'ΤΡΙΖΩΝΗΣ ΑΘΑΝ ΛΕΠΕΝΙΩΤΗΣ ΔΗΜ ΣΥΝΙΔΙΟΚΤΗΣΙΑ',vt:'998212712',ad:'ΧΑΤΖΗΓΑΚΗ 3, 42100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:500,nm:'ΤΡΟΦΙΜΑ ΑΧΑΙΑΣ ΜΟΝ. Ι.Κ.Ε.',vt:'800595552',ad:'ΣΤΑΔΙΟΥ 58, 26500',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:501,nm:'ΤΡΟΦΟΔΟΤΙΚΗ ΑΙΓΑΙΟΥ ΑΕ',vt:'094391577',ad:'ΝΑΟΥΣΑ ΠΑΡΟΥ 0, 84401',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:502,nm:'ΤΣΑΚΟΥΜΗΣ  ΠΑΝΑΓΙΩΤΗΣ ΔΗΜΗΤΡΙΟΣ',vt:'105919504',ad:'ΑΛΙΑΡΤΟΣ ΘΕΣΗ  ΠΟΤΑΜΙ, 32001',ct:'ΑΛΙΑΡΤΟΣ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:503,nm:'ΤΣΑΜΠΑΣΗΣ  ΒΙΟΜΗΧΑΝΙΑ ΤΡΟΦΙΜΩΝ ΜΟΝΟΠΡΟΣΩΠΗ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ',vt:'094152450',ad:'ΑΚΟΒΑ, 21200',ct:'ΑΡΓΟΣ',co:'',ph:'2751066660,66119',em:'',pl:'',nt:'',plFile:null},
+    {id:504,nm:'ΤΥΡΑΣ ΑΕ',vt:'094311348',ad:'5 ΧΛΜ  ΕΟ ΤΡΙΚΑΛΩΝ ΠΥΛΗΣ 0, 42100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:505,nm:'ΥΔΡΑΙΟΥ  ΕΛΕΝΗ',vt:'055816030',ad:'ΣΚΙΑΘΟΣ 0, 37002',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:506,nm:'ΥΠΕΡΑΓΟΡΑ ΔΥΤΙΚΩΝ ΠΡΟΑΣΤΙΩΝ ΜΟΝΟΠΡΟΣΩΠΗ ΙΔΙΩΤΙΚΗ ΚΕΦΑΛΑΙΟΥΧΙΚΗ ΕΤΑΙΡΕΙΑ',vt:'801461824',ad:'ΜΙΧΑΗΛ ΒΟΔΑ 7, 12131',ct:'ΠΕΡΙΣΤΕΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:507,nm:'ΥΠΕΡΑΓΟΡΑ ΚΡΕΑΤΩΝ Α.Β.Ε.Ε.',vt:'099171232',ad:'3 ΧΙΛ ΤΡΙΠΟΛΗΣ ΚΑΛΑΜΑΤΑΣ 0, 22100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:508,nm:'Φ ΚΑΖΙΑΝΗΣ ΑΕ',vt:'998896969',ad:'12 ΧΙΛ  ΕΘΝΙΚΗΣ ΠΑΛΑΙΟΚΑΣΤΡΙΤΣΑΣ - ΚΕΡΚΥΡΑ 0, 49083',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:509,nm:'ΦΑΓΕ ΕΛΛΑΔΑΣ ΒΙΟΜΗΧΑΝΙΑ ΓΑΛΑΚΤΟΣ ΜΟΝΟΠΡΟΣΩΠΗ ΑΕ',vt:'094061540',ad:'ΕΡΜΟΥ 35, 14452',ct:'ΜΕΤΑΜΟΡΦΩΣΗ',co:'',ph:'2102892555',em:'',pl:'',nt:'',plFile:null},
+    {id:510,nm:'ΦΛΩΡΟΣ  ΙΩΑΝΝΗΣ ΓΕΩΡΓΙΟΣ',vt:'104298943',ad:'ΤΡΙΑΚΟΣΙΩΝ 94, 23100',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:511,nm:'ΦΡΙΓΚΟ ΤΡΑΝΣΠΟΡΤ ΔΙΕΘΝΕΙΣ ΜΕΤΑΦΟΡΕΣ ΜΟΝΟΠΡΟΣΩΠΗ ΕΠΕ',vt:'095591247',ad:'ΤΕΜΠΩΝ 80, 16561',ct:'ΓΛΥΦΑΔΑ',co:'',ph:'2109573170',em:'',pl:'',nt:'',plFile:null},
+    {id:512,nm:'ΦΩΤΙΟΣ ΜΠΟΖΙΟΝΕΛΟΣ ΚΑΙ ΥΙΟΙ Α.Ε.Ε',vt:'094377614',ad:'ΑΚΟΒΑ ΑΡΓΟΥΣ 0, 21200',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:513,nm:'ΧΑΒΑΛΕΣ  ΝΙΚΟΛΑΟΣ ΓΕΩΡΓΙΟΣ',vt:'037027020',ad:'ΤΘ 8028 ΑΓ ΚΩΝΣΤΑΝΤΙΝΟΥ 802, 19300',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:514,nm:'ΧΑΙΚΑΛΗΣ ΤΡΑΝΣ Α.Ε.',vt:'094356157',ad:'ΤΑΤΟΙΟΥ 53 ΚΑΙ ΠΙΕΡΙΑΣ 1 0, 14451',ct:'',co:'',ph:'',em:'',pl:'',nt:'',plFile:null},
+    {id:515,nm:'ΧΡΗΣΤΑΚΗ  ΒΑΣΙΛΙΚΗ ΗΛΙΑΣ',vt:'117676204',ad:'219 ΧΛΜ ΝΕΟ ΛΑΜΙΑΣ ΘΕΣΣΑΛΟΝΙΚΗΣ, 35100',ct:'ΛΑΜΙΑ',co:'',ph:'6974550590',em:'',pl:'',nt:'',plFile:null},
+    {id:516,nm:'ΧΡΗΣΤΟΣ ΜΟΥΤΑΦΗΣ Ε.E.',vt:'998630320',ad:'ΚΛΕΙΤΟΡΟΣ 29, 12132',ct:'ΠΕΡΙΣΤΕΡΙ',co:'',ph:'',em:'',pl:'',nt:'',plFile:null}
+  ],firms:[
+    {id:1,nm:'Trasporti Letizia',co:'Ιταλία',ct:'Anzola dell emilia',tk:'40011',str:'Via M. Calari, 13',ad:'Via M. Calari, 13, 40011, Anzola dell emilia, Ιταλία',hr:'παντα',cn:'',ph:'',em:'',nt:'5619 312244'}
+  ],avail:[],ferries:[],docs:[]};
+function NID(a){return a.length?Math.max.apply(null,a.map(function(x){return x.id||0;}))+1:1;}
+var curPg='dashboard',editOid=null,editTid=null,editCid=null,editFid=null,asgnOid=null;
+var stsOid=null,stsType=null;
+var ordFils={},showHid=false,wkOff=0,wkFil=null,calY=new Date().getFullYear(),calM=new Date().getMonth();
+var dragOid=null,dpY=new Date().getFullYear(),dpM=new Date().getMonth(),dpSel=null;
+var stsdpY=new Date().getFullYear(),stsdpM=new Date().getMonth(),stsdpSel=null;
+var avdpY=new Date().getFullYear(),avdpM=new Date().getMonth(),avdpSel=null;
+var plFile=null;
+
+function g(id){return document.getElementById(id);}
+function fmtD(d){if(!d)return'—';try{var dt=new Date(d+'T00:00:00');return('0'+dt.getDate()).slice(-2)+'/'+('0'+(dt.getMonth()+1)).slice(-2)+'/'+dt.getFullYear();}catch(e){return d;}}
+function fmtDT(d){if(!d)return'—';try{var dt=new Date(d);return('0'+dt.getDate()).slice(-2)+'/'+('0'+(dt.getMonth()+1)).slice(-2)+'/'+String(dt.getFullYear()).slice(-2)+' '+('0'+dt.getHours()).slice(-2)+':'+('0'+dt.getMinutes()).slice(-2);}catch(e){return d;}}
+function bdg(c,t){return'<span class="bdg '+c+'">'+t+'</span>';}
+function tbdg(t){return bdg(TB[t]||'bdr',TL[t]||t);}
+function sbdg(s){return bdg(SB[s]||'bop',SL[s]||s);}
+function notif(msg,type){var el=g('notif');el.textContent=msg;el.className='notif on '+(type||'ok');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on');},3200);}
+function OM(id){g(id).classList.add('on');}
+function CM(id){g(id).classList.remove('on');}
+function tLU(pl){return DB.orders.filter(function(o){return o.truck===pl&&o.status!=='Delivered';}).reduce(function(s,o){return s+parseFloat(o.ldm||0);},0);}
+function tWU(pl){return DB.orders.filter(function(o){return o.truck===pl&&o.status!=='Delivered';}).reduce(function(s,o){return s+parseInt(o.wgt||0);},0);}
+function canT(t,tmp){
+  if(t.chm==='single'){var ex=DB.orders.filter(function(o){return o.truck===t.tr&&o.status!=='Delivered';});return!ex.length||ex.every(function(o){return o.tmp===tmp;});}
+  var ts=[];DB.orders.filter(function(o){return o.truck===t.tr&&o.status!=='Delivered';}).forEach(function(o){if(ts.indexOf(o.tmp)<0)ts.push(o.tmp);});
+  return ts.indexOf(tmp)>=0||ts.length<2;
+}
+function getCountry(from){if(!from)return'';var p=from.split(',');return p.length>=2?p[p.length-1].trim():'';}
+function norm(s){if(!s)return'';return s.toLowerCase().replace(/[άαΆΑ]/g,'α').replace(/[έεΈΕ]/g,'ε').replace(/[ήηΉΗ]/g,'η').replace(/[ίιΊΙϊΐ]/g,'ι').replace(/[όοΌΟ]/g,'ο').replace(/[ύυΎΥϋΰ]/g,'υ').replace(/[ώωΏΩ]/g,'ω');}
+
+function SP(p){
+  document.querySelectorAll('.pg').forEach(function(x){x.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('on');});
+  g('pg-'+p).classList.add('on');
+  document.querySelectorAll('.nt').forEach(function(x){if(x.getAttribute('onclick')&&x.getAttribute('onclick').indexOf("'"+p+"'")>=0)x.classList.add('on');});
+  curPg=p;
+  if(p==='dashboard')rDash();
+  else if(p==='orders')renderOrders();
+  else if(p==='dispatch')rDisp();
+  else if(p==='groupage')renderGroupage();
+  else if(p==='trucks')rTrucks();
+  else if(p==='clients')rClients();
+  else if(p==='firms')rFirms();
+  else if(p==='weekly')renderWeekly();
+  else if(p==='calendar')rCal();
+  else if(p==='ferry')rFerry();
+}
+
+function rDash(){
+  var open=DB.orders.filter(function(o){return o.status==='Open';}).length;
+  var tr=DB.orders.filter(function(o){return o.status==='In Transit';}).length;
+  var un=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;}).length;
+  var ldm=DB.orders.filter(function(o){return o.status==='Open';}).reduce(function(s,o){return s+parseFloat(o.ldm||0);},0);
+  g('dstats').innerHTML='<div class="stat bl"><div class="sv">'+open+'</div><div class="sl">ΑΝΟΙΚΤΕΣ</div></div><div class="stat gr"><div class="sv">'+tr+'</div><div class="sl">ΣΕ ΜΕΤΑΦΟΡΑ</div></div><div class="stat ye"><div class="sv">'+un+'</div><div class="sl">ΧΩΡΙΣ ΑΝΑΘΕΣΗ</div></div><div class="stat re"><div class="sv">'+ldm.toFixed(1)+'</div><div class="sl">ΣΥΝΟΛΙΚΑ LDM</div></div>';
+  var uns=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;});
+  g('dun').innerHTML=uns.length?uns.map(function(o){return'<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b1)"><div><div style="font-size:10px;font-weight:500;color:var(--tx)">'+o.client+'</div><div style="font-size:9px;color:var(--tx3)">'+o.from+' · '+o.ldm+' LDM · '+(o.wgt/1000).toFixed(1)+'t · '+fmtD(o.rdy)+'</div></div><div style="display:flex;gap:5px;align-items:center">'+tbdg(o.tmp)+'<button class="btn btnp btns" onclick="openAsgn('+o.id+')">↗</button></div></div>';}).join(''):'<div style="font-size:10px;color:var(--tx3);padding:8px 0">Όλες έχουν ανατεθεί ✓</div>';
+  g('dfl').innerHTML=DB.trucks.map(function(t){var u=tLU(t.tr),pct=Math.min(100,Math.round(u/TLDM*100));return'<div style="padding:7px 0;border-bottom:1px solid var(--b1)"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:10px;font-weight:600;color:var(--tx);font-family:var(--d)">'+t.tr+'</span><span style="font-size:9px;color:var(--tx3)">'+u.toFixed(2)+' / '+TLDM+'</span></div><div class="capb"><div class="caps" style="width:'+pct+'%;background:'+(pct>85?'var(--er)':pct>50?'var(--ac)':'var(--ok)')+'"></div></div></div>';}).join('');
+  g('dotb').innerHTML=DB.orders.slice(-8).reverse().map(function(o){return'<tr><td class="tdp">#'+o.id+'</td><td class="tdp">'+o.client+'</td><td style="color:var(--tx3)">'+(o.firm||'—')+'</td><td>'+tbdg(o.tmp)+'</td><td>'+o.ldm+'</td><td>'+(o.wgt/1000).toFixed(1)+'t</td><td style="font-size:9px">'+fmtD(o.rdy)+'</td><td>'+sbdg(o.status)+'</td><td style="font-size:9px">'+(o.truck||'—')+'</td></tr>';}).join('');
+}
+
+function renderOrders(){
+  var statuses=['Open','On-Hold','Assigned','In Transit','Delivered'];
+  var temps=['frozen','chilled','heated','dry'];
+  var allCountries=[];
+  DB.orders.forEach(function(o){var c=getCountry(o.from);if(c&&allCountries.indexOf(c)<0)allCountries.push(c);});
+  allCountries.sort();
+  var slm={Open:'Ανοικτή','On-Hold':'Αναμονή',Assigned:'Ανατέθηκε','In Transit':'Μεταφορά',Delivered:'Παραδόθηκε'};
+  var tlm={frozen:'🔵 Κατάψυξη',chilled:'🟢 Συντήρηση',heated:'🟡 Ζεστό',dry:'⚫ Ξηρό'};
+  var el=g('ochips');el.innerHTML='';
+  function mkChip(key,lbl){var b=document.createElement('button');b.className='chip'+(ordFils[key]?' on':'');b.textContent=lbl;b.addEventListener('click',function(){if(ordFils[key])delete ordFils[key];else ordFils[key]=true;renderOrders();});el.appendChild(b);}
+  var s1=document.createElement('span');s1.style.cssText='font-size:9px;color:var(--tx3);margin-right:4px;align-self:center';s1.textContent='STATUS:';el.appendChild(s1);
+  statuses.forEach(function(f){mkChip(f,slm[f]);});
+  var s2=document.createElement('span');s2.style.cssText='font-size:9px;color:var(--tx3);margin:0 4px;align-self:center';s2.textContent='ΘΕΡΜ.:';el.appendChild(s2);
+  temps.forEach(function(f){mkChip(f,tlm[f]);});
+  if(allCountries.length){var s3=document.createElement('span');s3.style.cssText='font-size:9px;color:var(--tx3);margin:0 4px;align-self:center';s3.textContent='ΧΩΡΑ:';el.appendChild(s3);allCountries.forEach(function(c){mkChip('c:'+c,c);});}
+  var clr=document.createElement('button');clr.className='chip';clr.textContent='✕ Καθαρισμός';clr.style.cssText='margin-left:6px;border-color:var(--er);color:#fca5a5';clr.addEventListener('click',function(){ordFils={};renderOrders();});el.appendChild(clr);
+
+  var q=norm(g('osrch')?g('osrch').value:'');
+  var ords=DB.orders.slice();
+  if(!showHid)ords=ords.filter(function(o){return!o.hidden;});
+
+  var wkLbl=g('wkfil-lbl'),wkAllBtn=g('wkfil-all');
+  if(wkFil===null){
+    if(wkLbl)wkLbl.textContent='Εμφάνιση όλων';
+    if(wkAllBtn){wkAllBtn.style.background='var(--ac)';wkAllBtn.style.color='#fff';wkAllBtn.style.borderColor='var(--ac)';}
+  } else {
+    if(wkAllBtn){wkAllBtn.style.background='';wkAllBtn.style.color='';wkAllBtn.style.borderColor='';}
+    var mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7)+wkFil*7);mon.setHours(0,0,0,0);
+    var sun=new Date(mon);sun.setDate(sun.getDate()+6);sun.setHours(23,59,59,999);
+    if(wkLbl)wkLbl.textContent=('0'+mon.getDate()).slice(-2)+'/'+('0'+(mon.getMonth()+1)).slice(-2)+' — '+('0'+sun.getDate()).slice(-2)+'/'+('0'+(sun.getMonth()+1)).slice(-2)+'/'+sun.getFullYear();
+    ords=ords.filter(function(o){if(!o.rdy)return false;var d=new Date(o.rdy+'T00:00:00');return d>=mon&&d<=sun;});
+  }
+  var ss=statuses.filter(function(f){return ordFils[f];});if(ss.length)ords=ords.filter(function(o){return ss.indexOf(o.status)>=0;});
+  var ts=temps.filter(function(f){return ordFils[f];});if(ts.length)ords=ords.filter(function(o){return ts.indexOf(o.tmp)>=0;});
+  var cs=allCountries.filter(function(c){return ordFils['c:'+c];});if(cs.length)ords=ords.filter(function(o){return cs.indexOf(getCountry(o.from))>=0;});
+  if(q)ords=ords.filter(function(o){return norm(o.client+o.firm+o.from+o.to).indexOf(q)>=0;});
+
+  g('osub').textContent=ords.length+' παραγγελίες';
+  g('otb').innerHTML=ords.map(function(o){
+    return'<tr style="'+(o.hidden?'opacity:.45':'')+'">'+
+    '<td><button class="btn btni btns" onclick="togH('+o.id+')">'+(o.hidden?'🚫':'👁')+'</button></td>'+
+    '<td class="tdp">#'+o.id+'</td><td class="tdp">'+o.client+'</td>'+
+    '<td style="font-size:9px;color:var(--tx3)">'+(o.firm||'—')+'</td>'+
+    '<td style="font-size:9px">'+o.from+'</td>'+
+    '<td>'+tbdg(o.tmp)+'</td>'+
+    '<td>'+o.ldm+' <span style="font-size:8px;color:var(--tx3)">('+o.qty+o.pal+')</span></td>'+
+    '<td>'+(o.wgt/1000).toFixed(1)+'t</td>'+
+    '<td style="font-size:9px">'+fmtD(o.rdy)+'</td>'+
+    '<td>'+sbdg(o.status)+'</td>'+
+    '<td style="font-size:9px">'+(o.truck||'—')+'</td>'+
+    '<td><div style="display:flex;gap:3px;flex-wrap:wrap">'+
+    '<button class="btn btni btns" onclick="editOrd('+o.id+')">✏</button>'+
+    (!o.truck&&o.status==='Open'?'<button class="btn btni btnp btns" onclick="openAsgn('+o.id+')">↗</button>':'')+
+    (o.status==='Assigned'?'<button class="btn btns" style="font-size:8px;border-color:rgba(16,185,129,.4);color:var(--ok)" onclick="openSts('+o.id+',\'transit\')">→ Μεταφορά</button>':'')+
+    (o.status==='In Transit'?'<button class="btn btns" style="font-size:8px;border-color:rgba(156,163,175,.4);color:var(--dr)" onclick="openSts('+o.id+',\'delivered\')">→ Παράδοση</button>':'')+
+    (o.status==='Assigned'?'<button class="btn btns" style="font-size:8px;border-color:rgba(251,191,36,.4);color:var(--ht)" onclick="unAsgn('+o.id+')">✕ Φορτηγό</button>':'')+
+    '<button class="btn btni btns btnd" onclick="delOrd('+o.id+')">✕</button>'+
+    '</div></td></tr>';
+  }).join('');
+}
+function togH(id){var o=DB.orders.find(function(x){return x.id===id;});if(o){o.hidden=!o.hidden;renderOrders();}}
+function delOrd(id){if(confirm('Διαγραφή;')){DB.orders=DB.orders.filter(function(x){return x.id!==id;});renderOrders();rDash();}}
+function unAsgn(id){
+  var o=DB.orders.find(function(x){return x.id===id;});if(!o)return;
+  if(!confirm('Αφαίρεση #'+id+' ('+o.client+') από φορτηγό '+o.truck+';'))return;
+  if(!o.history)o.history=[];
+  o.history.push({date:new Date().toISOString().split('T')[0],action:'Αφαίρεση',truck:o.truck,note:'Αφαιρέθηκε από φορτηγό '+o.truck});
+  o.truck='';o.status='Open';o.loadDate='';
+  notif('Παραγγελία #'+id+' επιστράφηκε σε αναμονή');
+  rDash();renderOrders();if(curPg==='dispatch')rDisp();
+}
+
+function rDisp(){
+  var un=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;});
+  g('dords').innerHTML=un.length?un.map(function(o){
+    return'<div class="trc" style="margin-bottom:7px;cursor:grab;border-left:3px solid '+TC[o.tmp]+'" draggable="true" ondragstart="dragOid='+o.id+';event.dataTransfer.effectAllowed=\'move\'">'+
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+    '<div><div style="font-size:11px;font-weight:600;color:var(--tx)">#'+o.id+' '+o.client+'</div>'+
+    '<div style="font-size:9px;color:var(--tx3)">'+o.from+' · '+o.ldm+' LDM · '+(o.wgt/1000).toFixed(1)+'t</div>'+
+    '<div style="font-size:9px;color:var(--tx3)">'+o.qty+' '+(o.pal==='E'?'EPAL':o.pal==='B'?'Βιομ.':'Βαρέλια')+' · '+fmtD(o.rdy)+'</div></div>'+
+    '<div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end">'+tbdg(o.tmp)+
+    '<button class="btn btnp btns" onclick="openAsgn('+o.id+')">Ανάθεση</button></div></div></div>';
+  }).join(''):'<div style="text-align:center;padding:24px;color:var(--tx3);font-size:10px">Καμία αναντιστοιχία ✓</div>';
+  g('dtrks').innerHTML=DB.trucks.map(function(t){
+    var u=tLU(t.tr),uw=tWU(t.tr),pct=Math.min(100,Math.round(u/TLDM*100));
+    var freeLDM=(TLDM-u).toFixed(2);
+    var freeCol=pct>85?'var(--er)':pct>60?'var(--wn)':'var(--ok)';
+    var mo=DB.orders.filter(function(o){return o.truck===t.tr&&o.status!=='Delivered';});
+    return'<div class="trc" style="margin-bottom:9px" ondragover="event.preventDefault();event.currentTarget.classList.add(\'drag-over\')" ondragleave="event.currentTarget.classList.remove(\'drag-over\')" ondrop="event.preventDefault();event.currentTarget.classList.remove(\'drag-over\');if(dragOid)openAsgnWT(dragOid,\''+t.tr+'\')">'+
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">'+
+    '<div><div class="trp">'+t.tr+'</div><div class="tro">'+t.own+' · '+t.base+'</div>'+
+    '<div style="font-size:8px;color:var(--tx3);margin-top:2px">'+(t.chm==='single'?'Single-temp':t.chm==='cold'?'Bi-temp ψυχρό→θερμό':'Bi-temp θερμό→ψυχρό')+' · Payload: '+(t.pl/1000).toFixed(1)+'t</div></div>'+
+    '<div style="text-align:right"><div style="font-size:18px;font-weight:700;font-family:var(--d);color:'+freeCol+'">'+freeLDM+'<span style="font-size:9px;font-weight:400;color:var(--tx3);margin-left:2px">μ ελεύθ.</span></div>'+
+    '<div style="font-size:8px;color:var(--tx3);margin-top:1px">'+u.toFixed(2)+'μ αναθ. · '+pct+'%</div></div></div>'+
+    '<div class="capb" style="height:16px;border-radius:3px;margin-bottom:3px">'+
+    mo.map(function(o){return'<div class="caps" style="width:'+(parseFloat(o.ldm)/TLDM*100).toFixed(1)+'%;background:'+TC[o.tmp]+';opacity:.8"></div>';}).join('')+
+    '<div class="caps" style="flex:1;background:var(--bg4)"></div></div>'+
+    '<div class="capl"><span>'+(TLDM-u).toFixed(2)+' LDM ελεύθ.</span><span style="'+(uw>t.pl?'color:var(--er)':'')+'">'+(uw/1000).toFixed(1)+' / '+(t.pl/1000).toFixed(1)+'t</span></div>'+
+    (mo.length?'<div style="margin-top:6px;font-size:9px;color:var(--tx3)">'+mo.map(function(o){return'<span style="cursor:pointer" onclick="unAsgn('+o.id+')" title="Αφαίρεση">✕</span> #'+o.id+' '+o.client.split(' ')[0];}).join(' · ')+'</div>':
+    '<div style="margin-top:6px;font-size:9px;color:var(--tx3)">— Κενό — (σύρετε εδώ)</div>')+
+    '</div>';
+  }).join('');
+}
+
+function runOpt(){
+  var un=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;});
+  if(!un.length){notif('Δεν υπάρχουν ανοικτές','er');return;}
+  var res=[];
+  DB.trucks.forEach(function(t){
+    var rL=TLDM,rW=t.pl,sl=t.chm==='single'?1:2,ut=[],as=[];
+    un.slice().sort(function(a,b){return new Date(a.rdy)-new Date(b.rdy)||(parseFloat(b.ldm)-parseFloat(a.ldm));}).forEach(function(o){
+      if(as.find(function(x){return x.id===o.id;}))return;
+      if(!(ut.indexOf(o.tmp)>=0||ut.length<sl))return;
+      var l=parseFloat(o.ldm),w=parseInt(o.wgt);
+      if(l<=rL&&w<=rW){as.push(o);rL-=l;rW-=w;if(ut.indexOf(o.tmp)<0)ut.push(o.tmp);}
+    });
+    if(as.length)res.push({t:t,as:as,pct:Math.round((TLDM-rL)/TLDM*100)});
+  });
+  if(!res.length){g('optres').innerHTML='<div style="text-align:center;padding:20px;color:var(--tx3)">Δεν βρέθηκαν συνδυασμοί</div>';OM('opt-modal');return;}
+  g('optres').innerHTML=res.map(function(r){return'<div style="background:var(--bg3);border-radius:var(--r2);padding:13px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div><span style="font-family:var(--d);font-size:14px;font-weight:700;color:var(--tx)">'+r.t.tr+'</span><span style="font-size:9px;color:var(--tx3);margin-left:7px">'+r.t.own+'</span></div><div style="display:flex;gap:5px">'+bdg('bop',r.pct+'% γεμάτο')+'<button class="btn btnp btns" onclick="apOpt('+r.t.id+',['+r.as.map(function(x){return x.id;}).join(',')+'])">Εφαρμογή</button></div></div>'+r.as.map(function(o){return'<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-top:1px solid var(--b1);font-size:9px"><div style="width:7px;height:7px;border-radius:50%;background:'+TC[o.tmp]+';flex-shrink:0"></div><span style="color:var(--tx)">#'+o.id+' '+o.client+'</span><span style="color:var(--tx3)">'+o.ldm+'LDM</span>'+tbdg(o.tmp)+'</div>';}).join('')+'</div>';}).join('');
+  OM('opt-modal');
+}
+function apOpt(tid,ids){var t=DB.trucks.find(function(x){return x.id===tid;});if(!t)return;ids.forEach(function(id){var o=DB.orders.find(function(x){return x.id===id;});if(o){o.truck=t.tr;o.status='Assigned';}});CM('opt-modal');notif('Αναθέσεις εφαρμόστηκαν!');rDisp();}
+
+function renderGroupage(){
+  var op=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;});
+  if(!op.length){g('gcnt').innerHTML='<div style="text-align:center;padding:32px;color:var(--tx3)">Δεν υπάρχουν ανοικτές παραγγελίες</div>';return;}
+  var by={};op.forEach(function(o){var c=o.from.split(',')[0].trim();if(!by[c])by[c]=[];by[c].push(o);});
+  var html='';
+  Object.keys(by).forEach(function(city){
+    var ords=by[city],tL=ords.reduce(function(s,o){return s+parseFloat(o.ldm);},0),tW=ords.reduce(function(s,o){return s+parseInt(o.wgt);},0),tr=Math.ceil(tL/TLDM);
+    html+='<div class="trc" style="margin-bottom:11px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div><span style="font-size:13px;font-weight:700;font-family:var(--d);color:var(--tx)">'+city+'</span><span style="font-size:9px;color:var(--tx3);margin-left:7px">'+ords.length+' παραγγ. · '+tL.toFixed(2)+' LDM · '+(tW/1000).toFixed(1)+'t · ≈'+tr+' φορτ.</span></div><button class="btn btnp btns" onclick="openAsgn('+ords[0].id+')">Ανάθεση</button></div>'+
+    '<div class="capb" style="height:18px;border-radius:3px;margin-bottom:3px">'+ords.map(function(o){return'<div class="caps" style="width:'+(parseFloat(o.ldm)/TLDM*100).toFixed(1)+'%;background:'+TC[o.tmp]+';opacity:.8"></div>';}).join('')+'<div class="caps" style="flex:1;background:var(--bg4)"></div></div>'+
+    '<div class="capl"><span>'+Math.max(0,TLDM-Math.min(tL,TLDM)).toFixed(2)+' LDM κενό</span>'+(tL>TLDM?'<span style="color:var(--wn)">Overflow: '+(tL-TLDM).toFixed(2)+' LDM</span>':'')+'</div>'+
+    '<div style="margin-top:9px">'+ords.map(function(o){return'<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-top:1px solid var(--b1);font-size:9px">'+
+    '<div style="display:flex;align-items:center;gap:7px"><div style="width:7px;height:7px;border-radius:50%;background:'+TC[o.tmp]+';flex-shrink:0"></div><span style="color:var(--tx);font-weight:500">#'+o.id+' '+o.client+'</span><span style="color:var(--tx3)">'+o.qty+o.pal+' · '+o.ldm+'LDM</span></div>'+
+    '<div style="display:flex;gap:5px;align-items:center">'+tbdg(o.tmp)+'<span style="color:var(--tx3)">'+fmtD(o.rdy)+'</span><button class="btn btni btnp btns" onclick="openAsgn('+o.id+')">↗</button></div></div>';}).join('')+'</div></div>';
+  });
+  g('gcnt').innerHTML=html;
+}
+
+function rTrucks(){
+  g('tgrid').innerHTML=DB.trucks.map(function(t){var u=tLU(t.tr),uw=tWU(t.tr),pct=Math.min(100,Math.round(u/TLDM*100));var mo=DB.orders.filter(function(o){return o.truck===t.tr&&o.status!=='Delivered';});
+  return'<div class="trc"><div style="display:flex;justify-content:space-between;margin-bottom:7px"><div><div class="trp">'+t.tr+'</div><div class="tro">'+t.own+' · 📞'+t.ph+'</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">'+t.th+(t.th2?' + '+t.th2:'')+'</div></div>'+
+  '<div style="display:flex;gap:3px"><button class="btn btni btns" onclick="editTrk('+t.id+')">✏</button><button class="btn btni btns btnd" onclick="delTrk('+t.id+')">✕</button></div></div>'+
+  '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px">'+bdg(t.chm==='single'?'bdr':t.chm==='cold'?'bfr':'bht',t.chm==='single'?'Single-temp':t.chm==='cold'?'Bi-temp ψυχρό→θερμό':'Bi-temp θερμό→ψυχρό')+(t.prt?bdg('bas','Χώρ.@'+t.prt+'μ'):'')+'</div>'+
+  '<div class="capb" style="height:12px;border-radius:2px;margin-bottom:2px">'+mo.map(function(o){return'<div class="caps" style="width:'+(parseFloat(o.ldm)/TLDM*100).toFixed(1)+'%;background:'+TC[o.tmp]+';opacity:.8"></div>';}).join('')+'<div class="caps" style="flex:1;background:var(--bg4)"></div></div>'+
+  '<div class="capl"><span>'+u.toFixed(2)+' / '+TLDM+' ('+pct+'%)</span><span style="'+(uw>t.pl?'color:var(--er)':'')+'">'+(uw/1000).toFixed(1)+' / '+(t.pl/1000).toFixed(1)+'t</span></div>'+
+  '<div style="font-size:8px;color:var(--tx3);margin-top:5px">Tare: '+(t.tare/1000).toFixed(1)+'t · Payload: '+(t.pl/1000).toFixed(1)+'t · Βάση: '+t.base+'</div>'+
+  '<div style="display:flex;gap:5px;margin-top:9px"><a href="https://wa.me/'+(t.ph||'').replace(/\D/g,'')+'" target="_blank" class="btn btns">WhatsApp</a><a href="sms:'+t.ph+'" class="btn btns">SMS</a><a href="mailto:'+t.em+'" class="btn btns">Email</a></div></div>';
+  }).join('')+'<div style="border:1px dashed var(--b2);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;min-height:140px;cursor:pointer" onclick="OM(\'trk-modal\');resetTF()"><div style="text-align:center;color:var(--tx3)"><div style="font-size:24px">+</div><div style="font-size:10px;margin-top:3px">Νέο φορτηγό</div></div></div>';
+}
+
+function rClients(){
+  g('ctb').innerHTML=DB.clients.map(function(c){return'<tr><td class="tdp">'+c.nm+'</td><td style="font-size:9px">'+(c.vt||'—')+'</td><td>'+(c.co||'—')+'</td><td><a href="mailto:'+c.em+'" style="color:var(--ac)">'+(c.em||'—')+'</a></td><td>'+(c.ph||'—')+'</td><td>'+(c.ct||'—')+'</td><td style="font-size:9px;color:var(--tx2)">'+(c.pl?c.pl.substring(0,25)+(c.pl.length>25?'…':''):'—')+(c.plFile?' 📎':'')+'</td><td><div style="display:flex;gap:3px">'+(c.plFile?'<button class="btn btns" onclick="dlPl('+c.id+')" title="Λήψη">📎</button>':'')+'<button class="btn btni btns" onclick="editCli('+c.id+')">✏</button><button class="btn btni btns btnd" onclick="delCli('+c.id+')">✕</button></div></td></tr>';}).join('');
+}
+
+function rFirms(){
+  g('ftb').innerHTML=DB.firms.map(function(f){
+    var mapsQ=encodeURIComponent([(f.str||''),(f.tk?f.tk+' '+(f.ct||''):f.ct||''),(f.co||'')].filter(Boolean).join(', '));
+    return'<tr><td class="tdp">'+f.nm+'</td><td style="font-size:9px">'+(f.co||'—')+'</td><td style="font-size:9px">'+(f.ct||'—')+'</td><td style="font-size:9px;color:var(--tx3)">'+(f.tk||'—')+'</td><td style="font-size:9px">'+(f.str||f.ad||'—')+'</td><td style="font-size:9px;color:var(--tx3)">'+(f.hr||'—')+'</td><td>'+(f.cn||'—')+'</td><td>'+(f.ph||'—')+'</td>'+
+    '<td><a href="https://www.google.com/maps/search/?api=1&query='+mapsQ+'" target="_blank" class="btn btns">🗺</a></td>'+
+    '<td><div style="display:flex;gap:3px"><button class="btn btni btns" onclick="editFrm('+f.id+')">✏</button><button class="btn btni btns btnd" onclick="delFrm('+f.id+')">✕</button></div></td></tr>';
+  }).join('');
+}
+
+function renderWeekly(){
+  var today=new Date(),mon=new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7)+wkOff*7);mon.setHours(0,0,0,0);
+  g('wsub').textContent='Εβδομάδα '+mon.toLocaleDateString('el-GR',{day:'numeric',month:'short',year:'numeric'});
+  var fut=g('wfut')&&g('wfut').checked,wEnd=new Date(mon);wEnd.setDate(wEnd.getDate()+(fut?21:7));
+  var op=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden&&new Date(o.rdy+'T00:00:00')<=wEnd;});
+  g('wopen').innerHTML=op.length?'<div class="tw"><table><thead><tr><th>#</th><th>Πελάτης</th><th>Θερμ.</th><th>LDM</th><th>Κιλά</th><th>Ετοιμ.</th><th></th></tr></thead><tbody>'+op.map(function(o){return'<tr><td class="tdp">#'+o.id+'</td><td>'+o.client+'</td><td>'+tbdg(o.tmp)+'</td><td>'+o.ldm+'</td><td>'+(o.wgt/1000).toFixed(1)+'t</td><td style="font-size:9px">'+fmtD(o.rdy)+'</td><td><button class="btn btnp btns" onclick="openAsgn('+o.id+')">Ανάθεση</button></td></tr>';}).join('')+'</tbody></table></div>':'<div style="font-size:10px;color:var(--tx3);padding:7px 0">Καμία ανοικτή</div>';
+  var wStart=mon,wEnd2=new Date(mon);wEnd2.setDate(wEnd2.getDate()+6);wEnd2.setHours(23,59,59,999);
+  var activeTrucks=DB.trucks.filter(function(t){
+    var hasAvail=DB.avail.some(function(a){if(a.tr!==t.tr)return false;var d=new Date(a.fr+'T00:00:00');return d>=wStart&&d<=wEnd2;});
+    var hasOrds=DB.orders.some(function(o){if(o.truck!==t.tr||!o.rdy)return false;var d=new Date(o.rdy+'T00:00:00');return d>=wStart&&d<=wEnd2;});
+    return hasAvail||hasOrds;
+  });
+  var cols='110px '+['ΔΕΥ','ΤΡΙ','ΤΕΤ','ΠΕΜ','ΠΑΡ','ΣΑΒ','ΚΥΡ'].map(function(){return'1fr';}).join(' ');
+  var h='<div style="display:grid;grid-template-columns:'+cols+';border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;min-width:600px"><div style="background:var(--bg3);padding:7px 9px;font-size:8px;color:var(--tx3);border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)">ΦΟΡΤΗΓΟ</div>';
+  for(var i=0;i<7;i++){var dd=new Date(mon);dd.setDate(dd.getDate()+i);h+='<div style="background:var(--bg3);padding:7px;font-size:8px;color:var(--tx3);text-align:center;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)">'+['ΔΕΥ','ΤΡΙ','ΤΕΤ','ΠΕΜ','ΠΑΡ','ΣΑΒ','ΚΥΡ'][i]+'<br><span style="font-size:7px">'+dd.getDate()+'/'+(dd.getMonth()+1)+'</span></div>';}
+  if(!activeTrucks.length){h+='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--tx3);font-size:10px">Δεν υπάρχουν διαθέσιμα φορτηγά αυτή την εβδομάδα.<br><span style="font-size:9px">Πρόσθεσε διαθεσιμότητα με το κουμπί "+ Διαθεσιμότητα"</span></div>';}
+  activeTrucks.forEach(function(t){
+    var wOrds=DB.orders.filter(function(o){if(o.truck!==t.tr||!o.rdy)return false;var d=new Date(o.rdy+'T00:00:00');return d>=wStart&&d<=wEnd2;});
+    var statusBadge='';
+    if(wOrds.some(function(o){return o.status==='In Transit';}))statusBadge=bdg('btr','Σε Μεταφορά');
+    else if(wOrds.some(function(o){return o.status==='Assigned';}))statusBadge=bdg('bas','Ανατέθηκε');
+    else if(wOrds.some(function(o){return o.status==='Delivered';}))statusBadge=bdg('bde','Παρέδωσε');
+    var freeLDM=(TLDM-tLU(t.tr)).toFixed(2);
+    h+='<div style="background:var(--bg3);padding:7px 9px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)"><div style="font-family:var(--d);font-size:10px;font-weight:700;color:var(--tx)">'+t.tr+'</div><div style="font-size:8px;color:var(--tx3)">'+t.own.split(' ')[0]+'</div>'+(statusBadge?'<div style="margin-top:3px">'+statusBadge+'</div>':'')+'<div style="font-size:8px;color:var(--ok);margin-top:2px">'+freeLDM+'μ ελ.</div></div>';
+    for(var i=0;i<7;i++){
+      var dd2=new Date(mon);dd2.setDate(dd2.getDate()+i);
+      var avl=DB.avail.filter(function(a){return a.tr===t.tr&&new Date(a.fr+'T00:00:00').toDateString()===dd2.toDateString();});
+      var ords=DB.orders.filter(function(o){return o.truck===t.tr&&o.rdy&&new Date(o.rdy+'T00:00:00').toDateString()===dd2.toDateString();});
+      h+='<div style="background:'+(avl.length?'rgba(16,185,129,.04)':'var(--bg2)')+';padding:5px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1);min-height:54px">'+
+      avl.map(function(a){return'<div style="font-size:8px;padding:2px 4px;border-radius:2px;background:rgba(16,185,129,.15);color:var(--ok);margin-bottom:2px">📍 '+(a.ct||'Διαθέσιμο')+'</div>';}).join('')+
+      ords.map(function(o){var icon=o.status==='In Transit'?'🚛 ':o.status==='Delivered'?'✓ ':'📦 ';return'<div style="font-size:8px;padding:2px 4px;border-radius:2px;margin-bottom:2px;cursor:pointer;background:'+TC[o.tmp]+'22;color:'+TC[o.tmp]+'" onclick="editOrd('+o.id+')">'+icon+'#'+o.id+' '+o.client.split(' ')[0]+'</div>';}).join('')+'</div>';
+    }
+  });
+  g('wgrid').innerHTML=h+'</div>';
+  var s=g('avtr');if(s)s.innerHTML='<option value="">—</option>'+DB.trucks.map(function(t){return'<option value="'+t.tr+'">'+t.tr+' — '+t.own+'</option>';}).join('');
+}
+
+function rCal(){
+  g('callbl').textContent=MN[calM]+' '+calY;
+  var today=new Date(),first=new Date(calY,calM,1),start=(first.getDay()+6)%7,dim=new Date(calY,calM+1,0).getDate(),h='';
+  for(var i=0;i<start;i++){var d2=new Date(calY,calM,1-start+i);h+='<div class="cald other"><div class="caln">'+d2.getDate()+'</div></div>';}
+  for(var d=1;d<=dim;d++){
+    var it=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
+    var ords=DB.orders.filter(function(o){if(!o.rdy)return false;var rd=new Date(o.rdy+'T00:00:00');return rd.getFullYear()===calY&&rd.getMonth()===calM&&rd.getDate()===d;});
+    var avlTrucks=DB.avail.filter(function(a){var ad=new Date(a.fr+'T00:00:00');return ad.getFullYear()===calY&&ad.getMonth()===calM&&ad.getDate()===d;});
+    h+='<div class="cald'+(it?' today':'')+'"><div class="caln">'+d+'</div>'+
+    avlTrucks.map(function(a){var pct=Math.round(tLU(a.tr)/TLDM*100);var col=pct>85?'var(--er)':pct>50?'var(--wn)':'var(--ok)';return'<div class="cale" style="background:rgba(16,185,129,.12);color:'+col+'">🚛 '+a.tr+(pct?' '+pct+'%':'')+'</div>';}).join('')+
+    ords.map(function(o){var icon=o.status==='In Transit'?'🚛':o.status==='Delivered'?'✓':o.status==='Assigned'?'📦':'📋';return'<div class="cale" style="background:'+TC[o.tmp]+'22;color:'+TC[o.tmp]+'" onclick="editOrd('+o.id+')" title="#'+o.id+' '+o.client+'">'+icon+' '+o.client.substring(0,6)+(o.truck?' ('+o.truck+')':'')+'</div>';}).join('')+
+    '</div>';
+  }
+  var rem=(7-(start+dim)%7)%7;for(var j=1;j<=rem;j++)h+='<div class="cald other"><div class="caln">'+j+'</div></div>';
+  g('calgrid').innerHTML=h;
+}
+function calPrev(){calM--;if(calM<0){calM=11;calY--;}rCal();}
+function calNext(){calM++;if(calM>11){calM=0;calY++;}rCal();}
+
+function rFerry(){
+  function fc(f){return'<div class="ferryc"><div style="display:flex;justify-content:space-between"><div><div style="font-family:var(--d);font-size:13px;font-weight:700;color:var(--tx)">'+(f.co||f.pt)+'</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">Αναχώρηση: '+fmtDT(f.dp)+' · Deadline: '+fmtDT(f.dl)+'</div>'+(f.nt?'<div style="font-size:9px;color:var(--tx3)">'+f.nt+'</div>':'')+'</div><button class="btn btni btns btnd" onclick="delFer('+f.id+')">✕</button></div></div>';}
+  var b=DB.ferries.filter(function(f){return f.pt==='Bari';}),a=DB.ferries.filter(function(f){return f.pt==='Ancona';});
+  g('fercnt').innerHTML='<div><div class="ct" style="margin-bottom:9px">ΜΠΑΡΙ (BARI)</div>'+(b.length?b.map(fc).join(''):'<div style="font-size:10px;color:var(--tx3);padding:8px 0">Κανένα δρομολόγιο</div>')+'</div>'+
+  '<div><div class="ct" style="margin-bottom:9px">ΑΝΚΟΝΑ (ANCONA)</div>'+(a.length?a.map(fc).join(''):'<div style="font-size:10px;color:var(--tx3);padding:8px 0">Κανένα δρομολόγιο</div>')+'</div>';
+}
+
+function openAsgn(oid){
+  asgnOid=oid;
+  var o=DB.orders.find(function(x){return x.id===oid;});if(!o)return;
+  g('asgninfo').innerHTML='<strong style="color:var(--tx)">#'+o.id+' '+o.client+'</strong> — '+(o.firm||'')+'<br>'+o.from+' · '+o.ldm+' LDM · '+(o.wgt/1000).toFixed(1)+'t · '+TL[o.tmp]+'<br>Ετοιμότητα: '+fmtD(o.rdy);
+  var sel=g('asgntr');
+  // Show trucks available during the same week as order ready date
+  var ordRdy=o.rdy?new Date(o.rdy+'T00:00:00'):null;
+  var wkMon=null,wkSun=null;
+  if(ordRdy){
+    wkMon=new Date(ordRdy);wkMon.setDate(ordRdy.getDate()-((ordRdy.getDay()+6)%7));wkMon.setHours(0,0,0,0);
+    wkSun=new Date(wkMon);wkSun.setDate(wkMon.getDate()+6);wkSun.setHours(23,59,59,999);
+  }
+  var availTrucks=DB.trucks.filter(function(t){
+    if(!ordRdy)return true;
+    return DB.avail.some(function(a){
+      if(a.tr!==t.tr)return false;
+      var avDate=new Date(a.fr+'T00:00:00');
+      return avDate>=wkMon&&avDate<=wkSun;
+    });
+  });
+  if(!availTrucks.length){
+    sel.innerHTML='<option value="">— Κανένα διαθέσιμο φορτηγό αυτή την εβδομάδα —</option>';
+  } else {
+    sel.innerHTML='<option value="">— Επιλογή —</option>'+availTrucks.map(function(t){
+      var fL=(TLDM-tLU(t.tr)).toFixed(2),fW=((t.pl-tWU(t.tr))/1000).toFixed(1);
+      var fits=parseFloat(fL)>=parseFloat(o.ldm)&&(t.pl-tWU(t.tr))>=o.wgt,tok=canT(t,o.tmp);
+      var avlInfo=DB.avail.filter(function(a){if(a.tr!==t.tr)return false;var d=new Date(a.fr+'T00:00:00');return d>=wkMon&&d<=wkSun;});
+      var loc=avlInfo.length&&avlInfo[0].ct?' ('+avlInfo[0].ct+')':'';
+      return'<option value="'+t.tr+'" '+((!fits||!tok)?'style="color:var(--er)"':'')+'>'+t.tr+' — '+t.own+loc+' | '+fL+'LDM/'+fW+'t '+((fits&&tok)?'✓':'✗'+(!tok?' (θερμ.)':' (χώρος)'))+'</option>';
+    }).join('');
+  }
+  g('asgndt').value=o.rdy?o.rdy+'T08:00':'';
+  g('asgnfe').innerHTML='<option value="">— Χωρίς καράβι —</option>'+DB.ferries.map(function(f){return'<option value="'+f.id+'">'+f.pt+' '+fmtDT(f.dp)+' ('+f.co+')</option>';}).join('');
+  g('asgnap').style.display='none';g('asgnft').style.display='flex';g('asgnww').classList.remove('on');
+  OM('asgn-modal');
+}
+function openAsgnWT(oid,plate){
+  openAsgn(oid);
+  setTimeout(function(){var s=g('asgntr');for(var i=0;i<s.options.length;i++)if(s.options[i].value===plate){s.selectedIndex=i;chkAW();break;}},100);
+}
+function chkAW(){
+  var pl=g('asgntr').value;if(!pl||!asgnOid)return;
+  var o=DB.orders.find(function(x){return x.id===asgnOid;}),t=DB.trucks.find(function(x){return x.tr===pl;});
+  if(!o||!t)return;
+  g('asgnww').classList.toggle('on',(tWU(pl)+parseInt(o.wgt))>t.pl);
+}
+function showAP(){
+  var pl=g('asgntr').value,dt=g('asgndt').value;
+  if(!pl){notif('Επιλέξτε φορτηγό','er');return;}
+  var o=DB.orders.find(function(x){return x.id===asgnOid;}),t=DB.trucks.find(function(x){return x.tr===pl;});
+  var viols=[];
+  var freeLDM=TLDM-tLU(pl),freeW=t.pl-tWU(pl);
+  if(parseFloat(o.ldm)>freeLDM)viols.push('⚠ Υπέρβαση χώρου: χρειάζεται '+o.ldm+'μ, ελεύθερα '+freeLDM.toFixed(2)+'μ');
+  if(parseInt(o.wgt)>freeW)viols.push('⚠ Υπέρβαση βάρους: χρειάζεται '+(o.wgt/1000).toFixed(1)+'t, ελεύθερα '+(freeW/1000).toFixed(1)+'t');
+  if(!canT(t,o.tmp)){var exT=[];DB.orders.filter(function(x){return x.truck===pl&&x.status!=='Delivered';}).forEach(function(x){if(exT.indexOf(x.tmp)<0)exT.push(x.tmp);});viols.push('⚠ Θερμοκρασία: '+TL[o.tmp]+' ασύμβατη με '+(exT.map(function(tt){return TL[tt];}).join(', ')));}
+  var violHtml=viols.length?'<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:var(--r);padding:10px 12px;margin-bottom:10px"><div style="font-size:9px;font-weight:600;color:#fca5a5;margin-bottom:6px">ΠΑΡΑΒΙΑΣΕΙΣ</div>'+viols.map(function(v){return'<div style="font-size:10px;color:#fca5a5;margin-bottom:3px">'+v+'</div>';}).join('')+'<div style="font-size:9px;color:var(--tx3);margin-top:6px">Θέλετε να συνεχίσετε ούτως ή άλλως;</div></div>':'';
+  g('asgnapt').innerHTML=violHtml+'Παραγγελία <strong style="color:var(--tx)">#'+o.id+' '+o.client+'</strong> → <strong style="color:var(--tx)">'+pl+'</strong> ('+t.own+')<br>Ετοιμότητα: '+fmtD(o.rdy)+' · '+o.ldm+' LDM · '+(o.wgt/1000).toFixed(1)+'t · '+TL[o.tmp];
+  g('asgnap').style.display='block';g('asgnft').style.display='none';
+}
+function confAsgn(send){
+  var pl=g('asgntr').value,dt=g('asgndt').value;
+  var o=DB.orders.find(function(x){return x.id===asgnOid;}),t=DB.trucks.find(function(x){return x.tr===pl;});
+  if(!o.history)o.history=[];
+  o.history.push({date:new Date().toISOString().split('T')[0],action:'Ανάθεση',truck:pl,note:'Ανατέθηκε σε φορτηγό '+pl});
+  o.truck=pl;o.status='Assigned';o.loadDate=dt;
+  CM('asgn-modal');
+  if(send&&t){
+    var firm=DB.firms.find(function(x){return x.nm===o.firm;})||{};
+    var str=firm.str||firm.ad||o.from||'';
+    var tkCity=[firm.tk,firm.ct].filter(Boolean).join(' ');
+    var mapsUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent([str,tkCity,firm.co].filter(Boolean).join(', '));
+    var palLbl=o.pal==='E'?'EPAL':o.pal==='B'?'Βιομηχανική':'Βαρέλια';
+    var msg='📦 ΑΝΑΘΕΣΗ ΦΟΡΤΙΟΥ\n\n🏢 ΦΙΡΜΑ: '+(o.firm||'—')+(str?'\n📍 Οδός: '+str:'')+(tkCity?'\n🏙 Πόλη: '+tkCity:'')+(firm.co?'\n🌍 Χώρα: '+firm.co:'')+'\n🗺 Maps: '+mapsUrl+(firm.hr?'\n⏰ Ωράριο: '+firm.hr:'')+(firm.cn?'\n👤 Επαφή: '+firm.cn+(firm.ph?' · '+firm.ph:''):'')+'\n\n📋 ΦΟΡΤΙΟ\nΠελάτης: '+o.client+'\nΕτοιμότητα: '+fmtD(o.rdy)+'\nΠαλέτες: '+o.qty+' '+palLbl+'\nLDM: '+o.ldm+'μ\nΒάρος: '+(o.wgt/1000).toFixed(1)+'t\nΘερμ.: '+TL[o.tmp]+(o.notes?'\nΣημ.: '+o.notes:'');
+    window.open('https://wa.me/'+(t.ph||'').replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+  }
+  notif('Ανάθεση ολοκληρώθηκε!');rDash();renderOrders();if(curPg==='dispatch')rDisp();if(curPg==='weekly')renderWeekly();
+}
+
+function openSts(id,type){
+  stsOid=id;stsType=type;
+  var o=DB.orders.find(function(x){return x.id===id;});if(!o)return;
+  g('stsmt').textContent=type==='transit'?'→ Μεταφορά':'→ Παραδόθηκε';
+  g('sts-date-lbl').textContent=type==='transit'?'Ημερομηνία φόρτωσης':'Ημερομηνία παράδοσης';
+  g('stsinfo').innerHTML='<strong style="color:var(--tx)">#'+o.id+' '+o.client+'</strong><br>'+o.from+' · '+o.ldm+' LDM · '+TL[o.tmp]+(o.truck?'<br>Φορτηγό: '+o.truck:'');
+  stsdpSel=null;stsdpY=new Date().getFullYear();stsdpM=new Date().getMonth();
+  g('stsdtxt').value='';g('stsdt').value='';stsdpRen();OM('sts-modal');
+}
+function stsdpTog(){var c=g('stsdpcal');if(c.classList.contains('on')){c.classList.remove('on');return;}stsdpRen();c.classList.add('on');}
+document.addEventListener('click',function(e){if(!e.target.closest('#sts-modal .dpw')){var c=g('stsdpcal');if(c)c.classList.remove('on');}});
+function stsdpRen(){
+  function mk(y,m,nav){var f=new Date(y,m,1),st=(f.getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),today=new Date();var h='<div class="dpnr">'+(nav?'<button class="dpb" onclick="stsdpN(-1,event)">&#8249;</button>':'<span style="width:28px"></span>')+'<span class="dplb">'+MN[m]+' '+y+'</span><button class="dpb" onclick="stsdpN(1,event)">&#8250;</button></div><div class="dpg">'+DAYS.map(function(d){return'<div class="dc dh">'+d+'</div>';}).join('');for(var i=0;i<st;i++)h+='<div class="dc do"></div>';for(var d=1;d<=dim;d++){var it=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d,sl=stsdpSel&&stsdpSel.getFullYear()===y&&stsdpSel.getMonth()===m&&stsdpSel.getDate()===d;h+='<div class="dc'+(it?' dt':'')+(sl?' ds':'')+'" onclick="stsdpPk('+y+','+m+','+d+',event)">'+d+'</div>';}return h+'</div>';}
+  var y2=stsdpM===11?stsdpY+1:stsdpY,m2=(stsdpM+1)%12;
+  g('stsdpcal').innerHTML=mk(stsdpY,stsdpM,true)+'<div class="dpsep"></div>'+mk(y2,m2,false);
+}
+function stsdpN(d,e){if(e)e.stopPropagation();stsdpM+=d;if(stsdpM<0){stsdpM=11;stsdpY--;}else if(stsdpM>11){stsdpM=0;stsdpY++;}stsdpRen();}
+function stsdpPk(y,m,d,e){if(e)e.stopPropagation();stsdpSel=new Date(y,m,d);var dd=('0'+d).slice(-2),mm=('0'+(m+1)).slice(-2);g('stsdtxt').value=dd+'/'+mm+'/'+y;g('stsdt').value=y+'-'+mm+'-'+dd;g('stsdpcal').classList.remove('on');stsdpRen();}
+function confirmSts(){
+  var dt=g('stsdt').value;if(!dt){notif('Επιλέξτε ημερομηνία','er');return;}
+  var o=DB.orders.find(function(x){return x.id===stsOid;});if(!o)return;
+  if(!o.history)o.history=[];
+  if(stsType==='transit'){o.status='In Transit';o.loadDate=dt;o.history.push({date:dt,action:'Φόρτωση',truck:o.truck,note:'Εκκίνηση μεταφοράς'});notif('→ Σε Μεταφορά ('+fmtD(dt)+')');}
+  else{o.status='Delivered';o.deliveryDate=dt;o.history.push({date:dt,action:'Παράδοση',truck:o.truck,note:'Παραδόθηκε στον πελάτη'});notif('→ Παραδόθηκε ('+fmtD(dt)+')');}
+  CM('sts-modal');rDash();renderOrders();if(curPg==='dispatch')rDisp();
+}
+
+function SDD(key){
+  var qid=key==='cli'?'ocliq':'ofrmq',items=key==='cli'?DB.clients:DB.firms,el=g('sddl-'+key);if(!el)return;
+  var q=norm((g(qid).value||'').trim());
+  var fil=items.filter(function(x){return!q||norm(x.nm).indexOf(q)>=0;});
+  if(!fil.length){el.innerHTML='<div class="sdde">Δεν βρέθηκαν</div>';el.classList.add('on');return;}
+  el.innerHTML=fil.slice(0,40).map(function(x){var safe=x.nm.replace(/&/g,'&amp;');return'<div class="sddi" onmousedown="SDDP(\''+key+'\','+x.id+')">'+safe+'</div>';}).join('');
+  el.classList.add('on');
+}
+function SDDP(key,id){
+  var items=key==='cli'?DB.clients:DB.firms,x=items.find(function(i){return i.id===id;});if(!x)return;
+  if(key==='cli'){g('ocliq').value=x.nm;g('ocli').value=x.nm;g('sddl-cli').classList.remove('on');g('fg-cli').classList.remove('ferr');var to=g('oto');if(to&&!to.value)to.value=x.ct||'';}
+  else{g('ofrmq').value=x.nm;g('ofrm').value=x.nm;g('sddl-frm').classList.remove('on');g('fg-frm').classList.remove('ferr');var fr=g('ofrom');if(fr)fr.value=(x.ct||'')+(x.co?', '+x.co:'');}
+}
+function SDDC(key){var el=g('sddl-'+key);if(el)el.classList.remove('on');}
+
+document.addEventListener('click',function(e){if(!e.target.closest('.dpw')){var c=g('dpcal');if(c)c.classList.remove('on');}});
+function dpTog(){var c=g('dpcal');if(c.classList.contains('on')){c.classList.remove('on');return;}dpY=new Date().getFullYear();dpM=new Date().getMonth();dpRen();c.classList.add('on');}
+function dpRen(){
+  function mk(y,m,nav){var f=new Date(y,m,1),st=(f.getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),today=new Date();var h='<div class="dpnr">'+(nav?'<button class="dpb" onclick="dpN(-1,event)">&#8249;</button>':'<span style="width:28px"></span>')+'<span class="dplb">'+MN[m]+' '+y+'</span><button class="dpb" onclick="dpN(1,event)">&#8250;</button></div><div class="dpg">'+DAYS.map(function(d){return'<div class="dc dh">'+d+'</div>';}).join('');for(var i=0;i<st;i++)h+='<div class="dc do"></div>';for(var d=1;d<=dim;d++){var it=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d,sl=dpSel&&dpSel.getFullYear()===y&&dpSel.getMonth()===m&&dpSel.getDate()===d;h+='<div class="dc'+(it?' dt':'')+(sl?' ds':'')+'" onclick="dpPk('+y+','+m+','+d+',event)">'+d+'</div>';}return h+'</div>';}
+  var y2=dpM===11?dpY+1:dpY,m2=(dpM+1)%12;
+  g('dpcal').innerHTML=mk(dpY,dpM,true)+'<div class="dpsep"></div>'+mk(y2,m2,false);
+}
+function dpN(d,e){if(e)e.stopPropagation();dpM+=d;if(dpM<0){dpM=11;dpY--;}else if(dpM>11){dpM=0;dpY++;}dpRen();}
+function dpPk(y,m,d,e){if(e)e.stopPropagation();dpSel=new Date(y,m,d);var dd=('0'+d).slice(-2),mm=('0'+(m+1)).slice(-2);g('ordytxt').value=dd+'/'+mm+'/'+y;g('ordy').value=y+'-'+mm+'-'+dd;g('dpcal').classList.remove('on');g('fg-rdy').classList.remove('ferr');dpRen();}
+
+function calcLDM(){var pt=g('opal').value,qty=parseInt(g('oqty').value)||0;if(!pt)return;var factor=pt==='M'?1.00:(LM[pt]||0.40);g('oldm').value=(qty*factor).toFixed(2);updLDM();}
+function updLDM(){var ldm=parseFloat(g('oldm').value)||0,el=g('ldmprev');if(ldm>0){el.classList.add('on');g('lldm').textContent=ldm.toFixed(2)+' LDM';g('lpct').textContent=(ldm/TLDM*100).toFixed(1)+'%';g('lfree').textContent=(TLDM-ldm).toFixed(2)+' LDM';g('lpct').style.color=ldm>TLDM?'var(--er)':'var(--tx)';}else el.classList.remove('on');g('ldmwarn').classList.toggle('on',ldm>TLDM);updWarn();}
+function updWarn(){g('wgtwarn').classList.toggle('on',(parseInt(g('owgt').value)||0)>34000);}
+function resetOF(){
+  editOid=null;dpSel=null;
+  ['ofrom','oto','oqty','oldm','owgt','oprice','onotes'].forEach(function(id){var el=g(id);if(el)el.value='';});
+  g('ocliq').value='';g('ocli').value='';g('ofrmq').value='';g('ofrm').value='';
+  g('opal').value='';g('otmp').value='';g('ordytxt').value='';g('ordy').value='';
+  g('ldmprev').classList.remove('on');g('ldmwarn').classList.remove('on');g('wgtwarn').classList.remove('on');
+  ['fg-cli','fg-frm','fg-pal','fg-qty','fg-ldm','fg-wgt','fg-tmp','fg-rdy'].forEach(function(id){var el=g(id);if(el)el.classList.remove('ferr');});
+  g('ordmt').textContent='Νέα Παραγγελία';
+  // Reset tabs
+  var tf=g('ord-tab-form'),th=g('ord-tab-hist');
+  if(tf)tf.style.display='block';if(th)th.style.display='none';
+  var btns=document.querySelectorAll('#ord-tab-btn-form,#ord-tab-btn-hist');
+  btns.forEach(function(b){b.classList.remove('on');});
+  var fb=g('ord-tab-btn-form');if(fb)fb.classList.add('on');
+  var sb=g('ord-save-btn');if(sb)sb.style.display='inline-flex';
+}
+function saveOrd(){
+  var cli=g('ocli').value.trim(),frm=g('ofrm').value.trim(),pal=g('opal').value,qty=parseInt(g('oqty').value)||0,ldm=parseFloat(g('oldm').value)||0,wgt=parseInt(g('owgt').value)||0,tmp=g('otmp').value,rdy=g('ordy').value;
+  var checks=[{id:'fg-cli',v:cli,msg:'Επιλέξτε πελάτη'},{id:'fg-frm',v:frm,msg:'Επιλέξτε φίρμα'},{id:'fg-pal',v:pal,msg:'Επιλέξτε τύπο παλετών'},{id:'fg-qty',v:qty,msg:'Εισάγετε ποσότητα'},{id:'fg-ldm',v:ldm,msg:'Εισάγετε LDM'},{id:'fg-wgt',v:wgt,msg:'Εισάγετε βάρος'},{id:'fg-tmp',v:tmp,msg:'Επιλέξτε θερμοκρασία'},{id:'fg-rdy',v:rdy,msg:'Επιλέξτε ημερομηνία'}];
+  var err=null;checks.forEach(function(c){var el=g(c.id);if(!c.v){if(el)el.classList.add('ferr');if(!err)err=c.msg;}else{if(el)el.classList.remove('ferr');}});
+  if(err){notif(err,'er');return;}
+  var o={id:editOid||NID(DB.orders),client:cli,firm:frm,from:g('ofrom').value,to:g('oto').value,pal:pal,qty:qty,ldm:ldm,wgt:wgt,tmp:tmp,rdy:rdy,price:parseFloat(g('oprice').value)||0,notes:g('onotes').value,status:'Open',truck:'',hidden:false};
+  if(editOid){var i=DB.orders.findIndex(function(x){return x.id===editOid;});if(i>=0){o.status=DB.orders[i].status;o.truck=DB.orders[i].truck;o.hidden=DB.orders[i].hidden;o.history=DB.orders[i].history||[];DB.orders[i]=o;}}
+  else DB.orders.push(o);
+  CM('ord-modal');editOid=null;notif('Παραγγελία αποθηκεύτηκε!');renderOrders();rDash();
+}
+function editOrd(id){
+  var o=DB.orders.find(function(x){return x.id===id;});if(!o)return;
+  resetOF();editOid=id;g('ordmt').textContent='Επεξεργασία #'+id;
+  ['from','to','qty','ldm','price','notes'].forEach(function(f){var el=g('o'+f);if(el)el.value=o[f]||'';});
+  g('owgt').value=o.wgt||'';g('ocliq').value=o.client||'';g('ocli').value=o.client||'';
+  g('ofrmq').value=o.firm||'';g('ofrm').value=o.firm||'';g('opal').value=o.pal||'';g('otmp').value=o.tmp||'';
+  if(o.rdy){var d=new Date(o.rdy+'T00:00:00');g('ordytxt').value=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();g('ordy').value=o.rdy;dpSel=d;}
+  // History tab
+  var hist=o.history||[];var hEl=g('ord-hist-content');
+  if(hEl){if(hist.length){var stCol={Ανάθεση:'var(--ht)',Φόρτωση:'var(--ok)',Παράδοση:'var(--tx3)',Αφαίρεση:'var(--er)'};hEl.innerHTML=hist.map(function(h){var col=stCol[h.action]||'var(--tx2)';return'<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--b1);align-items:flex-start"><div style="width:8px;height:8px;border-radius:50%;background:'+col+';margin-top:3px;flex-shrink:0"></div><div><div style="font-size:10px;font-weight:600;color:var(--tx)">'+h.action+'</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">'+fmtD(h.date)+(h.truck?' · Φορτηγό: <span style="color:var(--tx2)">'+h.truck+'</span>':'')+'</div>'+(h.note?'<div style="font-size:9px;color:var(--tx3)">'+h.note+'</div>':'')+'</div></div>';}).join('');}else{hEl.innerHTML='<div style="text-align:center;padding:24px;color:var(--tx3);font-size:10px">Δεν υπάρχει ιστορικό ακόμα</div>';}}
+  updLDM();OM('ord-modal');
+}
+function swTab(e,tab,btn){
+  var tabs=e==='ord'?['form','hist']:['basic','docs'];
+  tabs.forEach(function(t){var el=g(e+'-tab-'+t);if(el)el.style.display=t===tab?'block':'none';});
+  btn.closest('.mtabs').querySelectorAll('.mtab').forEach(function(x){x.classList.remove('on');});btn.classList.add('on');
+  if(e==='ord'){var sb=g('ord-save-btn');if(sb)sb.style.display=tab==='hist'?'none':'inline-flex';}
+}
+
+function resetTF(){editTid=null;g('trkmt').textContent='Νέο Φορτηγό';['ttr','tth','tth2','town','tph','tem','tbase','tprt'].forEach(function(id){var el=g(id);if(el)el.value='';});g('ttare').value='';g('tpl').value='';g('tchm').value='single';togCF();}
+function calcPL(){var t=parseInt(g('ttare').value)||0;g('tpl').value=t?(GROSS-t)+'kg (≈'+((GROSS-t)/1000).toFixed(1)+'t)':'';}
+function togCF(){g('tprtw').style.display=g('tchm').value!=='single'?'flex':'none';}
+function saveTrk(){var tare=parseInt(g('ttare').value)||0;var t={id:editTid||NID(DB.trucks),tr:g('ttr').value,th:g('tth').value,th2:g('tth2').value,own:g('town').value,ph:g('tph').value,em:g('tem').value,base:g('tbase').value,tare:tare,pl:GROSS-tare,chm:g('tchm').value,prt:parseFloat(g('tprt').value)||0};if(!t.tr||!t.own){notif('Πινακίδα και ιδιοκτήτης απαιτούνται','er');return;}if(editTid){var i=DB.trucks.findIndex(function(x){return x.id===editTid;});if(i>=0)DB.trucks[i]=t;}else DB.trucks.push(t);CM('trk-modal');editTid=null;notif('Φορτηγό αποθηκεύτηκε!');rTrucks();}
+function editTrk(id){var t=DB.trucks.find(function(x){return x.id===id;});if(!t)return;editTid=id;g('trkmt').textContent='Επεξεργασία: '+t.tr;['tr','th','th2','own','ph','em','base'].forEach(function(f){var el=g('t'+f);if(el)el.value=t[f]||'';});g('ttare').value=t.tare||'';g('tchm').value=t.chm||'single';g('tprt').value=t.prt||'';togCF();calcPL();OM('trk-modal');}
+function delTrk(id){if(confirm('Διαγραφή;')){DB.trucks=DB.trucks.filter(function(x){return x.id!==id;});rTrucks();notif('Διαγράφηκε');}}
+
+function plChg(inp){if(!inp.files||!inp.files[0])return;var f=inp.files[0];if(f.size>10*1024*1024){notif('Μέγιστο 10MB','er');return;}var r=new FileReader();r.onload=function(e){plFile={name:f.name,size:f.size,data:e.target.result};g('cplname').textContent='📎 '+f.name+' ('+(f.size/1024).toFixed(0)+' KB)';g('cplprev').style.display='flex';g('cplzone').style.display='none';};r.readAsDataURL(f);}
+function plDrop(e){e.preventDefault();g('cplzone').style.borderColor='';var files=e.dataTransfer.files;if(files&&files[0])plChg({files:files});}
+function plClear(){plFile=null;g('cplfile').value='';g('cplprev').style.display='none';g('cplzone').style.display='block';}
+function dlPl(id){var c=DB.clients.find(function(x){return x.id===id;});if(!c||!c.plFile)return;var a=document.createElement('a');a.href=c.plFile.data;a.download=c.plFile.name;a.click();}
+function resetCF(){editCid=null;plFile=null;g('climt').textContent='Νέος Πελάτης';['cnm','cvt','cad','cct','cco','cph','cem','cpl','cnt'].forEach(function(id){var el=g(id);if(el)el.value='';});plClear();}
+function saveCli(){var c={id:editCid||NID(DB.clients),nm:g('cnm').value,vt:g('cvt').value,ad:g('cad').value,ct:g('cct').value,co:g('cco').value,ph:g('cph').value,em:g('cem').value,pl:g('cpl').value,nt:g('cnt').value};if(plFile)c.plFile=plFile;else if(editCid){var ex=DB.clients.find(function(x){return x.id===editCid;});if(ex&&ex.plFile)c.plFile=ex.plFile;}if(!c.nm){notif('Εισάγετε επωνυμία','er');return;}if(editCid){var i=DB.clients.findIndex(function(x){return x.id===editCid;});if(i>=0)DB.clients[i]=c;}else DB.clients.push(c);CM('cli-modal');editCid=null;plFile=null;notif('Πελάτης αποθηκεύτηκε!');rClients();}
+function editCli(id){var c=DB.clients.find(function(x){return x.id===id;});if(!c)return;editCid=id;plFile=null;['nm','vt','ad','ct','co','ph','em','nt'].forEach(function(f){var el=g('c'+f);if(el)el.value=c[f]||'';});g('cpl').value=c.pl||'';if(c.plFile){plFile=c.plFile;g('cplname').textContent='📎 '+c.plFile.name;g('cplprev').style.display='flex';g('cplzone').style.display='none';}else{g('cplprev').style.display='none';g('cplzone').style.display='block';}OM('cli-modal');}
+function delCli(id){if(confirm('Διαγραφή;')){DB.clients=DB.clients.filter(function(x){return x.id!==id;});rClients();notif('Διαγράφηκε');}}
+
+function updFAd(){var str=g('fstr')?g('fstr').value:'';var tk=g('ftk')?g('ftk').value:'';var ct=g('fct')?g('fct').value:'';var co=g('fco')?g('fco').value:'';var fad=g('fad');if(fad)fad.value=[str,tk,ct,co].filter(function(x){return x&&x.trim();}).join(', ');}
+function resetFF(){editFid=null;g('frmmt').textContent='Νέα Φίρμα';['fnm','fct','ftk','fstr','fad','fhr','fcn','fph','fem','fnt'].forEach(function(id){var el=g(id);if(el)el.value='';});}
+function saveFrm(){var str=g('fstr')?g('fstr').value:'';var tk=g('ftk')?g('ftk').value:'';var fullAd=[str,tk,g('fct').value,g('fco').value].filter(function(x){return x&&x.trim();}).join(', ');var f={id:editFid||NID(DB.firms),nm:g('fnm').value,co:g('fco').value,ct:g('fct').value,tk:tk,str:str,ad:fullAd,hr:g('fhr').value,cn:g('fcn').value,ph:g('fph').value,em:g('fem').value,nt:g('fnt').value};if(!f.nm){notif('Εισάγετε επωνυμία','er');return;}if(editFid){var i=DB.firms.findIndex(function(x){return x.id===editFid;});if(i>=0)DB.firms[i]=f;}else DB.firms.push(f);CM('frm-modal');editFid=null;notif('Φίρμα αποθηκεύτηκε!');rFirms();}
+function editFrm(id){var f=DB.firms.find(function(x){return x.id===id;});if(!f)return;editFid=id;['nm','co','ct','hr','cn','ph','em','nt'].forEach(function(k){var el=g('f'+k);if(el)el.value=f[k]||'';});var ftk=g('ftk');if(ftk)ftk.value=f.tk||'';var fstr=g('fstr');if(fstr)fstr.value=f.str||f.ad||'';var fad=g('fad');if(fad)fad.value=f.ad||'';OM('frm-modal');}
+function delFrm(id){if(confirm('Διαγραφή;')){DB.firms=DB.firms.filter(function(x){return x.id!==id;});rFirms();notif('Διαγράφηκε');}}
+
+function avdpTog(){var c=g('avdpcal');if(c.classList.contains('on')){c.classList.remove('on');return;}avdpRen();c.classList.add('on');}
+document.addEventListener('click',function(e){if(!e.target.closest('#avl-modal .dpw')){var c=g('avdpcal');if(c)c.classList.remove('on');}});
+function avdpRen(){var f=new Date(avdpY,avdpM,1),st=(f.getDay()+6)%7,dim=new Date(avdpY,avdpM+1,0).getDate(),today=new Date();var h='<div class="dpnr"><button class="dpb" onclick="avdpN(-1,event)">&#8249;</button><span class="dplb">'+MN[avdpM]+' '+avdpY+'</span><button class="dpb" onclick="avdpN(1,event)">&#8250;</button></div><div class="dpg">'+DAYS.map(function(d){return'<div class="dc dh">'+d+'</div>';}).join('');for(var i=0;i<st;i++)h+='<div class="dc do"></div>';for(var d=1;d<=dim;d++){var it=today.getFullYear()===avdpY&&today.getMonth()===avdpM&&today.getDate()===d,sl=avdpSel&&avdpSel.getFullYear()===avdpY&&avdpSel.getMonth()===avdpM&&avdpSel.getDate()===d;h+='<div class="dc'+(it?' dt':'')+(sl?' ds':'')+'" onclick="avdpPk('+avdpY+','+avdpM+','+d+',event)">'+d+'</div>';}h+='</div>';g('avdpcal').innerHTML=h;}
+function avdpN(d,e){if(e)e.stopPropagation();avdpM+=d;if(avdpM<0){avdpM=11;avdpY--;}else if(avdpM>11){avdpM=0;avdpY++;}avdpRen();}
+function avdpPk(y,m,d,e){if(e)e.stopPropagation();avdpSel=new Date(y,m,d);var dd=('0'+d).slice(-2),mm=('0'+(m+1)).slice(-2);g('avfrtxt').value=dd+'/'+mm+'/'+y;g('avfr').value=y+'-'+mm+'-'+dd;g('avdpcal').classList.remove('on');avdpRen();}
+function saveAvl(){var a={id:NID(DB.avail),tr:g('avtr').value,ct:g('avct').value,co:g('avco').value,fr:g('avfr').value,nt:g('avnt').value};if(!a.tr){notif('Επιλέξτε φορτηγό','er');return;}if(!a.fr){notif('Επιλέξτε ημερομηνία','er');return;}DB.avail.push(a);g('avfrtxt').value='';g('avfr').value='';avdpSel=null;CM('avl-modal');notif('Αποθηκεύτηκε!');renderWeekly();}
+
+function saveFer(){var f={id:NID(DB.ferries),pt:g('fept').value,dp:g('fedp').value,co:g('feco').value,dl:g('fedl').value,nt:g('fent').value};DB.ferries.push(f);CM('fer-modal');notif('Αποθηκεύτηκε!');rFerry();}
+function delFer(id){if(confirm('Διαγραφή;')){DB.ferries=DB.ferries.filter(function(x){return x.id!==id;});rFerry();notif('Διαγράφηκε');}}
+
+function parseEm(){var body=g('embody').value;if(!body.trim()){notif('Εισάγετε κείμενο','er');return;}var sender=g('emsnd').value;var palM=body.match(/(\d+)\s*(?:παλ|pallet|pal|eur)/i),kgM=body.match(/(\d[\d.,]*)\s*(?:kg|κιλ)/i),tonM=body.match(/(\d[\d.,]*)\s*(?:τόν|ton)/i),fromM=body.match(/(?:από|from)[:\s]+([^\n,]{3,30})/i);var tmp='chilled';if(body.match(/κατάψυξ|frozen|-18/i))tmp='frozen';else if(body.match(/ζεστ|hot/i))tmp='heated';else if(body.match(/ξηρ|dry/i))tmp='dry';g('epcli').value=sender.split('@')[1]?sender.split('@')[1].split('.')[0]:'';g('eptmp').value=tmp;var qty=parseInt(palM?palM[1]:0)||0;g('epqty').value=qty;g('epldm').value=(qty*0.40).toFixed(2);var kg=tonM?parseFloat(tonM[1].replace(',','.'))*1000:kgM?parseFloat(kgM[1].replace(',','.')):0;g('epwgt').value=Math.round(kg)||'';g('epfrm').value=fromM?fromM[1].trim():'';g('emparsed').style.display='block';g('emok').style.display='inline-flex';}
+function appEm(){var o={id:NID(DB.orders),client:g('epcli').value,firm:'',from:g('epfrm').value,to:'',pal:'E',qty:parseInt(g('epqty').value)||0,ldm:parseFloat(g('epldm').value)||0,wgt:parseInt(g('epwgt').value)||0,tmp:g('eptmp').value,rdy:'',price:0,notes:'Από email',status:'Open',truck:'',hidden:false};DB.orders.push(o);CM('em-modal');notif('Καταχωρήθηκε!');renderOrders();}
+function upDoc(e,t){var n=prompt('Όνομα αρχείου για "'+t+'":');if(n){DB.docs.push({id:NID(DB.docs),entity:e,type:t,name:n,date:new Date().toISOString().split('T')[0]});notif('Έγγραφο: '+n);}}
+
+function exportData(){var data={version:4,exported:new Date().toISOString(),orders:DB.orders,trucks:DB.trucks,clients:DB.clients,firms:DB.firms,avail:DB.avail,ferries:DB.ferries,docs:DB.docs};var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='logismart-data-'+new Date().toISOString().split('T')[0]+'.json';a.click();URL.revokeObjectURL(url);notif('Εξαγωγή ολοκληρώθηκε!');}
+function importData(inp){if(!inp.files||!inp.files[0])return;var reader=new FileReader();reader.onload=function(e){try{var data=JSON.parse(e.target.result);if(!data.orders||!data.clients){notif('Μη έγκυρο αρχείο','er');return;}if(!confirm('Θα αντικατασταθούν ΟΛΑ τα τρέχοντα δεδομένα. Συνέχεια;'))return;DB.orders=data.orders||[];DB.trucks=data.trucks||[];DB.clients=data.clients||[];DB.firms=data.firms||[];DB.avail=data.avail||[];DB.ferries=data.ferries||[];DB.docs=data.docs||[];inp.value='';notif('Εισαγωγή ολοκληρώθηκε — '+DB.orders.length+' παραγγ., '+DB.clients.length+' πελάτες');SP(curPg);}catch(err){notif('Σφάλμα ανάγνωσης','er');}};reader.readAsText(inp.files[0]);}
+
+// ══ GOOGLE MAPS URL LOOKUP ══
+function gmapsLookup(){
+  var url=(g('gmaps-url').value||'').trim();
+  var st=g('gmaps-status');
+  if(!url){notif('Επικόλλησε πρώτα το Google Maps URL','er');return;}
+
+  st.style.display='block';st.style.color='var(--tx3)';st.textContent='⟳ Αναζήτηση…';
+
+  // Extract place_id from URL if present
+  var placeId=null;
+  var pm=url.match(/place_id[=:]([A-Za-z0-9_-]+)/);
+  if(pm)placeId=pm[1];
+
+  // Extract CID (Google internal ID) from /maps/place/ URL
+  var cidM=url.match(/0x[0-9a-fA-F]+:0x[0-9a-fA-F]+/);
+
+  if(placeId){
+    gmapsFetchPlace(placeId);
+    return;
+  }
+
+  // Try to extract business name + location from URL for text search
+  var textQuery='';
+  // Format: /maps/place/NAME/@lat,lng
+  var nameM=url.match(/maps\/place\/([^/@?]+)/);
+  if(nameM){
+    textQuery=decodeURIComponent(nameM[1].replace(/\+/g,' '));
+  }
+  // Format: ?q=NAME
+  var qM=url.match(/[?&]q=([^&]+)/);
+  if(qM)textQuery=decodeURIComponent(qM[1].replace(/\+/g,' '));
+
+  if(!textQuery){
+    st.style.color='var(--er)';
+    st.textContent='Δεν μπόρεσα να εξάγω στοιχεία. Δοκίμασε: Maps → Κοινοποίηση → Αντιγραφή συνδέσμου';
+    return;
+  }
+
+  // Use Places Text Search
+  var apiUrl='https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+encodeURIComponent(textQuery)+'&inputtype=textquery&fields=place_id,name&key=AIzaSyC145IdWrjYx-Rpjn4mL8AgFhk96NReKRM';
+
+  fetch(apiUrl)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.candidates&&d.candidates.length){
+        gmapsFetchPlace(d.candidates[0].place_id);
+      } else {
+        st.style.color='var(--er)';
+        st.textContent='Δεν βρέθηκε. Δοκίμασε να αντιγράψεις το link από Maps → Κοινοποίηση.';
+      }
+    })
+    .catch(function(){
+      st.style.color='var(--er)';
+      st.textContent='Σφάλμα σύνδεσης. Έλεγξε το internet και δοκίμασε πάλι.';
+    });
+}
+
+function gmapsFetchPlace(placeId){
+  var st=g('gmaps-status');
+  var fields='name,formatted_address,address_components,formatted_phone_number,opening_hours,website';
+  var url='https://maps.googleapis.com/maps/api/place/details/json?place_id='+placeId+'&fields='+fields+'&key=AIzaSyC145IdWrjYx-Rpjn4mL8AgFhk96NReKRM&language=el';
+
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.result){
+        gmapsFillForm(d.result);
+        st.style.color='var(--ok)';
+        st.textContent='✓ Στοιχεία συμπληρώθηκαν — ελέγξτε και διορθώστε αν χρειαστεί';
+      } else {
+        st.style.color='var(--er)';
+        st.textContent='Δεν βρέθηκαν λεπτομέρειες. ('+( d.status||'')+')'+(d.status==='REQUEST_DENIED'?' — Έλεγξε ότι το Places API είναι ενεργό':'');
+      }
+    })
+    .catch(function(){
+      st.style.color='var(--er)';st.textContent='Σφάλμα σύνδεσης.';
+    });
+}
+
+function gmapsFillForm(place){
+  var ac=place.address_components||[];
+  var street_number='',route='',city='',postal_code='',country_en='';
+  ac.forEach(function(c){
+    if(c.types.indexOf('street_number')>=0)street_number=c.long_name;
+    if(c.types.indexOf('route')>=0)route=c.long_name;
+    if(c.types.indexOf('locality')>=0||c.types.indexOf('administrative_area_level_3')>=0){if(!city)city=c.long_name;}
+    if(c.types.indexOf('postal_code')>=0)postal_code=c.long_name;
+    if(c.types.indexOf('country')>=0)country_en=c.long_name;
+  });
+
+  if(g('fnm'))g('fnm').value=place.name||'';
+  if(g('fstr'))g('fstr').value=route+(street_number?' '+street_number:'');
+  if(g('ftk'))g('ftk').value=postal_code;
+  if(g('fct'))g('fct').value=city;
+  if(g('fph')&&place.formatted_phone_number)g('fph').value=place.formatted_phone_number;
+
+  var countryMap={'Germany':'Γερμανία','Austria':'Αυστρία','Italy':'Ιταλία','France':'Γαλλία',
+    'Netherlands':'Ολλανδία','Belgium':'Βέλγιο','Spain':'Ισπανία','Poland':'Πολωνία',
+    'Czech Republic':'Τσεχία','Czechia':'Τσεχία','Hungary':'Ουγγαρία'};
+  var fco=g('fco');
+  if(fco&&country_en){
+    var mapped=countryMap[country_en]||'Άλλο';
+    for(var i=0;i<fco.options.length;i++){if(fco.options[i].text===mapped){fco.selectedIndex=i;break;}}
+  }
+
+  if(g('fhr')&&place.opening_hours&&place.opening_hours.weekday_text){
+    g('fhr').value=place.opening_hours.weekday_text.slice(0,5).join(' | ');
+  }
+
+  updFAd();
+  g('gmaps-url').value='';
+}
+
+g('nd').textContent=new Date().toLocaleDateString('el-GR',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+rDash();
+</script>
+</body>
+</html>
