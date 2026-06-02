@@ -111,7 +111,13 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
 .caln{font-size:9px;color:var(--tx3);margin-bottom:3px}
 .cale{font-size:7px;padding:2px 4px;border-radius:2px;margin-bottom:2px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 ::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+.pac-container{background:var(--bg4)!important;border:1px solid var(--b2)!important;border-radius:var(--r)!important;box-shadow:0 6px 20px rgba(0,0,0,.5)!important;font-family:var(--m)!important;z-index:9999!important}
+.pac-item{padding:8px 10px!important;font-size:10px!important;color:var(--tx2)!important;border-top:1px solid var(--b1)!important;cursor:pointer!important}
+.pac-item:hover{background:var(--bg5)!important}
+.pac-item-query{font-size:10px!important;color:var(--tx)!important}
+.pac-matched{color:var(--ac)!important}
 </style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC145IdWrjYx-Rpjn4mL8AgFhk96NReKRM&libraries=places&language=el" defer></script>
 </head>
 <body>
 <div class="nav">
@@ -367,7 +373,10 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
       </div>
       <div id="gmaps-status" style="font-size:9px;margin-top:3px;display:none"></div>
     </div>
-    <div class="fg"><label>Επωνυμία<span class="req">*</span></label><input type="text" id="fnm" class="fi"></div>
+    <div class="fg"><label>Επωνυμία<span class="req">*</span></label>
+      <input type="text" id="fnm" class="fi" placeholder="Πληκτρολογήστε για αναζήτηση Google…" autocomplete="off">
+      <div id="places-hint" style="font-size:8px;color:var(--tx3);margin-top:2px">Επιλέξτε από τις προτάσεις για αυτόματη συμπλήρωση διεύθυνσης</div>
+    </div>
     <div class="fg"><label>Χώρα</label>
       <select id="fco" class="fsel" onchange="updFAd()">
         <option>Γερμανία</option><option>Αυστρία</option><option selected>Ιταλία</option><option>Γαλλία</option>
@@ -1646,6 +1655,60 @@ function gmapsFillForm(place){
   updFAd();
   g('gmaps-url').value='';
 }
+
+// ══ GOOGLE PLACES AUTOCOMPLETE ══
+function initFirmPlaces(){
+  var input=g('fnm');
+  if(!input||typeof google==='undefined'||!google.maps||!google.maps.places){
+    setTimeout(initFirmPlaces,500);return;
+  }
+  var ac=new google.maps.places.Autocomplete(input,{
+    types:['establishment'],
+    fields:['name','address_components','formatted_phone_number','opening_hours','geometry']
+  });
+  // Prevent form submit on Enter
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')e.preventDefault();});
+  ac.addListener('place_changed',function(){
+    var place=ac.getPlace();
+    if(!place.address_components)return;
+    var ac2=place.address_components,street_number='',route='',city='',postal_code='',country_en='';
+    ac2.forEach(function(c){
+      if(c.types.indexOf('street_number')>=0)street_number=c.long_name;
+      if(c.types.indexOf('route')>=0)route=c.long_name;
+      if(c.types.indexOf('locality')>=0){if(!city)city=c.long_name;}
+      if(c.types.indexOf('administrative_area_level_3')>=0){if(!city)city=c.long_name;}
+      if(c.types.indexOf('postal_code')>=0)postal_code=c.long_name;
+      if(c.types.indexOf('country')>=0)country_en=c.long_name;
+    });
+    if(g('fnm'))g('fnm').value=place.name||'';
+    if(g('fstr'))g('fstr').value=route+(street_number?' '+street_number:'');
+    if(g('ftk'))g('ftk').value=postal_code;
+    if(g('fct'))g('fct').value=city;
+    if(g('fph')&&place.formatted_phone_number)g('fph').value=place.formatted_phone_number;
+    var cmap={'Germany':'Γερμανία','Austria':'Αυστρία','Italy':'Ιταλία','France':'Γαλλία','Netherlands':'Ολλανδία','Belgium':'Βέλγιο','Spain':'Ισπανία','Poland':'Πολωνία','Czech Republic':'Τσεχία','Czechia':'Τσεχία','Hungary':'Ουγγαρία'};
+    var fco=g('fco');
+    if(fco&&country_en){var mapped=cmap[country_en]||'Άλλο';for(var i=0;i<fco.options.length;i++){if(fco.options[i].text===mapped){fco.selectedIndex=i;break;}}}
+    if(place.opening_hours&&place.opening_hours.weekday_text){
+      var hrs=place.opening_hours.weekday_text.slice(0,5).join(' | ');
+      if(g('fhr'))g('fhr').value=hrs;
+    }
+    updFAd();
+    var hint=g('places-hint');
+    if(hint){hint.textContent='✓ Συμπληρώθηκε από Google — ελέγξτε και διορθώστε αν χρειαστεί';hint.style.color='var(--ok)';}
+  });
+}
+// Init when Places modal opens
+var _frmModalObserver=new MutationObserver(function(muts){
+  muts.forEach(function(m){
+    if(m.target.id==='frm-modal'&&m.target.classList.contains('on')){
+      setTimeout(initFirmPlaces,100);
+    }
+  });
+});
+document.addEventListener('DOMContentLoaded',function(){
+  var fm=g('frm-modal');
+  if(fm)_frmModalObserver.observe(fm,{attributes:true,attributeFilter:['class']});
+});
 
 g('nd').textContent=new Date().toLocaleDateString('el-GR',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 rDash();
