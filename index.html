@@ -428,7 +428,13 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
 <div class="mov" id="avl-modal"><div class="modal">
   <div class="mh"><span class="mt">Διαθεσιμότητα Φορτηγού</span><button class="mx" onclick="CM('avl-modal')">×</button></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-    <div class="fg s2"><label>Φορτηγό</label><select id="avtr" class="fsel"></select></div>
+    <div class="fg s2"><label>Φορτηγό</label>
+      <select id="avtr" class="fsel"></select>
+      <div id="avl-existing" style="margin-top:6px;font-size:9px;display:none">
+        <div style="color:var(--tx3);margin-bottom:4px;letter-spacing:.06em;font-size:8px">ΗΔΗ ΔΗΛΩΜΕΝΑ ΑΥΤΗ ΤΗΝ ΕΒΔΟΜΑΔΑ</div>
+        <div id="avl-existing-list"></div>
+      </div>
+    </div>
     <div class="fg"><label>Πόλη</label><input type="text" id="avct" class="fi" placeholder="π.χ. Anzola"></div>
     <div class="fg"><label>Χώρα</label><input type="text" id="avco" class="fi" placeholder="π.χ. Ιταλία"></div>
     <div class="fg s2"><label>Ημερομηνία διαθεσιμότητας</label>
@@ -1308,7 +1314,36 @@ function renderWeekly(){
     }
   });
   g('wgrid').innerHTML=h+'</div>';
-  var s=g('avtr');if(s)s.innerHTML='<option value="">—</option>'+DB.trucks.map(function(t){return'<option value="'+t.tr+'">'+t.tr+' — '+t.own+'</option>';}).join('');
+  // Populate truck select with weekly availability info
+  var s=g('avtr');
+  if(s){
+    // Compute current week in weekly plan
+    var wMon=new Date();wMon.setDate(wMon.getDate()-((wMon.getDay()+6)%7)+wkOff*7);wMon.setHours(0,0,0,0);
+    var wSun=new Date(wMon);wSun.setDate(wMon.getDate()+6);wSun.setHours(23,59,59,999);
+    s.innerHTML='<option value="">—</option>'+DB.trucks.map(function(t){
+      var hasAvl=DB.avail.some(function(a){if(a.tr!==t.tr)return false;var d=new Date(a.fr+'T00:00:00');return d>=wMon&&d<=wSun;});
+      var style=hasAvl?'color:#dc2626;font-weight:600':'';
+      var suffix=hasAvl?' ⚠ ΗΔΗ ΔΗΛΩΜΕΝΟ':'';
+      return'<option value="'+t.tr+'" style="'+style+'">'+t.tr+' — '+t.own+suffix+'</option>';
+    }).join('');
+    // Show existing availability for this week
+    var existing=DB.avail.filter(function(a){var d=new Date(a.fr+'T00:00:00');return d>=wMon&&d<=wSun;});
+    var exEl=g('avl-existing'),exList=g('avl-existing-list');
+    if(exEl&&exList){
+      if(existing.length){
+        exEl.style.display='block';
+        exList.innerHTML=existing.map(function(a){
+          return'<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);border-radius:4px;margin-bottom:3px">'+
+            '<span style="color:#dc2626;font-weight:600">'+a.tr+'</span>'+
+            '<span style="color:var(--tx3)">'+fmtD(a.fr)+(a.ct?' · '+a.ct:'')+'</span>'+
+            '<button class="btn btns btnd" style="font-size:8px;padding:1px 6px" onclick="delAvl('+a.id+')">✕</button>'+
+          '</div>';
+        }).join('');
+      } else {
+        exEl.style.display='none';
+      }
+    }
+  }
 }
 
 // ── WEEKLY CALENDAR ──
@@ -1619,6 +1654,11 @@ document.addEventListener('click',function(e){if(!e.target.closest('#avl-modal .
 function avdpRen(){var f=new Date(avdpY,avdpM,1),st=(f.getDay()+6)%7,dim=new Date(avdpY,avdpM+1,0).getDate(),today=new Date();var h='<div class="dpnr"><button class="dpb" onclick="avdpN(-1,event)">&#8249;</button><span class="dplb">'+MN[avdpM]+' '+avdpY+'</span><button class="dpb" onclick="avdpN(1,event)">&#8250;</button></div><div class="dpg">'+DAYS.map(function(d){return'<div class="dc dh">'+d+'</div>';}).join('');for(var i=0;i<st;i++)h+='<div class="dc do"></div>';for(var d=1;d<=dim;d++){var it=today.getFullYear()===avdpY&&today.getMonth()===avdpM&&today.getDate()===d,sl=avdpSel&&avdpSel.getFullYear()===avdpY&&avdpSel.getMonth()===avdpM&&avdpSel.getDate()===d;h+='<div class="dc'+(it?' dt':'')+(sl?' ds':'')+'" onclick="avdpPk('+avdpY+','+avdpM+','+d+',event)">'+d+'</div>';}h+='</div>';g('avdpcal').innerHTML=h;}
 function avdpN(d,e){if(e)e.stopPropagation();avdpM+=d;if(avdpM<0){avdpM=11;avdpY--;}else if(avdpM>11){avdpM=0;avdpY++;}avdpRen();}
 function avdpPk(y,m,d,e){if(e)e.stopPropagation();avdpSel=new Date(y,m,d);var dd=('0'+d).slice(-2),mm=('0'+(m+1)).slice(-2);g('avfrtxt').value=dd+'/'+mm+'/'+y;g('avfr').value=y+'-'+mm+'-'+dd;g('avdpcal').classList.remove('on');avdpRen();}
+function delAvl(id){
+  DB.avail=DB.avail.filter(function(x){return x.id!==id;});
+  notif('Διαθεσιμότητα αφαιρέθηκε');
+  renderWeekly(); // refreshes the list inside modal too
+}
 function saveAvl(){var a={id:NID(DB.avail),tr:g('avtr').value,ct:g('avct').value,co:g('avco').value,fr:g('avfr').value,nt:g('avnt').value};if(!a.tr){notif('Επιλέξτε φορτηγό','er');return;}if(!a.fr){notif('Επιλέξτε ημερομηνία','er');return;}DB.avail.push(a);g('avfrtxt').value='';g('avfr').value='';avdpSel=null;CM('avl-modal');notif('Αποθηκεύτηκε!');renderWeekly();}
 
 function saveFer(){var f={id:NID(DB.ferries),pt:g('fept').value,dp:g('fedp').value,co:g('feco').value,dl:g('fedl').value,nt:g('fent').value};DB.ferries.push(f);CM('fer-modal');notif('Αποθηκεύτηκε!');rFerry();}
