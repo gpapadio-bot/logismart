@@ -6,7 +6,7 @@
 <title>Logi-Smart v4</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0c10;--bg2:#0f1318;--bg3:#161b24;--bg4:#1d2333;--bg5:#252d40;--b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.12);--tx:#e4e8f0;--tx2:#7a8499;--tx3:#3d4560;--ac:#3b82f6;--ac2:#2563eb;--fr:#60a5fa;--ch:#34d399;--ht:#fbbf24;--dr:#9ca3af;--ok:#10b981;--er:#ef4444;--wn:#f59e0b;--m:'JetBrains Mono',monospace;--d:'Syne',sans-serif;--r:6px;--r2:10px}
+:root{--bg:#f0f4f8;--bg2:#ffffff;--bg3:#f8fafc;--bg4:#eef2f7;--bg5:#e2e8f0;--b1:rgba(0,0,0,.07);--b2:rgba(0,0,0,.13);--tx:#1a202c;--tx2:#4a5568;--tx3:#718096;--ac:#2563eb;--ac2:#1d4ed8;--fr:#2563eb;--ch:#059669;--ht:#d97706;--dr:#6b7280;--ok:#059669;--er:#dc2626;--wn:#d97706;--m:'JetBrains Mono',monospace;--d:'Syne',sans-serif;--r:6px;--r2:10px}
 *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
 body{font-family:var(--m);background:var(--bg);color:var(--tx);display:flex;flex-direction:column;font-size:12px}
 .nav{height:46px;background:var(--bg2);border-bottom:1px solid var(--b1);display:flex;align-items:center;padding:0 14px;gap:2px;flex-shrink:0;overflow-x:auto}
@@ -125,7 +125,6 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
   <button class="nt on" onclick="SP('dashboard')">ΕΠΙΣΚΟΠΗΣΗ</button>
   <button class="nt" onclick="SP('orders')">ΠΑΡΑΓΓΕΛΙΕΣ</button>
   <button class="nt" onclick="SP('dispatch')">DISPATCH</button>
-  <button class="nt" onclick="SP('groupage')">GROUPAGE</button>
   <button class="nt" onclick="SP('trucks')">ΣΤΟΛΟΣ</button>
   <button class="nt" onclick="SP('clients')">ΠΕΛΑΤΕΣ</button>
   <button class="nt" onclick="SP('firms')">ΦΙΡΜΕΣ ΕΞ.</button>
@@ -217,14 +216,42 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}tbody tr:last-child td{border
 </div>
 
 <div id="pg-calendar" class="pg">
-  <div class="ph"><div><div class="pt">Ημερολόγιο</div></div>
-    <div style="display:flex;gap:7px;align-items:center">
-      <button class="btn btns" onclick="calPrev()">← Πριν</button>
-      <span style="font-size:11px;color:var(--tx2);min-width:120px;text-align:center" id="callbl"></span>
-      <button class="btn btns" onclick="calNext()">Μετά →</button>
-    </div></div>
-  <div class="cal7"><div class="calh">ΔΕΥ</div><div class="calh">ΤΡΙ</div><div class="calh">ΤΕΤ</div><div class="calh">ΠΕΜ</div><div class="calh">ΠΑΡ</div><div class="calh">ΣΑΒ</div><div class="calh">ΚΥΡ</div></div>
-  <div class="cal7" id="calgrid" style="margin-top:2px"></div>
+  <div class="ph"><div><div class="pt">Ημερολόγιο</div></div></div>
+  <!-- WEEKLY VIEW -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <button class="btn btns" onclick="wkCalPrev()">← Πριν</button>
+    <span style="font-size:11px;color:var(--tx2);min-width:180px;text-align:center;font-weight:600" id="wkcallbl"></span>
+    <button class="btn btns" onclick="wkCalNext()">Μετά →</button>
+    <button class="btn btns" onclick="wkCalToday()">Σήμερα</button>
+  </div>
+  <div style="overflow-x:auto;margin-bottom:16px">
+    <div style="display:grid;grid-template-columns:60px repeat(7,1fr);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;min-width:700px" id="wkcalgrid"></div>
+  </div>
+
+  <!-- MINI MONTHLY below -->
+  <div class="card" style="padding:12px;max-width:380px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <button class="btn btni btns" onclick="calPrev()">‹</button>
+      <span style="font-size:10px;font-weight:600;color:var(--tx)" id="callbl"></span>
+      <button class="btn btni btns" onclick="calNext()">›</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:4px">
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΔΕ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΤΡ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΤΕ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΠΕ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΠΑ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΣΑ</div>
+      <div style="text-align:center;font-size:7px;color:var(--tx3);padding:2px">ΚΥ</div>
+    </div>
+    <div id="minicalgrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px"></div>
+    <div style="margin-top:10px;border-top:1px solid var(--b1);padding-top:8px;display:flex;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(59,130,246,.15);flex-shrink:0"></div><span style="font-size:8px;color:var(--tx3)">Τρέχουσα εβδ.</span></div>
+      <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:var(--ac);flex-shrink:0"></div><span style="font-size:8px;color:var(--tx3)">Σήμερα</span></div>
+      <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0"></div><span style="font-size:8px;color:var(--tx3)">Φορτηγό</span></div>
+      <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:var(--fr);flex-shrink:0"></div><span style="font-size:8px;color:var(--tx3)">Παραγγελία</span></div>
+    </div>
+  </div>
 </div>
 
 <div id="pg-ferry" class="pg">
@@ -1076,7 +1103,6 @@ function SP(p){
   if(p==='dashboard')rDash();
   else if(p==='orders')renderOrders();
   else if(p==='dispatch')rDisp();
-  else if(p==='groupage')renderGroupage();
   else if(p==='trucks')rTrucks();
   else if(p==='clients')rClients();
   else if(p==='firms')rFirms();
@@ -1221,22 +1247,6 @@ function runOpt(){
 }
 function apOpt(tid,ids){var t=DB.trucks.find(function(x){return x.id===tid;});if(!t)return;ids.forEach(function(id){var o=DB.orders.find(function(x){return x.id===id;});if(o){o.truck=t.tr;o.status='Assigned';}});CM('opt-modal');notif('Αναθέσεις εφαρμόστηκαν!');rDisp();}
 
-function renderGroupage(){
-  var op=DB.orders.filter(function(o){return!o.truck&&o.status==='Open'&&!o.hidden;});
-  if(!op.length){g('gcnt').innerHTML='<div style="text-align:center;padding:32px;color:var(--tx3)">Δεν υπάρχουν ανοικτές παραγγελίες</div>';return;}
-  var by={};op.forEach(function(o){var c=o.from.split(',')[0].trim();if(!by[c])by[c]=[];by[c].push(o);});
-  var html='';
-  Object.keys(by).forEach(function(city){
-    var ords=by[city],tL=ords.reduce(function(s,o){return s+parseFloat(o.ldm);},0),tW=ords.reduce(function(s,o){return s+parseInt(o.wgt);},0),tr=Math.ceil(tL/TLDM);
-    html+='<div class="trc" style="margin-bottom:11px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div><span style="font-size:13px;font-weight:700;font-family:var(--d);color:var(--tx)">'+city+'</span><span style="font-size:9px;color:var(--tx3);margin-left:7px">'+ords.length+' παραγγ. · '+tL.toFixed(2)+' LDM · '+(tW/1000).toFixed(1)+'t · ≈'+tr+' φορτ.</span></div><button class="btn btnp btns" onclick="openAsgn('+ords[0].id+')">Ανάθεση</button></div>'+
-    '<div class="capb" style="height:18px;border-radius:3px;margin-bottom:3px">'+ords.map(function(o){return'<div class="caps" style="width:'+(parseFloat(o.ldm)/TLDM*100).toFixed(1)+'%;background:'+TC[o.tmp]+';opacity:.8"></div>';}).join('')+'<div class="caps" style="flex:1;background:var(--bg4)"></div></div>'+
-    '<div class="capl"><span>'+Math.max(0,TLDM-Math.min(tL,TLDM)).toFixed(2)+' LDM κενό</span>'+(tL>TLDM?'<span style="color:var(--wn)">Overflow: '+(tL-TLDM).toFixed(2)+' LDM</span>':'')+'</div>'+
-    '<div style="margin-top:9px">'+ords.map(function(o){return'<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-top:1px solid var(--b1);font-size:9px">'+
-    '<div style="display:flex;align-items:center;gap:7px"><div style="width:7px;height:7px;border-radius:50%;background:'+TC[o.tmp]+';flex-shrink:0"></div><span style="color:var(--tx);font-weight:500">#'+o.id+' '+o.client+'</span><span style="color:var(--tx3)">'+o.qty+o.pal+' · '+o.ldm+'LDM</span></div>'+
-    '<div style="display:flex;gap:5px;align-items:center">'+tbdg(o.tmp)+'<span style="color:var(--tx3)">'+fmtD(o.rdy)+'</span><button class="btn btni btnp btns" onclick="openAsgn('+o.id+')">↗</button></div></div>';}).join('')+'</div></div>';
-  });
-  g('gcnt').innerHTML=html;
-}
 
 function rTrucks(){
   g('tgrid').innerHTML=DB.trucks.map(function(t){var u=tLU(t.tr),uw=tWU(t.tr),pct=Math.min(100,Math.round(u/TLDM*100));var mo=DB.orders.filter(function(o){return o.truck===t.tr&&o.status!=='Delivered';});
@@ -1301,24 +1311,101 @@ function renderWeekly(){
   var s=g('avtr');if(s)s.innerHTML='<option value="">—</option>'+DB.trucks.map(function(t){return'<option value="'+t.tr+'">'+t.tr+' — '+t.own+'</option>';}).join('');
 }
 
+// ── WEEKLY CALENDAR ──
+var wkCalOff=0; // week offset from today
 function rCal(){
-  g('callbl').textContent=MN[calM]+' '+calY;
-  var today=new Date(),first=new Date(calY,calM,1),start=(first.getDay()+6)%7,dim=new Date(calY,calM+1,0).getDate(),h='';
-  for(var i=0;i<start;i++){var d2=new Date(calY,calM,1-start+i);h+='<div class="cald other"><div class="caln">'+d2.getDate()+'</div></div>';}
-  for(var d=1;d<=dim;d++){
-    var it=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
-    var ords=DB.orders.filter(function(o){if(!o.rdy)return false;var rd=new Date(o.rdy+'T00:00:00');return rd.getFullYear()===calY&&rd.getMonth()===calM&&rd.getDate()===d;});
-    var avlTrucks=DB.avail.filter(function(a){var ad=new Date(a.fr+'T00:00:00');return ad.getFullYear()===calY&&ad.getMonth()===calM&&ad.getDate()===d;});
-    h+='<div class="cald'+(it?' today':'')+'"><div class="caln">'+d+'</div>'+
-    avlTrucks.map(function(a){var pct=Math.round(tLU(a.tr)/TLDM*100);var col=pct>85?'var(--er)':pct>50?'var(--wn)':'var(--ok)';return'<div class="cale" style="background:rgba(16,185,129,.12);color:'+col+'">🚛 '+a.tr+(pct?' '+pct+'%':'')+'</div>';}).join('')+
-    ords.map(function(o){var icon=o.status==='In Transit'?'🚛':o.status==='Delivered'?'✓':o.status==='Assigned'?'📦':'📋';return'<div class="cale" style="background:'+TC[o.tmp]+'22;color:'+TC[o.tmp]+'" onclick="editOrd('+o.id+')" title="#'+o.id+' '+o.client+'">'+icon+' '+o.client.substring(0,6)+(o.truck?' ('+o.truck+')':'')+'</div>';}).join('')+
+  rWkCal();rMiniCal();
+}
+function calPrev(){calM--;if(calM<0){calM=11;calY--;}rMiniCal();}
+function calNext(){calM++;if(calM>11){calM=0;calY++;}rMiniCal();}
+function wkCalPrev(){wkCalOff--;rWkCal();rMiniCal();}
+function wkCalNext(){wkCalOff++;rWkCal();rMiniCal();}
+function wkCalToday(){wkCalOff=0;var today=new Date();calY=today.getFullYear();calM=today.getMonth();rWkCal();rMiniCal();}
+
+function rWkCal(){
+  var today=new Date();
+  var mon=new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7)+wkCalOff*7);
+  mon.setHours(0,0,0,0);
+  var sun=new Date(mon);sun.setDate(mon.getDate()+6);
+
+  var monStr=('0'+mon.getDate()).slice(-2)+'/'+('0'+(mon.getMonth()+1)).slice(-2);
+  var sunStr=('0'+sun.getDate()).slice(-2)+'/'+('0'+(sun.getMonth()+1)).slice(-2)+'/'+sun.getFullYear();
+  g('wkcallbl').textContent=monStr+' — '+sunStr;
+
+  var HOURS=['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
+  var DNAMES=['ΔΕΥ','ΤΡΙ','ΤΕΤ','ΠΕΜ','ΠΑΡ','ΣΑΒ','ΚΥΡ'];
+  var h='';
+
+  // Header row
+  h+='<div style="background:var(--bg3);padding:8px 4px;font-size:8px;color:var(--tx3);text-align:center;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)"></div>';
+  for(var i=0;i<7;i++){
+    var dd=new Date(mon);dd.setDate(dd.getDate()+i);
+    var isToday=dd.toDateString()===today.toDateString();
+    var hasEv=DB.orders.some(function(o){return o.rdy&&new Date(o.rdy+'T00:00:00').toDateString()===dd.toDateString();})
+      ||DB.avail.some(function(a){return new Date(a.fr+'T00:00:00').toDateString()===dd.toDateString();});
+    h+='<div style="background:'+(isToday?'rgba(59,130,246,.12)':'var(--bg3)')+';padding:8px 4px;text-align:center;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)">'+
+      '<div style="font-size:9px;font-weight:'+(isToday?'700':'500')+';color:'+(isToday?'var(--ac)':'var(--tx2)')+'">'+DNAMES[i]+'</div>'+
+      '<div style="font-size:11px;font-weight:700;color:'+(isToday?'var(--ac)':'var(--tx)')+';line-height:1.2">'+dd.getDate()+'</div>'+
+      (hasEv?'<div style="width:5px;height:5px;border-radius:50%;background:var(--ac);margin:2px auto 0"></div>':'')+
     '</div>';
   }
-  var rem=(7-(start+dim)%7)%7;for(var j=1;j<=rem;j++)h+='<div class="cald other"><div class="caln">'+j+'</div></div>';
-  g('calgrid').innerHTML=h;
+
+  // All-day row (availability + full-day orders)
+  h+='<div style="background:var(--bg3);padding:4px;font-size:7px;color:var(--tx3);text-align:center;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:center">Φορτηγά</div>';
+  for(var i=0;i<7;i++){
+    var dd2=new Date(mon);dd2.setDate(dd2.getDate()+i);
+    var avl=DB.avail.filter(function(a){return new Date(a.fr+'T00:00:00').toDateString()===dd2.toDateString();});
+    var ords=DB.orders.filter(function(o){return o.rdy&&new Date(o.rdy+'T00:00:00').toDateString()===dd2.toDateString();});
+    h+='<div style="background:var(--bg2);padding:3px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1);min-height:40px">'+
+      avl.map(function(a){return'<div style="font-size:8px;padding:2px 4px;border-radius:3px;background:rgba(16,185,129,.15);color:var(--ok);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">🚛 '+a.tr+(a.ct?' · '+a.ct:'')+'</div>';}).join('')+
+      ords.map(function(o){var sIcon=o.status==='Delivered'?'✓ ':o.status==='In Transit'?'🚛 ':o.status==='Assigned'?'📦 ':'📋 ';var pIcon={E:'🟦',B:'🟧',P:'🛢',M:'📐'}[o.pal]||'';return'<div style="font-size:8px;padding:3px 5px;border-radius:3px;background:'+TC[o.tmp]+'22;color:'+TC[o.tmp]+';margin-bottom:2px;cursor:pointer;overflow:hidden;" onclick="editOrd('+o.id+')" title="#'+o.id+' '+(o.recip||o.client)+' | '+o.firm+'">'+sIcon+'<span style="font-weight:600">'+(o.recip||o.client).substring(0,10)+'</span><br><span style="opacity:.8;font-size:7px">'+( o.firm||'').substring(0,12)+' '+pIcon+o.qty+'</span></div>';}).join('')+
+    '</div>';
+  }
+
+  g('wkcalgrid').innerHTML=h;
 }
-function calPrev(){calM--;if(calM<0){calM=11;calY--;}rCal();}
-function calNext(){calM++;if(calM>11){calM=0;calY++;}rCal();}
+
+function rMiniCal(){
+  g('callbl').textContent=MN[calM]+' '+calY;
+  var today=new Date();
+  // Compute current week range for highlight
+  var wkMon=new Date(today);wkMon.setDate(today.getDate()-((today.getDay()+6)%7)+wkCalOff*7);wkMon.setHours(0,0,0,0);
+  var wkSun=new Date(wkMon);wkSun.setDate(wkMon.getDate()+6);wkSun.setHours(23,59,59,999);
+
+  var first=new Date(calY,calM,1),start=(first.getDay()+6)%7,dim=new Date(calY,calM+1,0).getDate(),h='';
+  for(var i=0;i<start;i++){
+    var dp=new Date(calY,calM,1-start+i);
+    h+='<div style="text-align:center;padding:3px 1px;font-size:9px;color:var(--tx3);opacity:.3">'+dp.getDate()+'</div>';
+  }
+  for(var d=1;d<=dim;d++){
+    var dt=new Date(calY,calM,d);
+    var isToday=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
+    var inWk=dt>=wkMon&&dt<=wkSun;
+    var hasOrd=DB.orders.some(function(o){if(!o.rdy)return false;var rd=new Date(o.rdy+'T00:00:00');return rd.getFullYear()===calY&&rd.getMonth()===calM&&rd.getDate()===d;});
+    var hasAvl=DB.avail.some(function(a){var ad=new Date(a.fr+'T00:00:00');return ad.getFullYear()===calY&&ad.getMonth()===calM&&ad.getDate()===d;});
+    var bg=isToday?'var(--ac)':inWk?'rgba(59,130,246,.15)':'transparent';
+    var col=isToday?'#fff':inWk?'var(--ac)':'var(--tx2)';
+    h+='<div onclick="miniCalClick('+calY+','+calM+','+d+')" style="text-align:center;padding:3px 1px;font-size:9px;border-radius:3px;cursor:pointer;background:'+bg+';color:'+col+';position:relative">'+d+
+      (hasOrd&&!isToday?'<div style="position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--fr)"></div>':'')+
+      (hasAvl&&!isToday?'<div style="position:absolute;top:1px;right:1px;width:3px;height:3px;border-radius:50%;background:var(--ok)"></div>':'')+
+    '</div>';
+  }
+  var rem=(7-(start+dim)%7)%7;
+  for(var j=1;j<=rem;j++)h+='<div style="text-align:center;padding:3px 1px;font-size:9px;color:var(--tx3);opacity:.3">'+j+'</div>';
+  g('minicalgrid').innerHTML=h;
+}
+
+function miniCalClick(y,m,d){
+  // Jump weekly view to week containing this date
+  var today=new Date();
+  var clicked=new Date(y,m,d);
+  var todayMon=new Date(today);todayMon.setDate(today.getDate()-((today.getDay()+6)%7));todayMon.setHours(0,0,0,0);
+  var clickedMon=new Date(clicked);clickedMon.setDate(clicked.getDate()-((clicked.getDay()+6)%7));clickedMon.setHours(0,0,0,0);
+  var diff=Math.round((clickedMon-todayMon)/(7*24*3600*1000));
+  wkCalOff=diff;calY=y;calM=m;
+  rWkCal();rMiniCal();
+}
 
 function rFerry(){
   function fc(f){return'<div class="ferryc"><div style="display:flex;justify-content:space-between"><div><div style="font-family:var(--d);font-size:13px;font-weight:700;color:var(--tx)">'+(f.co||f.pt)+'</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">Αναχώρηση: '+fmtDT(f.dp)+' · Deadline: '+fmtDT(f.dl)+'</div>'+(f.nt?'<div style="font-size:9px;color:var(--tx3)">'+f.nt+'</div>':'')+'</div><button class="btn btni btns btnd" onclick="delFer('+f.id+')">✕</button></div></div>';}
